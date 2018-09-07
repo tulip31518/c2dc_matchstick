@@ -62,12 +62,67 @@ cc.Class({
             default:null,
             type: cc.Node
         },
+
+        home_pan:{
+            default:null,
+            type: cc.Node
+        },
+
+        top_pan:{
+            default:null,
+            type: cc.Node
+        },
+
+        lvl_large_pan:{
+            default:null,
+            type: cc.Node
+        },
+
+        lvl_detail_pan:{
+            default:null,
+            type: cc.Node
+        },
+
+        btn_backhome:{
+            default:null,
+            type: cc.Node
+        },
+
+        btn_lpan1:{
+            default:null,
+            type: cc.Node
+        },
+
+        btn_lpan2:{
+            default:null,
+            type: cc.Node
+        },
+
+        btn_lpan3:{
+            default:null,
+            type: cc.Node
+        },
+
+        btn_lpan4:{
+            default:null,
+            type: cc.Node
+        },
+
+        btn_lpan5:{
+            default:null,
+            type: cc.Node
+        },
+
+        btn_lpan6:{
+            default:null,
+            type: cc.Node
+        },
     },
 
     // LIFE-CYCLE CALLBACKS:
 
     onLoad () {
-        cc.log("Load scene");
+        
         this.actions();
         this.events();
     },
@@ -82,16 +137,69 @@ cc.Class({
         this.btn_start.on(cc.Node.EventType.TOUCH_END, function () {            
             this.load_game_menu();                   
         }, this);
+
+        this.btn_backhome.on(cc.Node.EventType.TOUCH_END, function () {
+            if(this.blevel_detail)
+            {
+                this.lvl_large_pan.active = true;
+                this.lvl_detail_pan.active = false;
+                this.blevel_detail = false;
+            }
+            else
+            {
+                this.home_pan.active = true;
+                this.top_pan.active = false;
+                this.level_pan.active = false;            
+                this.level_pan.position = cc.v2(0, -100);
+            }            
+        }, this);
+
+        this.btn_lpan1.on(cc.Node.EventType.TOUCH_END, function () {
+            this.stage = 1;
+            this.load_level_detail_pan();
+        }, this);
+
+        this.btn_lpan2.on(cc.Node.EventType.TOUCH_END, function () {
+            this.stage = 2;
+            this.load_level_detail_pan();
+        }, this);
+
+        this.btn_lpan3.on(cc.Node.EventType.TOUCH_END, function () {
+            this.stage = 3;
+            this.load_level_detail_pan();
+        }, this);
+
+        this.btn_lpan4.on(cc.Node.EventType.TOUCH_END, function () {
+            this.stage = 4;
+            this.load_level_detail_pan();
+        }, this);
+
+        this.btn_lpan5.on(cc.Node.EventType.TOUCH_END, function () {
+            this.stage = 5;
+            this.load_level_detail_pan();
+        }, this);
+
+        this.btn_lpan6.on(cc.Node.EventType.TOUCH_END, function () {
+            this.stage = 6;
+        }, this);
     },
 
-    disapper_buttons: function()
-    {
-
+    load_level_detail_pan: function()
+    {        
+        this.blevel_detail = true;
+        this.lvl_large_pan.active = false;
+        this.lvl_detail_pan.active = true;
+        this.level_pan.position = cc.v2(0, -100);
+        this.level_pan.runAction(cc.sequence(
+            cc.moveBy(0.2, cc.v2(0, 50)),
+            this.comein_levelAction
+        )); 
     },
 
     load_game_menu: function()
     {
-        this.disapper_buttons();
+        this.home_pan.active = false;
+        this.top_pan.active = true;
         this.level_pan.active = true;
         this.level_pan.runAction(cc.sequence(
             cc.moveBy(0.2, cc.v2(0, 50)),

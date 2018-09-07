@@ -57,11 +57,47 @@ cc.Class({
             default:null,
             type: cc.Node
         },
+
+        level_pan:{
+            default:null,
+            type: cc.Node
+        },
     },
 
     // LIFE-CYCLE CALLBACKS:
 
-    // onLoad () {},
+    onLoad () {
+        cc.log("Load scene");
+        this.actions();
+        this.events();
+    },
+
+    actions: function()
+    {
+        this.comein_levelAction = cc.moveBy(0.1, cc.v2(0, 50)).easing(cc.easeElasticInOut(3.0));
+    },
+
+    events: function()
+    {
+        this.btn_start.on(cc.Node.EventType.TOUCH_END, function () {            
+            this.load_game_menu();                   
+        }, this);
+    },
+
+    disapper_buttons: function()
+    {
+
+    },
+
+    load_game_menu: function()
+    {
+        this.disapper_buttons();
+        this.level_pan.active = true;
+        this.level_pan.runAction(cc.sequence(
+            cc.moveBy(0.2, cc.v2(0, 50)),
+            this.comein_levelAction
+        )); 
+    },
 
     start () {
 

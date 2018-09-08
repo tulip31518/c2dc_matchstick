@@ -52,6 +52,11 @@ cc.Class({
             default:null,
             type: cc.Node
         },
+
+        lvl_count:{
+            default:null,
+            type: cc.Node
+        },
         level: 1,
     },
 
@@ -64,20 +69,29 @@ cc.Class({
         /*
             Display current level
         */
-        this.level_name.string = "LEVEL " + this.level;
-        this.stage.string = this.game.stage;
+        this.level_name.string = "LEVEL " + this.level ;
+        if(this.level == this.game.level)
+            this.stage.string = this.game.stage;
+        else
+            this.stage.string = "50";
 
          /*
             Delete Mark on Level Lock
         */
         if(this.level <= this.game.level)
+        {
             this.lvl_status.active = false;
+            this.stage.node.active = true;
+            this.lvl_count.active = true;
+        }    
 
         /*
             Display Medal on Level Success
         */
         if(this.level < this.game.level)
+        {
             this.medal.active = true;
+        }    
 
         this.node.on(cc.Node.EventType.TOUCH_END, function () {
             if(this.level > this.game.level)

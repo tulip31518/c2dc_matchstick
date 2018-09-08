@@ -121,7 +121,8 @@ cc.Class({
     // LIFE-CYCLE CALLBACKS:
 
     onLoad () {
-        this.stage = 5;
+        this.level = 2;
+        this.stage = 15;
         this.actions();
         this.events();
     },

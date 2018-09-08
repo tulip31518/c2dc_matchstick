@@ -49,6 +49,7 @@ cc.Class({
         },
 
         stage: 1,
+        brefresh: false,
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -60,30 +61,18 @@ cc.Class({
         /*
             Display current stage
         */        
-        this.lbl_stage.string = this.stage;
-
-         /*
-            Display Stage Hint
-        */
-        if(this.stage % 10 == 0 && this.stage >= this.game.stage)
-            this.lvl_hint.active = true;
+        this.lbl_stage.string = this.stage;        
 
         /*
             Select Background Image according to Game Stage.
         */
-        var sprite = this.getComponent(cc.Sprite);
-
-        if(this.stage < this.game.stage)
-            sprite.spriteFrame = this.spriteList[0];                                //Yellow Button
-        else if(this.stage >= this.game.stage && this.stage < this.game.stage + 3)
-            sprite.spriteFrame = this.spriteList[1];                                //Yellow Empty Button
-        else
-            sprite.spriteFrame = this.spriteList[2];                                //Gray Button
+        this.level_sprite = this.getComponent(cc.Sprite); 
+        this.refresh_btn_info();
 
         this.node.on(cc.Node.EventType.TOUCH_END, function () {
             if(this.stage < this.game.stage + 3)                                    //Available stage
             {
-                this.game.stage = this.stage;
+                this.game.curent_stage = this.stage;
                 this.game.load_game_pan();
             }
             else
@@ -96,9 +85,41 @@ cc.Class({
 
     },
 
+    refresh_btn_info: function()
+    {
+        /*
+            In case that current level or stage is passed
+        */
+       
+
+        if(this.game.curent_level < this.game.level)            
+        {
+            this.level_sprite.spriteFrame = this.spriteList[0];
+        }    
+        else if(this.stage < this.game.stage)
+        {
+            this.level_sprite.spriteFrame = this.spriteList[0];                                  //Yellow Button
+        }                                 
+        else if(this.stage >= this.game.stage && this.stage < this.game.stage + 3)
+            this.level_sprite.spriteFrame = this.spriteList[1];                                 //Yellow Empty Button
+        else
+            this.level_sprite.spriteFrame = this.spriteList[2];
+
+         /*
+            Display Stage Hint
+        */
+        if(this.stage % 10 == 0 && this.stage >= this.game.stage && this.game.curent_level >= this.game.level)
+            this.lvl_hint.active = true;
+
+        this.brefresh = false;
+    },
+
     // start () {
 
     // },
 
-    // update (dt) {},
+    update (dt) {
+        if(this.brefresh)
+            this.refresh_btn_info();
+    },
 });

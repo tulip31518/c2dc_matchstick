@@ -100,7 +100,8 @@ cc.Class({
             }
             else
             {
-                this.game.level = this.level;     
+                this.game.curent_level = this.level;
+                this.game.blevel_detail = true;
                 this.game.load_level_detail_pan(); 
             }                              
         }, this);

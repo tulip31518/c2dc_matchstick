@@ -1555,7 +1555,7 @@
         "__id__": 161
       }
     ],
-    "_active": true,
+    "_active": false,
     "_level": 2,
     "_components": [
       {
@@ -31398,8 +31398,9 @@
     },
     "level": 1,
     "stage": 1,
-    "cur_level": 1,
-    "cur_stage": 1,
+    "curent_level": 1,
+    "curent_stage": 1,
+    "blevel_detail": true,
     "_id": "7e1STvSNpMwpsylHzaeJID"
   },
   {

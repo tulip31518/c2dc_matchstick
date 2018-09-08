@@ -82,47 +82,18 @@ cc.Class({
             default:null,
             type: cc.Node
         },
-
-        // btn_lpan1:{
-        //     default:null,
-        //     type: cc.Node
-        // },
-
-        // btn_lpan2:{
-        //     default:null,
-        //     type: cc.Node
-        // },
-
-        // btn_lpan3:{
-        //     default:null,
-        //     type: cc.Node
-        // },
-
-        // btn_lpan4:{
-        //     default:null,
-        //     type: cc.Node
-        // },
-
-        // btn_lpan5:{
-        //     default:null,
-        //     type: cc.Node
-        // },
-
-        // btn_lpan6:{
-        //     default:null,
-        //     type: cc.Node
-        // },
         level: 1,
         stage: 1,
-        cur_level: 1,
-        cur_stage: 1,
+        curent_level: 1,
+        curent_stage: 1,
+        blevel_detail: false,
     },
 
     // LIFE-CYCLE CALLBACKS:
 
     onLoad () {
-        this.level = 2;
-        this.stage = 15;
+        this.level = this.curent_level = 2;
+        this.stage = this.curent_stage = 15;
         this.actions();
         this.events();
     },
@@ -139,52 +110,31 @@ cc.Class({
         }, this);
 
         this.btn_backhome.on(cc.Node.EventType.TOUCH_END, function () {
-            if(this.blevel_detail)
+            if(this.lvl_detail_pan.active)
             {
                 this.lvl_large_pan.active = true;
                 this.lvl_detail_pan.active = false;
-                this.blevel_detail = false;
             }
             else
             {
                 this.home_pan.active = true;
                 this.top_pan.active = false;
                 this.level_pan.active = false;            
-                this.level_pan.position = cc.v2(0, -100);
+                this.level_pan.position = cc.v2(0, -100);               
             }            
         }, this);
-
-        // this.btn_lpan1.on(cc.Node.EventType.TOUCH_END, function () {
-        //     this.stage = 1;
-        //     this.load_level_detail_pan();
-        // }, this);
-
-        // this.btn_lpan2.on(cc.Node.EventType.TOUCH_END, function () {
-        //     this.stage = 2;
-        //     this.load_level_detail_pan();
-        // }, this);
-
-        // this.btn_lpan3.on(cc.Node.EventType.TOUCH_END, function () {
-        //     this.stage = 3;
-        //     this.load_level_detail_pan();
-        // }, this);
-
-        // this.btn_lpan4.on(cc.Node.EventType.TOUCH_END, function () {
-        //     this.stage = 4;
-        //     this.load_level_detail_pan();
-        // }, this);
-
-        // this.btn_lpan5.on(cc.Node.EventType.TOUCH_END, function () {
-        //     this.stage = 5;
-        //     this.load_level_detail_pan();
-        // }, this);
-
-        // this.btn_lpan6.on(cc.Node.EventType.TOUCH_END, function () {
-        //     this.stage = 6;
-        // }, this);
+        
     },
 
+    load_game_pan: function()
+    {
 
+    },
+
+    load_dlg_get_hint: function()
+    {
+
+    },
 
     load_level_detail_pan: function()
     {        
@@ -195,7 +145,10 @@ cc.Class({
         this.level_pan.runAction(cc.sequence(
             cc.moveBy(0.2, cc.v2(0, 50)),
             this.comein_levelAction
-        )); 
+        ));
+        var btns = this.lvl_detail_pan.getComponentsInChildren("stage_manager");
+        for(var i = 0; i < btns.length; i++) 
+            btns[i].brefresh = true;
     },
 
     load_game_menu: function()

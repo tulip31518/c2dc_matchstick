@@ -28,11 +28,6 @@ cc.Class({
         //     }
         // },
 
-        btn_start:{
-            default:null,
-            type: cc.Node
-        },
-
         daily_gift:{
             default:null,
             type: cc.Node
@@ -88,41 +83,45 @@ cc.Class({
             type: cc.Node
         },
 
-        btn_lpan1:{
-            default:null,
-            type: cc.Node
-        },
+        // btn_lpan1:{
+        //     default:null,
+        //     type: cc.Node
+        // },
 
-        btn_lpan2:{
-            default:null,
-            type: cc.Node
-        },
+        // btn_lpan2:{
+        //     default:null,
+        //     type: cc.Node
+        // },
 
-        btn_lpan3:{
-            default:null,
-            type: cc.Node
-        },
+        // btn_lpan3:{
+        //     default:null,
+        //     type: cc.Node
+        // },
 
-        btn_lpan4:{
-            default:null,
-            type: cc.Node
-        },
+        // btn_lpan4:{
+        //     default:null,
+        //     type: cc.Node
+        // },
 
-        btn_lpan5:{
-            default:null,
-            type: cc.Node
-        },
+        // btn_lpan5:{
+        //     default:null,
+        //     type: cc.Node
+        // },
 
-        btn_lpan6:{
-            default:null,
-            type: cc.Node
-        },
+        // btn_lpan6:{
+        //     default:null,
+        //     type: cc.Node
+        // },
+        level: 1,
+        stage: 1,
+        cur_level: 1,
+        cur_stage: 1,
     },
 
     // LIFE-CYCLE CALLBACKS:
 
     onLoad () {
-        
+        this.stage = 5;
         this.actions();
         this.events();
     },
@@ -134,7 +133,7 @@ cc.Class({
 
     events: function()
     {
-        this.btn_start.on(cc.Node.EventType.TOUCH_END, function () {            
+        this.home_pan.on(cc.Node.EventType.TOUCH_END, function () {            
             this.load_game_menu();                   
         }, this);
 
@@ -154,35 +153,37 @@ cc.Class({
             }            
         }, this);
 
-        this.btn_lpan1.on(cc.Node.EventType.TOUCH_END, function () {
-            this.stage = 1;
-            this.load_level_detail_pan();
-        }, this);
+        // this.btn_lpan1.on(cc.Node.EventType.TOUCH_END, function () {
+        //     this.stage = 1;
+        //     this.load_level_detail_pan();
+        // }, this);
 
-        this.btn_lpan2.on(cc.Node.EventType.TOUCH_END, function () {
-            this.stage = 2;
-            this.load_level_detail_pan();
-        }, this);
+        // this.btn_lpan2.on(cc.Node.EventType.TOUCH_END, function () {
+        //     this.stage = 2;
+        //     this.load_level_detail_pan();
+        // }, this);
 
-        this.btn_lpan3.on(cc.Node.EventType.TOUCH_END, function () {
-            this.stage = 3;
-            this.load_level_detail_pan();
-        }, this);
+        // this.btn_lpan3.on(cc.Node.EventType.TOUCH_END, function () {
+        //     this.stage = 3;
+        //     this.load_level_detail_pan();
+        // }, this);
 
-        this.btn_lpan4.on(cc.Node.EventType.TOUCH_END, function () {
-            this.stage = 4;
-            this.load_level_detail_pan();
-        }, this);
+        // this.btn_lpan4.on(cc.Node.EventType.TOUCH_END, function () {
+        //     this.stage = 4;
+        //     this.load_level_detail_pan();
+        // }, this);
 
-        this.btn_lpan5.on(cc.Node.EventType.TOUCH_END, function () {
-            this.stage = 5;
-            this.load_level_detail_pan();
-        }, this);
+        // this.btn_lpan5.on(cc.Node.EventType.TOUCH_END, function () {
+        //     this.stage = 5;
+        //     this.load_level_detail_pan();
+        // }, this);
 
-        this.btn_lpan6.on(cc.Node.EventType.TOUCH_END, function () {
-            this.stage = 6;
-        }, this);
+        // this.btn_lpan6.on(cc.Node.EventType.TOUCH_END, function () {
+        //     this.stage = 6;
+        // }, this);
     },
+
+
 
     load_level_detail_pan: function()
     {        

@@ -78,14 +78,31 @@ cc.Class({
             type: cc.Node
         },
 
+        game_pan:{
+            default:null,
+            type: cc.Node
+        },
+
         btn_backhome:{
             default:null,
             type: cc.Node
         },
+
+        toppan_title:{
+            default:null,
+            type: cc.Label
+        },
+
+        passed_stages:{
+            default:null,
+            type: cc.Label
+        },
+
         level: 1,
         stage: 1,
         curent_level: 1,
         curent_stage: 1,
+        hints:15,
         blevel_detail: false,
     },
 
@@ -114,6 +131,8 @@ cc.Class({
             {
                 this.lvl_large_pan.active = true;
                 this.lvl_detail_pan.active = false;
+                this.toppan_title.string = "LEVEL";
+                this.passed_stages.string = (this.level - 1) * 50 + this.stage;
             }
             else
             {
@@ -128,7 +147,10 @@ cc.Class({
 
     load_game_pan: function()
     {
-
+        this.game_pan.active = true;
+        this.top_pan.active = false;
+        this.lvl_detail_pan.active = false;
+        
     },
 
     load_dlg_get_hint: function()
@@ -141,12 +163,16 @@ cc.Class({
         this.blevel_detail = true;
         this.lvl_large_pan.active = false;
         this.lvl_detail_pan.active = true;
+
+        this.toppan_title.string = "LEVEL " + this.curent_level;
+        this.passed_stages.string = this.stage;
+
         this.level_pan.position = cc.v2(0, -100);
         this.level_pan.runAction(cc.sequence(
             cc.moveBy(0.2, cc.v2(0, 50)),
             this.comein_levelAction
         ));
-        var btns = this.lvl_detail_pan.getComponentsInChildren("stage_manager");
+        var btns = this.lvl_detail_pan.getComponentsInChildren("stage_button");
         for(var i = 0; i < btns.length; i++) 
             btns[i].brefresh = true;
     },
@@ -156,6 +182,9 @@ cc.Class({
         this.home_pan.active = false;
         this.top_pan.active = true;
         this.level_pan.active = true;
+        this.toppan_title.string = "LEVEL";
+        this.passed_stages.string = (this.level - 1) * 50 + this.stage;
+
         this.level_pan.runAction(cc.sequence(
             cc.moveBy(0.2, cc.v2(0, 50)),
             this.comein_levelAction

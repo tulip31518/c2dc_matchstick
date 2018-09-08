@@ -6,7 +6,7 @@
   "filterMode": "bilinear",
   "premultiplyAlpha": false,
   "subMetas": {
-    "stick_limit": {
+    "stick_mini": {
       "ver": "1.0.3",
       "uuid": "75d3d643-4083-498c-b8fc-1adf8af95444",
       "rawTextureUuid": "6f3391ff-7c1c-4695-884c-276d49ed1981",

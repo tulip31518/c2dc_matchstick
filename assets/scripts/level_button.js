@@ -78,12 +78,17 @@ cc.Class({
          /*
             Delete Mark on Level Lock
         */
-        if(this.level <= this.game.level)
+        if(this.level <= this.game.level || (this.level == this.game.level + 1 && this.game.stage >= 20))
         {
             this.lvl_status.active = false;
             this.stage.node.active = true;
             this.lvl_count.active = true;
-        }    
+        }
+        // else if(this.level == this.game.level + 1)
+        // {
+        //     if(this.game.stage >= 20)
+        //         this.lvl_status.active = false;
+        // }
 
         /*
             Display Medal on Level Success

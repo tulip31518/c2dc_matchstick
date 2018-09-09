@@ -137,8 +137,8 @@ cc.Class({
     onLoad () {
         this.bsound_play = true;
         this.level = this.curent_level = 2;
-        this.stage = this.curent_stage = 15;
-        this.updateInterval = 0.5;
+        this.stage = this.curent_stage = 20;
+        this.updateInterval = 1;
         this.actions();
         this.events();
     },
@@ -346,15 +346,17 @@ cc.Class({
         if(!this.home_pan.active) return;
 
         var scl = Math.random();
+        if(scl < 0.3) return;
         var xPos = this.node.width * (Math.random() - 0.5);
 
         let item = cc.instantiate(this.stickPrefab);
+        item.getComponent('stick').game = this;
     	this.node.addChild(item);
-        item.setPosition(xPos, cc.view.getVisibleSize().height + 50);
+        item.setPosition(xPos, cc.view.getVisibleSize().height / 2 + 50);
         
         item.runAction(cc.scaleTo(0.1, scl, scl));
-        item.runAction(cc.moveBy(scl * 5, cc.v2(0, -500))).repeatForever();
-        item.runAction(cc.rotateBy(scl * 3, 360)).repeatForever();
+        item.runAction(cc.moveBy(8 - scl * 2, cc.v2(0, -500))).repeatForever();
+        item.runAction(cc.rotateBy(5- scl, 360)).repeatForever();
 
 
         this.updateTimer = 0;

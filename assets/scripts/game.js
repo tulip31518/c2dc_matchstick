@@ -4,6 +4,11 @@ cc.Class({
 
     properties: {
 
+        stickPrefab:{
+            default:null,
+            type: cc.Prefab
+        },
+
         daily_gift:{
             default:null,
             type: cc.Node
@@ -29,12 +34,42 @@ cc.Class({
             type: cc.Node
         },
 
+        snd_spriteList:{
+            default:[],
+            type: [cc.SpriteFrame]
+        },
+
+        bk_sound:{
+            default:null,
+            type: cc.AudioClip
+        },
+
         btn_cap:{
             default:null,
             type: cc.Node
         },
 
         btn_bucket:{
+            default:null,
+            type: cc.Node
+        },
+
+        dlg_bucket:{
+            default:null,
+            type: cc.Node
+        },
+
+        close_dlg_bucket:{
+            default:null,
+            type: cc.Node
+        },
+
+        lbl_dlg_bucket:{
+            default:null,
+            type: cc.Label
+        },
+
+        btn_start:{
             default:null,
             type: cc.Node
         },
@@ -93,15 +128,17 @@ cc.Class({
         stage: 1,
         curent_level: 1,
         curent_stage: 1,
-        hints:15,
+        hints:12,
         blevel_detail: false,
     },
 
     // LIFE-CYCLE CALLBACKS:
 
     onLoad () {
+        this.bsound_play = true;
         this.level = this.curent_level = 2;
         this.stage = this.curent_stage = 15;
+        this.updateInterval = 0.5;
         this.actions();
         this.events();
     },
@@ -111,6 +148,31 @@ cc.Class({
         this.comein_levelAction = cc.moveBy(0.1, cc.v2(0, 50)).easing(cc.easeElasticInOut(3.0));
         this.in_gift_Action = cc.moveBy(0.5, cc.v2(0, -600)).easing(cc.easeElasticOut());
         this.out_gift_Action = cc.moveBy(0.5, cc.v2(0, 600)).easing(cc.easeElasticOut());
+
+        this.btn_start_rot_r = cc.rotateBy(0.1, 15).easing(cc.easeElasticInOut());
+        this.btn_start_rot_l = cc.rotateBy(0.1, -15).easing(cc.easeElasticInOut());
+        
+        this.btn_start.runAction(cc.repeatForever(cc.sequence(
+            this.btn_start_rot_r,
+            this.btn_start_rot_l,
+            this.btn_start_rot_l,
+            this.btn_start_rot_r, 
+            cc.delayTime(2)
+        )));
+
+        // this.btn_start.runAction(cc.moveBy(5, cc.v2(0, 500))).repeatForever();
+        // this.btn_start.runAction(cc.rotateBy(3, 360)).repeatForever();
+
+        this.daily_gift.runAction(cc.repeatForever(cc.sequence(
+            cc.scaleBy(0.1, 1.25, 1.25).easing(cc.easeElasticInOut()),
+            cc.scaleBy(0.1, 0.8, 0.8).easing(cc.easeElasticInOut()),
+            cc.scaleBy(0.1, 0.8, 0.8).easing(cc.easeElasticInOut()),
+            cc.scaleBy(0.1, 1.25, 1.25).easing(cc.easeElasticInOut()), 
+            cc.delayTime(5)
+        )));
+
+
+        
     },
 
     events: function()
@@ -124,6 +186,7 @@ cc.Class({
         }, this);
 
         this.event_dlg_gift();
+        this.event_dlg_buy_hint();        
 
         this.btn_backhome.on(cc.Node.EventType.TOUCH_END, function () {
             if(this.lvl_detail_pan.active)
@@ -141,7 +204,56 @@ cc.Class({
                 this.level_pan.position = cc.v2(0, -200);          
             }            
         }, this);
+
+        this.btn_sound.on(cc.Node.EventType.TOUCH_END, function () {
+            this.bsound_play = !this.bsound_play;
+            var sprite = this.btn_sound.getComponent(cc.Sprite);
+            if(this.bsound_play)
+            {
+                sprite.spriteFrame = this.snd_spriteList[0];
+                cc.audioEngine.play(this.bk_sound, true, 1);
+            }    
+            else
+            {
+                sprite.spriteFrame = this.snd_spriteList[1];
+                cc.audioEngine.stopAll();
+            }
+              
+        }, this);
+
+        if(this.bsound_play)
+            cc.audioEngine.play(this.bk_sound, true, 1);
         
+    },
+
+    event_dlg_buy_hint: function()
+    {
+        this.btn_bucket.on(cc.Node.EventType.TOUCH_END, function () 
+        {
+            this.dlg_bucket.active = true;
+            this.lbl_dlg_bucket.string =  this.hints;
+            this.dlg_bucket.position = cc.v2(375, 1800);
+            this.node.runAction(cc.sequence(
+                cc.delayTime(0.1),
+                cc.fadeOut(0.5)
+            ));
+            this.dlg_bucket.runAction(cc.sequence(
+                cc.moveBy(0.5, cc.v2(0, -600)),
+                this.in_gift_Action
+            ));
+        }, this);
+
+        this.close_dlg_bucket.on(cc.Node.EventType.TOUCH_END, function () {
+            this.node.runAction(cc.sequence(
+                cc.delayTime(0.1),
+                cc.fadeIn(0.5)
+            ));
+            this.dlg_bucket.runAction(cc.sequence(
+                cc.moveBy(0.5, cc.v2(0, 600)),
+                this.out_gift_Action,
+
+            ));
+        }, this);
     },
 
     event_dlg_gift: function()
@@ -227,5 +339,26 @@ cc.Class({
 
     },
 
-    // update (dt) {},
+    update (dt) 
+    {
+        this.updateTimer += dt;
+        if (this.updateTimer < this.updateInterval) return; // we don't need to do the math every frame        
+        if(!this.home_pan.active) return;
+
+        var scl = Math.random();
+        var xPos = this.node.width * (Math.random() - 0.5);
+
+        let item = cc.instantiate(this.stickPrefab);
+    	this.node.addChild(item);
+        item.setPosition(xPos, cc.view.getVisibleSize().height + 50);
+        
+        item.runAction(cc.scaleTo(0.1, scl, scl));
+        item.runAction(cc.moveBy(scl * 5, cc.v2(0, -500))).repeatForever();
+        item.runAction(cc.rotateBy(scl * 3, 360)).repeatForever();
+
+
+        this.updateTimer = 0;
+
+
+    },
 });

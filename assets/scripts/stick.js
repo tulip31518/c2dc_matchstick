@@ -14,6 +14,7 @@ cc.Class({
 
     onLoad () {
         this.updateInterval = 0.5;
+        
     },
 
     // start () {
@@ -27,7 +28,7 @@ cc.Class({
         this.updateTimer += dt;
         if (this.updateTimer < this.updateInterval) return;
         
-        if(this.node.position.y < cc.view.getVisibleSize().height / (-2))        
+        if(this.node.position.y < cc.view.getVisibleSize().height / (-2))      
             this.node.destroy();
         this.updateTimer = 0;
         

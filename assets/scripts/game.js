@@ -124,7 +124,7 @@ cc.Class({
             type: cc.Label
         },
 
-        level: 1,
+        level: 2,
         stage: 1,
         curent_level: 1,
         curent_stage: 1,

@@ -82,9 +82,10 @@ cc.Class({
          /*
             Display Stage Hint
         */
-        if(this.stage % 10 == 0 && this.stage >= this.game.stage && this.game.curent_level >= this.game.level)
+        if(this.stage % 10 == 0 && this.stage >= this.game.stage && this.game.curent_level >= this.game.level)        
             this.lvl_hint.active = true;
-
+        else
+            this.lvl_hint.active = false;
         this.brefresh = false;
     },
 

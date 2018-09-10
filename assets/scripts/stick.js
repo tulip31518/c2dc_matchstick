@@ -22,15 +22,15 @@ cc.Class({
     // },
 
     update (dt) {
-        if(!this.game.home_pan.active)
-            this.node.destroy();
+        // if(!this.game.home_pan.active)
+        //     this.node.destroy();
         
-        this.updateTimer += dt;
-        if (this.updateTimer < this.updateInterval) return;
+        // this.updateTimer += dt;
+        // if (this.updateTimer < this.updateInterval) return;
         
-        if(this.node.position.y < cc.view.getVisibleSize().height / (-2))      
-            this.node.destroy();
-        this.updateTimer = 0;
+        // if(this.node.position.y < cc.view.getVisibleSize().height / (-2))      
+        //     this.node.destroy();
+        // this.updateTimer = 0;
         
     },
 });

@@ -134,10 +134,10 @@ cc.Class({
             type: cc.Node
         },
 
-        act_type:    "",
-        act_cnt:     0,
-        act_shape:   "",
-        act_shape_cnt:0,
+        // act_type:    "",
+        // act_cnt:     0,
+        // act_shape:   "",
+        // act_shape_cnt:0,
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -262,17 +262,50 @@ cc.Class({
 
     load_game_info: function()
     {
-        this.act_type = "Add";
-        this.act_cnt = 1;
-        this.act_shape = "square";
-        this.act_shape_cnt = 1;
+        // this.act_type = "Add";
+        // this.act_cnt = 1;
+        // this.act_shape = "square";
+        // this.act_shape_cnt = 1;
+        // this.scick_cnt = 4;
+
+        this.task_info = {
+            act_type:"Add",
+            act_cnt: 1,
+            act_shape: "square",
+            act_shape_cnt: 1,
+            scale:  1.8,
+            stick_allignments:[
+                {x:-150, y:0, direction:0, status:1},
+                {x:150, y:0, direction:0, status:1},
+                {x:0, y:-175, direction:1, status:1},
+                {x:0, y:175, direction:1, status:0}
+            ]
+        };
 
         this.stage.string = "STAGE " + this.game.curent_stage;
         this.level.string = "LEVEL " + this.game.curent_level;
         this.hint.string = this.game.hints;
 
-        this.task_content.string = this.act_type + " " + this.act_cnt + " matchmaticks to create " 
-            + this.act_shape_cnt + "\n" + this.act_shape + "s." ;
+        this.task_content.string = this.task_info.act_type + " " + this.task_info.act_cnt + " matchmaticks to create " 
+            + this.task_info.act_shape_cnt + "\n" + this.task_info.act_shape + "s." ;
+        for(var i = 0; i < this.task_info.stick_allignments.length; i++)
+        {
+            let item = cc.instantiate(this.stick);
+            item.getComponent('stick').game = this;
+    	    this.game_board.addChild(item);
+            item.setPosition(this.task_info.stick_allignments[i].x, this.task_info.stick_allignments[i].y);
+            item.runAction(cc.scaleTo(0, this.task_info.scale, this.task_info.scale));
+            switch(this.task_info.stick_allignments[i].direction)
+            {
+                case 1: item.runAction(cc.rotateBy(0, 90));break;
+                case 1: item.runAction(cc.rotateBy(0, -30));break;
+                case 1: item.runAction(cc.rotateBy(0, 30));break;
+                default:break;
+            }
+
+            if(this.task_info.stick_allignments[i].status == 0)
+                ;
+        }
     },
 
     load_game: function()

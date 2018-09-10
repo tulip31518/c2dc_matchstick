@@ -55,7 +55,8 @@ cc.Class({
             {
                 if(this.lvl_hint.active)
                     this.game.load_dlg_get_hint();                                  // Display Dialog to get Hint
-            }                              
+            }            
+            
         }, this);
 
 

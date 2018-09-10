@@ -29,6 +29,41 @@ cc.Class({
             type: cc.Label
         },
 
+        dlg_level_locked:{
+            default:null,
+            type: cc.Node
+        },
+
+        play_dlg_level_locked:{
+            default:null,
+            type: cc.Node
+        },
+
+        close_dlg_level_locked:{
+            default:null,
+            type: cc.Node
+        },
+
+        lbl_dlg_level_locked:{
+            default:null,
+            type: cc.Label
+        },  
+        
+        dlg_get_hint:{
+            default:null,
+            type: cc.Node
+        },
+
+        ok_dlg_get_hint:{
+            default:null,
+            type: cc.Node
+        },
+
+        close_dlg_get_hint:{
+            default:null,
+            type: cc.Node
+        },
+
         btn_sound:{
             default:null,
             type: cc.Node
@@ -64,9 +99,29 @@ cc.Class({
             type: cc.Node
         },
 
+        hint1_video_dlg_bucket:{
+            default:null,
+            type: cc.Node
+        },
+
         lbl_dlg_bucket:{
             default:null,
             type: cc.Label
+        },
+
+        dlg_no_video:{
+            default:null,
+            type: cc.Node
+        },
+
+        close_dlg_no_video:{
+            default:null,
+            type: cc.Node
+        },
+
+        ok_dlg_no_video:{
+            default:null,
+            type: cc.Node
         },
 
         btn_start:{
@@ -146,8 +201,8 @@ cc.Class({
     actions: function()
     {
         this.comein_levelAction = cc.moveBy(0.1, cc.v2(0, 50)).easing(cc.easeElasticInOut(3.0));
-        this.in_gift_Action = cc.moveBy(0.5, cc.v2(0, -600)).easing(cc.easeElasticOut());
-        this.out_gift_Action = cc.moveBy(0.5, cc.v2(0, 600)).easing(cc.easeElasticOut());
+        this.in_gift_Action = cc.moveBy(0.5, cc.v2(0, -700)).easing(cc.easeElasticOut());
+        this.out_gift_Action = cc.moveBy(0.5, cc.v2(0, 700)).easing(cc.easeElasticOut());
 
         this.btn_start_rot_r = cc.rotateBy(0.1, 15).easing(cc.easeElasticInOut());
         this.btn_start_rot_l = cc.rotateBy(0.1, -15).easing(cc.easeElasticInOut());
@@ -186,7 +241,9 @@ cc.Class({
         }, this);
 
         this.event_dlg_gift();
-        this.event_dlg_buy_hint();        
+        this.event_dlg_buy_hint();
+        this.event_dlg_level_locked();
+        this.event_dlg_get_hint();
 
         this.btn_backhome.on(cc.Node.EventType.TOUCH_END, function () {
             if(this.lvl_detail_pan.active)
@@ -232,13 +289,13 @@ cc.Class({
         {
             this.dlg_bucket.active = true;
             this.lbl_dlg_bucket.string =  this.hints;
-            this.dlg_bucket.position = cc.v2(375, 1800);
+            this.dlg_bucket.position = cc.v2(375, 2000);
             this.node.runAction(cc.sequence(
                 cc.delayTime(0.1),
                 cc.fadeOut(0.5)
             ));
             this.dlg_bucket.runAction(cc.sequence(
-                cc.moveBy(0.5, cc.v2(0, -600)),
+                cc.moveBy(0.5, cc.v2(0, -700)),
                 this.in_gift_Action
             ));
         }, this);
@@ -249,10 +306,40 @@ cc.Class({
                 cc.fadeIn(0.5)
             ));
             this.dlg_bucket.runAction(cc.sequence(
-                cc.moveBy(0.5, cc.v2(0, 600)),
+                cc.moveBy(0.5, cc.v2(0, 700)),
                 this.out_gift_Action,
 
             ));
+        }, this);
+
+        this.hint1_video_dlg_bucket.on(cc.Node.EventType.TOUCH_END, function () {
+            cc.log("hint1 clicked");
+            this.dlg_no_video.active = true;
+            this.dlg_no_video.position = cc.v2(375, 2000);
+            this.dlg_bucket.runAction(cc.sequence(
+                cc.delayTime(0.1),
+                cc.fadeOut(0.5)
+            ));
+            this.dlg_no_video.runAction(cc.sequence(
+                cc.moveBy(0.5, cc.v2(0, -700)),
+                this.in_gift_Action
+            ));
+        }, this);
+
+        this.ok_dlg_no_video.on(cc.Node.EventType.TOUCH_END, function () {
+            this.dlg_bucket.runAction(cc.sequence(
+                cc.delayTime(0.1),
+                cc.fadeIn(0.5)
+            ));
+            this.dlg_no_video.active = false;
+        }, this);
+
+        this.close_dlg_no_video.on(cc.Node.EventType.TOUCH_END, function () {
+            this.dlg_bucket.runAction(cc.sequence(
+                cc.delayTime(0.1),
+                cc.fadeIn(0.5)
+            ));
+            this.dlg_no_video.active = false;
         }, this);
     },
 
@@ -269,7 +356,7 @@ cc.Class({
                 cc.fadeOut(0.5)
             ));
             this.dlg_gift.runAction(cc.sequence(
-                cc.moveBy(0.5, cc.v2(0, -600)),
+                cc.moveBy(0.5, cc.v2(0, -700)),
                 this.in_gift_Action
             ));
         }, this);
@@ -280,11 +367,80 @@ cc.Class({
                 cc.fadeIn(0.5)
             ));
             this.dlg_gift.runAction(cc.sequence(
-                cc.moveBy(0.5, cc.v2(0, 600)),
+                cc.moveBy(0.5, cc.v2(0, 700)),
                 this.out_gift_Action,
 
             ));
         }, this);
+    },
+
+    event_dlg_level_locked: function()
+    {
+        this.close_dlg_level_locked.on(cc.Node.EventType.TOUCH_END, function () {
+            this.node.runAction(cc.sequence(
+                cc.delayTime(0.1),
+                cc.fadeIn(0.5)
+            ));
+            this.dlg_level_locked.active = false;
+        }, this);
+
+        this.play_dlg_level_locked.on(cc.Node.EventType.TOUCH_END, function () {
+            this.node.runAction(cc.sequence(
+                cc.delayTime(0.1),
+                cc.fadeIn(0.5)
+            ));
+            this.dlg_level_locked.active = false;
+        }, this);
+    },
+
+    event_dlg_get_hint: function()
+    {
+        this.close_dlg_get_hint.on(cc.Node.EventType.TOUCH_END, function () {
+            this.node.runAction(cc.sequence(
+                cc.delayTime(0.1),
+                cc.fadeIn(0.5)
+            ));
+            this.dlg_get_hint.active = false;
+        }, this);
+
+        this.ok_dlg_get_hint.on(cc.Node.EventType.TOUCH_END, function () {
+            this.node.runAction(cc.sequence(
+                cc.delayTime(0.1),
+                cc.fadeIn(0.5)
+            ));
+            this.dlg_get_hint.active = false;
+        }, this);
+    },
+
+
+    load_dlg_level_locked: function(lvl)
+    {
+        this.dlg_level_locked.active = true;
+        this.dlg_level_locked.position = cc.v2(375, 2000);
+        var temp = lvl - 1;
+        this.lbl_dlg_level_locked.string = "To try Level " + lvl + " you must beat 20 \n stages on LEVEL " + temp;
+        this.node.runAction(cc.sequence(
+            cc.delayTime(0.1),
+            cc.fadeOut(0.5)
+        ));
+        this.dlg_level_locked.runAction(cc.sequence(
+            cc.moveBy(0.5, cc.v2(0, -700)),
+            this.in_gift_Action
+        ));
+    },
+
+    load_dlg_get_hint: function()
+    {
+        this.dlg_get_hint.active = true;
+        this.dlg_get_hint.position = cc.v2(375, 2000);
+        this.node.runAction(cc.sequence(
+            cc.delayTime(0.1),
+            cc.fadeOut(0.5)
+        ));
+        this.dlg_get_hint.runAction(cc.sequence(
+            cc.moveBy(0.5, cc.v2(0, -700)),
+            this.in_gift_Action
+        ));
     },
 
     load_game_pan: function()
@@ -293,12 +449,7 @@ cc.Class({
         this.top_pan.active = false;
         this.level_pan.active = false;
         this.game_pan.getComponent('game_control').load_game_info();
-    },
-
-    load_dlg_get_hint: function()
-    {
-
-    },
+    },    
 
     load_level_detail_pan: function()
     {        
@@ -352,10 +503,10 @@ cc.Class({
         let item = cc.instantiate(this.stickPrefab);
         item.getComponent('stick').game = this;
     	this.node.addChild(item);
-        item.setPosition(xPos, cc.view.getVisibleSize().height / 2 + 50);
+        item.setPosition(xPos, cc.winSize.height / 2 + 250);
         
         item.runAction(cc.scaleTo(0.1, scl, scl));
-        item.runAction(cc.moveBy(8 - scl * 2, cc.v2(0, -500))).repeatForever();
+        item.runAction(cc.moveBy(8 - scl * 2, cc.v2(0, -600))).repeatForever();
         item.runAction(cc.rotateBy(5- scl, 360)).repeatForever();
 
 

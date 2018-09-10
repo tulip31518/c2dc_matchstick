@@ -48,7 +48,7 @@ cc.Class({
             type: cc.Label
         },
 
-        lvl_status:{
+        level_locked:{
             default:null,
             type: cc.Node
         },
@@ -80,14 +80,14 @@ cc.Class({
         */
         if(this.level <= this.game.level || (this.level == this.game.level + 1 && this.game.stage >= 20))
         {
-            this.lvl_status.active = false;
+            this.level_locked.active = false;
             this.stage.node.active = true;
             this.lvl_count.active = true;
         }
         // else if(this.level == this.game.level + 1)
         // {
         //     if(this.game.stage >= 20)
-        //         this.lvl_status.active = false;
+        //         this.level_locked.active = false;
         // }
 
         /*
@@ -99,9 +99,9 @@ cc.Class({
         }    
 
         this.node.on(cc.Node.EventType.TOUCH_END, function () {
-            if(this.level > this.game.level)
+            if(this.level_locked.active)
             {
-
+                this.game.load_dlg_level_locked(this.level);
             }
             else
             {

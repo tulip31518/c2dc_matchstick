@@ -14,6 +14,11 @@ cc.Class({
             type: cc.Prefab
         },
 
+        stick_spriteList:{
+            default:[],
+            type: [cc.SpriteFrame]
+        },
+
         canvas:{
             default:null,
             type: cc.Node
@@ -133,6 +138,8 @@ cc.Class({
             default:null,
             type: cc.Node
         },
+
+        b_game_on:true,
 
         // act_type:    "",
         // act_cnt:     0,
@@ -262,12 +269,6 @@ cc.Class({
 
     load_game_info: function()
     {
-        // this.act_type = "Add";
-        // this.act_cnt = 1;
-        // this.act_shape = "square";
-        // this.act_shape_cnt = 1;
-        // this.scick_cnt = 4;
-
         this.task_info = {
             act_type:"Add",
             act_cnt: 1,
@@ -288,24 +289,35 @@ cc.Class({
 
         this.task_content.string = this.task_info.act_type + " " + this.task_info.act_cnt + " matchmaticks to create " 
             + this.task_info.act_shape_cnt + "\n" + this.task_info.act_shape + "s." ;
+
+        this.b_game_on = true;
+        this.arr_sticks = [];
         for(var i = 0; i < this.task_info.stick_allignments.length; i++)
         {
             let item = cc.instantiate(this.stick);
             item.getComponent('stick').game = this;
-    	    this.sticks.addChild(item);
-            item.setPosition(this.task_info.stick_allignments[i].x, this.task_info.stick_allignments[i].y);
-            item.runAction(cc.scaleTo(0, this.task_info.scale, this.task_info.scale));
+            this.sticks.addChild(item);
+            var sprite = item.getComponent(cc.Sprite);
+            item.setPosition(this.task_info.stick_allignments[i].x, this.task_info.stick_allignments[i].y - 700);
+            item.runAction(cc.scaleTo(0, this.task_info.scale, this.task_info.scale));            
+            
             switch(this.task_info.stick_allignments[i].direction)
             {
                 case 1: item.runAction(cc.rotateBy(0, 90));break;
-                case 1: item.runAction(cc.rotateBy(0, -30));break;
-                case 1: item.runAction(cc.rotateBy(0, 30));break;
+                case 2: item.runAction(cc.rotateBy(0, -30));break;
+                case 3: item.runAction(cc.rotateBy(0, 30));break;
                 default:break;
-            }
-
-            if(this.task_info.stick_allignments[i].status == 0)
-                ;
+            }            
+            sprite.spriteFrame = this.stick_spriteList[this.task_info.stick_allignments[i].status];
+            this.arr_sticks.push(item);
         }
+        for(var j = 0; j < this.arr_sticks.length; j++)
+            this.arr_sticks[j].runAction(cc.sequence(
+                cc.delayTime(0.5),
+                // cc.jumpBy(0.4, cc.v2(0, 700), 800, 1),//.easing(cc.easeElasticOut(0.5)),
+                cc.moveBy(0.2, cc.v2(0, 1000)).easing(cc.easeExponentialOut()), 
+                cc.moveBy(0.2, cc.v2(0, -300)).easing(cc.easeExponentialIn())
+            ));            
     },
 
     load_game: function()

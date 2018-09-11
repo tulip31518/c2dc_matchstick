@@ -70,7 +70,7 @@
     },
     "_skewX": 0,
     "_skewY": 0,
-    "_localZOrder": 791,
+    "_localZOrder": 1275,
     "groupIndex": 0,
     "_id": ""
   },
@@ -100,7 +100,7 @@
     "_isTrimmedMode": true,
     "_state": 0,
     "_atlas": null,
-    "_id": "43kW5hYqZDWaEcoefG3Xmv"
+    "_id": "a4v6YiN4ZMKbuytr3xzZAg"
   },
   {
     "__type__": "1ac04YEv25L5pibq2YC0O7d",
@@ -111,7 +111,19 @@
     },
     "_enabled": true,
     "game": null,
-    "_id": "d2Ls66VCZGoKyb94Ds5rsO"
+    "stick_spriteList": [
+      {
+        "__uuid__": "cc29d49d-b955-4834-abff-e815f8ad8183"
+      },
+      {
+        "__uuid__": "a94b5d07-8fb1-4798-b930-bda0187bcb66"
+      }
+    ],
+    "updateInterval": 0,
+    "status": 0,
+    "direction": 0,
+    "bUpdated": false,
+    "_id": "6akGoFCv9FNZBKta9DAmpi"
   },
   {
     "__type__": "cc.PrefabInfo",

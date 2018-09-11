@@ -8,38 +8,43 @@ cc.Class({
             type: cc.Node
         },
 
-        snd_spriteList:{
+        stick_spriteList:{
             default:[],
             type: [cc.SpriteFrame]
         },
         
         updateInterval: 0,
-        status:0
+        status:0,
+        direction: 0,
+        bUpdated: true,
     },
 
     // LIFE-CYCLE CALLBACKS:
 
     onLoad () {
+        this.sprite = this.getComponent(cc.Sprite);
         this.updateInterval = 0.5;
-        if(this.status == 1)
-            ;
+        // this.sprite.spriteFrame = this.snd_spriteList[this.status];
     },
 
-    // start () {
+    // start () {     
 
     // },
 
-    update (dt) {        
+    update (dt) 
+    {       
+        if(this.game.b_game_on)
+            return;
 
-        // if(!this.game.home_pan.active)
-        //     this.node.destroy();
+        if(!this.game.home_pan.active)
+            this.node.destroy();
         
-        // this.updateTimer += dt;
-        // if (this.updateTimer < this.updateInterval) return;
+        this.updateTimer += dt;
+        if (this.updateTimer < this.updateInterval) return;
         
-        // if(this.node.position.y < cc.view.getVisibleSize().height / (-2))      
-        //     this.node.destroy();
-        // this.updateTimer = 0;
+        if(this.node.position.y < cc.view.getVisibleSize().height / (-2))      
+            this.node.destroy();
+        this.updateTimer = 0;
         
     },
 });

@@ -406,6 +406,7 @@ cc.Class({
             {
                 y -= 700;
                 item.getComponent('stick').status = 2;
+                item.zIndex = 999;
             }
             else
                 item.getComponent('stick').status = 0;
@@ -419,6 +420,24 @@ cc.Class({
             else
                 this.arr_sticks_shadow.push(item);
         }
+    },
+
+    add_stick: function(pos, direction)
+    {
+        let item = cc.instantiate(this.stick);
+        item.getComponent('stick').game = this;
+        this.sticks.addChild(item);
+        item.getComponent('stick').status = 2;
+        item.zIndex = 999;
+        item.getComponent('stick').direction = direction;
+        this.change_stick_direction(item);
+        item.getComponent('stick').scale = this.task_info.scale;
+        item.setPosition(cc.v2(pos.x, pos.y));
+    },
+
+    remove_stick: function(pos)
+    {
+
     },
 
     reset_game: function()

@@ -27,6 +27,19 @@ cc.Class({
         // cc.director.getCollisionManager().enabledDebugDraw = true;
         this.sprite = this.getComponent(cc.Sprite);
         this.updateInterval = 0.5;
+
+        this.node.on(cc.Node.EventType.TOUCH_END, function () {
+            cc.log("clicked");
+            if(this.status == 0)
+            {
+                cc.log(this.direction);
+                this.game.add_stick(this.node.position , this.direction);
+            }
+            else
+            {
+                this.game.remove_stick(this.node.position);
+            }
+        }, this);
     },
 
     onCollisionEnter: function (other) 

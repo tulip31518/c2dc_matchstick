@@ -14,6 +14,11 @@ cc.Class({
             type: cc.Node
         },
 
+        background:{
+            default:null,
+            type: cc.Node
+        },
+
         dlg_gift:{
             default:null,
             type: cc.Node
@@ -204,13 +209,13 @@ cc.Class({
         this.in_gift_Action = cc.moveBy(0.5, cc.v2(0, -700)).easing(cc.easeElasticOut());
         this.out_gift_Action = cc.moveBy(0.5, cc.v2(0, 700)).easing(cc.easeElasticOut());
 
-        this.btn_start_rot_r = cc.rotateBy(0.1, 15).easing(cc.easeElasticInOut());
-        this.btn_start_rot_l = cc.rotateBy(0.1, -15).easing(cc.easeElasticInOut());
+        this.btn_start_rot_r = cc.rotateBy(0.1, 15).easing(cc.easeElasticOut());
+        this.btn_start_rot_l = cc.rotateBy(0.2, -15).easing(cc.easeElasticIn());
         
         this.btn_start.runAction(cc.repeatForever(cc.sequence(
-            this.btn_start_rot_r,
-            this.btn_start_rot_l,
-            this.btn_start_rot_l,
+            cc.rotateBy(0.1, 15),
+            cc.rotateBy(0.1, -15),
+            cc.rotateBy(0.1, -15),
             this.btn_start_rot_r, 
             cc.delayTime(2)
         )));
@@ -219,18 +224,25 @@ cc.Class({
         // this.btn_start.runAction(cc.rotateBy(3, 360)).repeatForever();
 
         this.daily_gift.runAction(cc.repeatForever(cc.sequence(
-            cc.scaleBy(0.1, 1.25, 1.25).easing(cc.easeElasticInOut()),
-            cc.scaleBy(0.1, 0.8, 0.8).easing(cc.easeElasticInOut()),
-            cc.scaleBy(0.1, 0.8, 0.8).easing(cc.easeElasticInOut()),
+            cc.scaleBy(0.1, 1.25, 1.25),
+            cc.scaleBy(0.1, 0.8, 0.8),
+            cc.scaleBy(0.1, 0.8, 0.8),
             cc.scaleBy(0.1, 1.25, 1.25).easing(cc.easeElasticInOut()), 
             cc.delayTime(5)
         )));
-
-
-        
     },
 
     events: function()
+    {        
+        this.event_home_pan();
+        this.event_dlg_gift();
+        this.event_dlg_buy_hint();
+        this.event_dlg_level_locked();
+        this.event_dlg_get_hint();   
+        
+    },
+
+    event_home_pan:function()
     {
         this.home_pan.on(cc.Node.EventType.TOUCH_END, function (event) 
         {       
@@ -239,11 +251,6 @@ cc.Class({
                 this.load_game_menu(); 
 
         }, this);
-
-        this.event_dlg_gift();
-        this.event_dlg_buy_hint();
-        this.event_dlg_level_locked();
-        this.event_dlg_get_hint();
 
         this.btn_backhome.on(cc.Node.EventType.TOUCH_END, function () {
             if(this.lvl_detail_pan.active)
@@ -278,9 +285,23 @@ cc.Class({
               
         }, this);
 
+        this.btn_share.on(cc.Node.EventType.TOUCH_END, function(){
+            cc.loader.loadRes("textures/icon",function(err,data){
+                wx.shareAppMessage({
+                    title: "Enjoy Matchsticks!",
+                    imageUrl: cc.loader.md5Pipe.transformURL(data.url),
+                    success(res){
+                        console.log(res)
+                    },
+                    fail(res){
+                        console.log(res)
+                    }
+                })
+            });
+        }, this);
+
         if(this.bsound_play)
             cc.audioEngine.play(this.bk_sound, true, 1);
-        
     },
 
     event_dlg_buy_hint: function()
@@ -503,12 +524,12 @@ cc.Class({
         let item = cc.instantiate(this.stickPrefab);
         item.getComponent('stick').game = this;
         item.getComponent('stick').status = 1;
-    	this.node.addChild(item);
+    	this.background.addChild(item);
         item.setPosition(xPos, cc.winSize.height / 2 + 250);
         
         item.runAction(cc.scaleTo(0.1, scl, scl));
         item.runAction(cc.moveBy(8 - scl * 2, cc.v2(0, -600))).repeatForever();
-        item.runAction(cc.rotateBy(5- scl, 360)).repeatForever();
+        item.runAction(cc.rotateBy(5- scl, -360)).repeatForever();
 
 
         this.updateTimer = 0;

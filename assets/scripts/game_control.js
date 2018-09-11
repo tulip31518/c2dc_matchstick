@@ -154,7 +154,7 @@ cc.Class({
             type: cc.Node
         },
 
-        b_game_on:true,
+        b_game_on:false,
 
         // act_type:    "",
         // act_cnt:     0,
@@ -167,7 +167,7 @@ cc.Class({
     onLoad () 
     {
         this.game = this.canvas.getComponent('game');
-        this.b_game_start = false;
+        this.reset_game();
         this.events();
         this.actions();
         this.load_game_info();
@@ -321,6 +321,22 @@ cc.Class({
                 cc.callFunc(this.change_stick_direction, this, this.arr_sticks[j]),
                 cc.callFunc(this.start_game, this)
             ));
+        
+        
+        for(var i = 0; i < this.task_info.act_cnt; i++)
+        {
+            let item = cc.instantiate(this.stick_mini);
+            item.getComponent('stick_mini').game = this;
+            this.footer.addChild(item);            
+            
+            if(this.task_info.act_type == "Add")
+            {               
+                item.getComponent('stick_mini').status = 1;
+            }
+            else if(this.task_info.act_type == "Remove")
+                item.getComponent('stick_mini').status = 0;
+            item.setPosition(i * 40 - 300, 0);
+        }
     },
 
     start_game: function()
@@ -397,16 +413,7 @@ cc.Class({
             item.getComponent('stick').direction = this.task_info.stick_allignments[i].direction;
             item.getComponent('stick').scale = this.task_info.scale;
             item.setPosition(this.task_info.stick_allignments[i].x, y);
-            // item.runAction(cc.scaleTo(0, this.task_info.scale, this.task_info.scale));
-            
-            // switch(this.task_info.stick_allignments[i].direction)
-            // {
-            //     case 1: item.runAction(cc.rotateBy(0, 90));break;
-            //     case 2: item.runAction(cc.rotateBy(0, -30));break;
-            //     case 3: item.runAction(cc.rotateBy(0, 30));break;
-            //     default:break;
-            // }
-            
+                        
             if(!bShadow)          
                 this.arr_sticks.push(item);
             else

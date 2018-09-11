@@ -21,10 +21,13 @@
     "_components": [
       {
         "__id__": 2
+      },
+      {
+        "__id__": 3
       }
     ],
     "_prefab": {
-      "__id__": 3
+      "__id__": 4
     },
     "_opacity": 255,
     "_color": {
@@ -67,7 +70,7 @@
     },
     "_skewX": 0,
     "_skewY": 0,
-    "_localZOrder": 7308,
+    "_localZOrder": 388,
     "groupIndex": 0,
     "_id": ""
   },
@@ -97,7 +100,27 @@
     "_isTrimmedMode": true,
     "_state": 0,
     "_atlas": null,
-    "_id": "baXQcy+A5JeIhlg36nc0CF"
+    "_id": "77Jh8tSUJCso7P9JDrfN7M"
+  },
+  {
+    "__type__": "ba92eipujZKXacQTx8HikUi",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 1
+    },
+    "_enabled": true,
+    "game": null,
+    "stick_mini_spriteList": [
+      {
+        "__uuid__": "6ad5c1ce-a8a3-40d3-b675-4468972093fb"
+      },
+      {
+        "__uuid__": "75d3d643-4083-498c-b8fc-1adf8af95444"
+      }
+    ],
+    "status": 1,
+    "_id": "b4rG+QOxlL7olNU0rF9Zvw"
   },
   {
     "__type__": "cc.PrefabInfo",

@@ -7,21 +7,30 @@ cc.Class({
             default: null,
             type: cc.Node
         },
+
+        snd_spriteList:{
+            default:[],
+            type: [cc.SpriteFrame]
+        },
+        
         updateInterval: 0,
+        status:0
     },
 
     // LIFE-CYCLE CALLBACKS:
 
     onLoad () {
         this.updateInterval = 0.5;
-        
+        if(this.status == 1)
+            ;
     },
 
     // start () {
 
     // },
 
-    update (dt) {
+    update (dt) {        
+
         // if(!this.game.home_pan.active)
         //     this.node.destroy();
         

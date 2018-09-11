@@ -49,7 +49,7 @@ cc.Class({
             type: cc.Node
         },
 
-        footer:{
+        sticks:{
             default:null,
             type: cc.Node
         },
@@ -292,7 +292,7 @@ cc.Class({
         {
             let item = cc.instantiate(this.stick);
             item.getComponent('stick').game = this;
-    	    this.game_board.addChild(item);
+    	    this.sticks.addChild(item);
             item.setPosition(this.task_info.stick_allignments[i].x, this.task_info.stick_allignments[i].y);
             item.runAction(cc.scaleTo(0, this.task_info.scale, this.task_info.scale));
             switch(this.task_info.stick_allignments[i].direction)

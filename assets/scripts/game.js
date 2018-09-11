@@ -191,8 +191,8 @@ cc.Class({
 
     onLoad () {
         this.bsound_play = true;
-        this.level = this.curent_level = 2;
-        this.stage = this.curent_stage = 20;
+        this.level = this.curent_level = 1;
+        this.stage = this.curent_stage = 1;
         this.updateInterval = 1;
         this.actions();
         this.events();
@@ -502,6 +502,7 @@ cc.Class({
 
         let item = cc.instantiate(this.stickPrefab);
         item.getComponent('stick').game = this;
+        item.getComponent('stick').status = 1;
     	this.node.addChild(item);
         item.setPosition(xPos, cc.winSize.height / 2 + 250);
         

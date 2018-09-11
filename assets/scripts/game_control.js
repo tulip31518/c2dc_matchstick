@@ -24,6 +24,11 @@ cc.Class({
             type: cc.Node
         },
 
+        spr_game_start:{
+            default: null,
+            type: cc.Node
+        },
+
         stage:{
             default:null,
             type: cc.Label
@@ -57,6 +62,16 @@ cc.Class({
         sticks:{
             default:null,
             type: cc.Node
+        },
+
+        hint_hand:{
+            default:null,
+            type: cc.Node
+        },
+
+        hint_hand_spriteList:{
+            default:[],
+            type: [cc.SpriteFrame]
         },
 
         footer:{
@@ -152,6 +167,7 @@ cc.Class({
     onLoad () 
     {
         this.game = this.canvas.getComponent('game');
+        this.b_game_start = false;
         this.events();
         this.actions();
         this.load_game_info();
@@ -211,10 +227,10 @@ cc.Class({
             this.dlg_pause.position = cc.v2(0, 1500);
             this.node.runAction(cc.sequence(
                 cc.delayTime(0.1),
-                cc.fadeOut(0.5)
+                cc.fadeOut(0.2)
             ));
             this.dlg_pause.runAction(cc.sequence(
-                cc.moveBy(0.5, cc.v2(0, -750)),
+                cc.moveBy(0.3, cc.v2(0, -750)),
                 this.in_pause_Action
             ));
             this.background.active = false;
@@ -229,10 +245,6 @@ cc.Class({
             this.dlg_pause.active = false;  
         }, this);
 
-        // this.close_dlg_pause.on(cc.Node.EventType.TOUCH_END, function () {            
-        //     this.load_game();
-        // }, this);
-
         this.continue_dlg_pause.on(cc.Node.EventType.TOUCH_END, function () {       
             this.node.runAction(cc.sequence(
                 cc.delayTime(0.1),
@@ -245,11 +257,13 @@ cc.Class({
         this.stage_dlg_pause.on(cc.Node.EventType.TOUCH_END, function () {            
             this.level_pan.active = true;
             this.top_pan.active = true;
+            this.reset_game();
             this.diable_game_pan();
         }, this);
 
         this.home_dlg_pause.on(cc.Node.EventType.TOUCH_END, function () {       
-            this.diable_game_pan();
+            this.reset_game();
+            this.diable_game_pan();            
             this.home_pan.active = true;
         }, this);
     },
@@ -304,9 +318,51 @@ cc.Class({
                 cc.delayTime(0.5),
                 cc.moveBy(0.2, cc.v2(0, 1000)).easing(cc.easeExponentialOut()), 
                 cc.moveBy(0.2, cc.v2(0, -300)).easing(cc.easeExponentialIn()),
-                cc.callFunc(this.change_stick_direction, this, this.arr_sticks[j])
-            ));            
-    },   
+                cc.callFunc(this.change_stick_direction, this, this.arr_sticks[j]),
+                cc.callFunc(this.start_game, this)
+            ));
+    },
+
+    start_game: function()
+    {
+        if(this.b_game_start)
+            return;
+        this.b_game_start = true;
+        this.spr_game_start.position = cc.v2(800, 0);
+        this.spr_game_start.runAction(cc.sequence(
+            cc.delayTime(0.5),
+            cc.moveBy(0.3, cc.v2(-800, 0)).easing(cc.easeExponentialOut()),
+            cc.delayTime(0.5),
+            cc.moveBy(0.3, cc.v2(800, 0)).easing(cc.easeExponentialIn()),
+            cc.delayTime(0.5),
+            cc.callFunc(this.start_hint_hand_animation, this)
+        ));        
+    },
+
+    start_hint_hand_animation: function()
+    {
+        if(this.game.curent_level == 1 && this.game.curent_stage == 1)
+        {
+            this.hint_hand.active = true;
+            this.bHintHand = true;
+            this.hint_hand.runAction(cc.sequence(                
+                cc.callFunc(this.change_hint_hand_image.bind(this)),
+                cc.delayTime(1),
+            )).repeatForever();
+        }
+        else
+            this.hint_hand.active = false;
+    },
+
+    change_hint_hand_image: function()
+    {
+        var sprite = this.hint_hand.getComponent(cc.Sprite);
+        if(this.bHintHand)
+            sprite.spriteFrame = this.hint_hand_spriteList[0];
+        else
+            sprite.spriteFrame = this.hint_hand_spriteList[1];
+        this.bHintHand = !this.bHintHand;
+    },
 
     change_stick_direction: function(stk)
     {
@@ -360,7 +416,10 @@ cc.Class({
 
     reset_game: function()
     {
-
+        this.sticks.removeAllChildren();
+        this.b_game_on = false;
+        this.b_game_start = false;
+        this.bHintHand = false;
     },
 
     // start () {

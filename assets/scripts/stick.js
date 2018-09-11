@@ -27,7 +27,6 @@ cc.Class({
         // cc.director.getCollisionManager().enabledDebugDraw = true;
         this.sprite = this.getComponent(cc.Sprite);
         this.updateInterval = 0.5;
-       
     },
 
     onCollisionEnter: function (other) 
@@ -36,7 +35,7 @@ cc.Class({
     },
 
     start () {     
-        var sprite = this.getComponent(cc.Sprite);
+        
         if(this.status == 0)
             this.sprite.spriteFrame = this.stick_spriteList[0];
         else if(this.status == 2)

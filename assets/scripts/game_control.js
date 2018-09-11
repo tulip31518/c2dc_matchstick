@@ -155,7 +155,6 @@ cc.Class({
         this.events();
         this.actions();
         this.load_game_info();
-        this.load_game();
     },
 
     actions: function()
@@ -274,12 +273,13 @@ cc.Class({
             act_cnt: 1,
             act_shape: "square",
             act_shape_cnt: 1,
-            scale:  1.8,
+            scale:  2,
+            color:{r:255},
             stick_allignments:[
-                {x:-150, y:0, direction:0, status:1},
-                {x:150, y:0, direction:0, status:1},
-                {x:0, y:-175, direction:1, status:1},
-                {x:0, y:175, direction:1, status:0}
+                {x:-180, y:0, direction:0, status:1},
+                {x:180, y:0, direction:0, status:1},
+                {x:0, y:-180, direction:1, status:1},
+                {x:0, y:180, direction:1, status:0}
             ]
         };
 
@@ -292,37 +292,70 @@ cc.Class({
 
         this.b_game_on = true;
         this.arr_sticks = [];
-        for(var i = 0; i < this.task_info.stick_allignments.length; i++)
-        {
-            let item = cc.instantiate(this.stick);
-            item.getComponent('stick').game = this;
-            this.sticks.addChild(item);
-            var sprite = item.getComponent(cc.Sprite);
-            item.setPosition(this.task_info.stick_allignments[i].x, this.task_info.stick_allignments[i].y - 700);
-            item.runAction(cc.scaleTo(0, this.task_info.scale, this.task_info.scale));            
-            
-            switch(this.task_info.stick_allignments[i].direction)
-            {
-                case 1: item.runAction(cc.rotateBy(0, 90));break;
-                case 2: item.runAction(cc.rotateBy(0, -30));break;
-                case 3: item.runAction(cc.rotateBy(0, 30));break;
-                default:break;
-            }            
-            sprite.spriteFrame = this.stick_spriteList[this.task_info.stick_allignments[i].status];
-            this.arr_sticks.push(item);
-        }
+        this.arr_sticks_shadow = [];
+
+        this.load_task_sticks(true);     
+        for(var j = 0; j < this.arr_sticks_shadow.length; j++)   
+            this.change_stick_direction(this.arr_sticks_shadow[j]);
+
+        this.load_task_sticks(false);
         for(var j = 0; j < this.arr_sticks.length; j++)
             this.arr_sticks[j].runAction(cc.sequence(
                 cc.delayTime(0.5),
-                // cc.jumpBy(0.4, cc.v2(0, 700), 800, 1),//.easing(cc.easeElasticOut(0.5)),
                 cc.moveBy(0.2, cc.v2(0, 1000)).easing(cc.easeExponentialOut()), 
-                cc.moveBy(0.2, cc.v2(0, -300)).easing(cc.easeExponentialIn())
+                cc.moveBy(0.2, cc.v2(0, -300)).easing(cc.easeExponentialIn()),
+                cc.callFunc(this.change_stick_direction, this, this.arr_sticks[j])
             ));            
+    },   
+
+    change_stick_direction: function(stk)
+    {
+        switch(stk.getComponent('stick').direction)
+        {
+            case 1: stk.runAction(cc.rotateBy(0, 90));break;
+            case 2: stk.runAction(cc.rotateBy(0, -30));break;
+            case 3: stk.runAction(cc.rotateBy(0, 30));break;
+            default:break;
+        }        
     },
 
-    load_game: function()
+    load_task_sticks: function(bShadow)
     {
+        for(var i = 0; i < this.task_info.stick_allignments.length; i++)
+        {
+            if(this.task_info.stick_allignments[i].status == 0 && !bShadow)
+                continue;
+            let item = cc.instantiate(this.stick);
+            item.getComponent('stick').game = this;
+            this.sticks.addChild(item);
+            var y = this.task_info.stick_allignments[i].y;
+            
+            if(!bShadow)
+            {
+                y -= 700;
+                item.getComponent('stick').status = 2;
+            }
+            else
+                item.getComponent('stick').status = 0;
 
+            item.getComponent('stick').direction = this.task_info.stick_allignments[i].direction;
+            item.getComponent('stick').scale = this.task_info.scale;
+            item.setPosition(this.task_info.stick_allignments[i].x, y);
+            // item.runAction(cc.scaleTo(0, this.task_info.scale, this.task_info.scale));
+            
+            // switch(this.task_info.stick_allignments[i].direction)
+            // {
+            //     case 1: item.runAction(cc.rotateBy(0, 90));break;
+            //     case 2: item.runAction(cc.rotateBy(0, -30));break;
+            //     case 3: item.runAction(cc.rotateBy(0, 30));break;
+            //     default:break;
+            // }
+            
+            if(!bShadow)          
+                this.arr_sticks.push(item);
+            else
+                this.arr_sticks_shadow.push(item);
+        }
     },
 
     reset_game: function()
@@ -330,9 +363,9 @@ cc.Class({
 
     },
 
-    start () {
+    // start () {
 
-    },
+    // },
 
     // update (dt) {},
 });

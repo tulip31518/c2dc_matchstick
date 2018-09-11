@@ -14,22 +14,38 @@ cc.Class({
         },
         
         updateInterval: 0,
-        status:0,
         direction: 0,
         bUpdated: true,
+        status: 1,
+        scale: 1,
     },
 
     // LIFE-CYCLE CALLBACKS:
 
-    onLoad () {
+    onLoad () {        
+        cc.director.getCollisionManager().enabled = true;
+        // cc.director.getCollisionManager().enabledDebugDraw = true;
         this.sprite = this.getComponent(cc.Sprite);
         this.updateInterval = 0.5;
-        // this.sprite.spriteFrame = this.snd_spriteList[this.status];
+       
     },
 
-    // start () {     
+    onCollisionEnter: function (other) 
+    {
+         
+    },
 
-    // },
+    start () {     
+        var sprite = this.getComponent(cc.Sprite);
+        if(this.status == 0)
+            this.sprite.spriteFrame = this.stick_spriteList[0];
+        else if(this.status == 2)
+        {
+            var color = new cc.Color(200, 200, 200);
+            this.node.color = color;     
+        }
+        this.node.scale = this.scale;
+    },
 
     update (dt) 
     {       

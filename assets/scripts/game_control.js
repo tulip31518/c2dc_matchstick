@@ -166,7 +166,7 @@ cc.Class({
 
     onLoad () 
     {
-        this.game = this.canvas.getComponent('game');
+        this.game = this.canvas.getComponent('game');        
         this.reset_game();
         this.events();
         this.actions();
@@ -412,13 +412,6 @@ cc.Class({
     change_stick_direction: function(stk)
     {
         stk.runAction(cc.rotateBy(0, stk.getComponent('stick').direction));
-        // switch(stk.getComponent('stick').direction)
-        // {
-        //     case 1: stk.runAction(cc.rotateBy(0, 90));break;
-        //     case 2: stk.runAction(cc.rotateBy(0, -30));break;
-        //     case 3: stk.runAction(cc.rotateBy(0, 30));break;
-        //     default:break;
-        // }        
     },
 
     load_task_sticks: function(bShadow)
@@ -454,15 +447,17 @@ cc.Class({
 
     add_stick: function(pos, direction)
     {
+        // if(this.game.curent_level == 1 && this.game.curent_stage && !this.hint_hand.active) return;
+
+        this.hint_hand.active = false;
+        
         let item = cc.instantiate(this.stick);
         item.getComponent('stick').game = this;
         this.sticks.addChild(item);
         item.getComponent('stick').status = 1;
         item.zIndex = 999;
-        // item.getComponent('stick').direction = direction;
         this.change_stick_direction(item);
-        // item.getComponent('stick').scale = this.task_info.scale;
-        
+                
         var oldPos = cc.v2(0,0);
         for(var i = this.arr_sticks_mini.length - 1; i >= 0; i--)
         {            
@@ -489,20 +484,44 @@ cc.Class({
             cc.rotateBy(0.1, direction),
         ));
         item.getComponent('stick').direction = direction;
+        // item.getComponent('stick').scale = this.task_info.scale;
 
     },
 
     remove_stick: function(stick)
     {
-        stick.destroy();
+        // stick.destroy();
+        var oldPos = cc.v2(0,0);
         for(var i = 0; i < this.arr_sticks_mini.length; i++)
         {            
             if(!this.arr_sticks_mini[i].active)
             {                         
                 this.arr_sticks_mini[i].active = true;
+                oldPos = this.arr_sticks_mini[i].position;
                 break;
             }    
         }
+
+        stick.runAction(cc.sequence(
+            cc.moveBy(0.1, cc.v2(-(stick.position.x - oldPos.x) / 2, 200)).easing(cc.easeExponentialInOut(0.1)),
+            cc.moveBy(0.1, cc.v2(-(stick.position.x - oldPos.x) / 2, -200)).easing(cc.easeExponentialIn(0.1)),
+        ));
+
+        stick.runAction(cc.sequence(
+            cc.scaleBy(0.2, 1 / this.task_info.scale, 1 / this.task_info.scale),
+            cc.delayTime(0.1)
+        ));        
+        
+        stick.runAction(cc.sequence(            
+            cc.rotateBy(0.1, -stick.getComponent('stick').direction),
+            cc.delayTime(0.1),
+            cc.callFunc(this.destroy_stick, this, stick)
+        ));
+    },
+
+    destroy_stick: function(stk)
+    {
+        stk.destroy();
     },
 
     reset_game: function()

@@ -29,15 +29,13 @@ cc.Class({
         this.updateInterval = 0.5;
 
         this.node.on(cc.Node.EventType.TOUCH_END, function () {
-            cc.log("clicked");
             if(this.status == 0)
             {
-                cc.log(this.direction);
                 this.game.add_stick(this.node.position , this.direction);
             }
             else
             {
-                this.game.remove_stick(this.node.position);
+                this.game.remove_stick(this.node);
             }
         }, this);
     },
@@ -57,6 +55,7 @@ cc.Class({
             this.node.color = color;     
         }
         this.node.scale = this.scale;
+        
     },
 
     update (dt) 

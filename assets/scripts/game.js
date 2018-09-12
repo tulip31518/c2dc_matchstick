@@ -469,7 +469,7 @@ cc.Class({
         this.game_pan.active = true;
         this.top_pan.active = false;
         this.level_pan.active = false;
-        this.game_pan.getComponent('game_control').load_game_info();
+        this.game_pan.getComponent('game_control').load_game();
     },    
 
     load_level_detail_pan: function()

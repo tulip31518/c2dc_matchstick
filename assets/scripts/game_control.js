@@ -170,7 +170,7 @@ cc.Class({
         this.reset_game();
         this.events();
         this.actions();
-        this.load_game_info();
+        this.load_game();
     },
 
     actions: function()
@@ -280,20 +280,20 @@ cc.Class({
         this.node.active = false;   
     },
 
-    load_game_info: function()
+    load_game: function()
     {
         this.task_info = {
             act_type:"Add",
-            act_cnt: 1,
+            act_cnt: 3,
             act_shape: "square",
             act_shape_cnt: 1,
             scale:  2,
             color:{r:255},
             stick_allignments:[
                 {x:-180, y:0, direction:0, status:1},
-                {x:180, y:0, direction:0, status:1},
-                {x:0, y:-180, direction:1, status:1},
-                {x:0, y:180, direction:1, status:0}
+                {x:180, y:0, direction:0, status:0},
+                {x:0, y:-180, direction:90, status:0},
+                {x:0, y:180, direction:90, status:0}
             ]
         };
 
@@ -322,20 +322,49 @@ cc.Class({
                 cc.callFunc(this.start_game, this)
             ));
         
+        this.arr_sticks_mini = [];
+
+        this.set_task_sticks_mini();
         
+    },
+
+    set_task_sticks_mini: function()
+    {
+        if(this.task_info.act_type == "Add")
+        {
+            this.make_sticks_mini("Remove", true);
+            this.make_sticks_mini("Add", true);            
+        }
+        else if(this.task_info.act_type == "Remove")
+        {
+            this.make_sticks_mini("Remove", true);
+        }
+        else
+        {
+            this.make_sticks_mini("Remove", false);
+            this.make_sticks_mini("Add", false);            
+        }
+    },
+
+    make_sticks_mini: function(act_type, status)
+    {
         for(var i = 0; i < this.task_info.act_cnt; i++)
         {
             let item = cc.instantiate(this.stick_mini);
             item.getComponent('stick_mini').game = this;
             this.footer.addChild(item);            
             
-            if(this.task_info.act_type == "Add")
+            if(act_type == "Add")
             {               
                 item.getComponent('stick_mini').status = 1;
             }
-            else if(this.task_info.act_type == "Remove")
+            else
                 item.getComponent('stick_mini').status = 0;
             item.setPosition(i * 40 - 300, 0);
+            item.active = status;
+            
+            if(act_type == "Add")
+                this.arr_sticks_mini.push(item);
         }
     },
 
@@ -382,13 +411,14 @@ cc.Class({
 
     change_stick_direction: function(stk)
     {
-        switch(stk.getComponent('stick').direction)
-        {
-            case 1: stk.runAction(cc.rotateBy(0, 90));break;
-            case 2: stk.runAction(cc.rotateBy(0, -30));break;
-            case 3: stk.runAction(cc.rotateBy(0, 30));break;
-            default:break;
-        }        
+        stk.runAction(cc.rotateBy(0, stk.getComponent('stick').direction));
+        // switch(stk.getComponent('stick').direction)
+        // {
+        //     case 1: stk.runAction(cc.rotateBy(0, 90));break;
+        //     case 2: stk.runAction(cc.rotateBy(0, -30));break;
+        //     case 3: stk.runAction(cc.rotateBy(0, 30));break;
+        //     default:break;
+        // }        
     },
 
     load_task_sticks: function(bShadow)
@@ -427,17 +457,52 @@ cc.Class({
         let item = cc.instantiate(this.stick);
         item.getComponent('stick').game = this;
         this.sticks.addChild(item);
-        item.getComponent('stick').status = 2;
+        item.getComponent('stick').status = 1;
         item.zIndex = 999;
-        item.getComponent('stick').direction = direction;
+        // item.getComponent('stick').direction = direction;
         this.change_stick_direction(item);
-        item.getComponent('stick').scale = this.task_info.scale;
-        item.setPosition(cc.v2(pos.x, pos.y));
+        // item.getComponent('stick').scale = this.task_info.scale;
+        
+        var oldPos = cc.v2(0,0);
+        for(var i = this.arr_sticks_mini.length - 1; i >= 0; i--)
+        {            
+            if(this.arr_sticks_mini[i].active)
+            {
+                oldPos = this.arr_sticks_mini[i].position;               
+                this.arr_sticks_mini[i].active = false;
+                break;
+            }    
+        }
+        item.setPosition(cc.v2(oldPos.x, pos.y));
+        item.runAction(cc.sequence(
+            cc.moveBy(0.1, cc.v2((pos.x - oldPos.x) / 2, 200)).easing(cc.easeExponentialInOut(0.1)),
+            cc.moveBy(0.1, cc.v2((pos.x - oldPos.x) / 2, -200)).easing(cc.easeExponentialIn(0.1)),
+        ));
+
+        item.runAction(cc.sequence(
+            cc.scaleBy(0.2, this.task_info.scale, this.task_info.scale),
+            cc.delayTime(0.1)
+        ));
+        
+        item.runAction(cc.sequence(
+            cc.delayTime(0.1),
+            cc.rotateBy(0.1, direction),
+        ));
+        item.getComponent('stick').direction = direction;
+
     },
 
-    remove_stick: function(pos)
+    remove_stick: function(stick)
     {
-
+        stick.destroy();
+        for(var i = 0; i < this.arr_sticks_mini.length; i++)
+        {            
+            if(!this.arr_sticks_mini[i].active)
+            {                         
+                this.arr_sticks_mini[i].active = true;
+                break;
+            }    
+        }
     },
 
     reset_game: function()

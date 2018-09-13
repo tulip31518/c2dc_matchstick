@@ -284,16 +284,16 @@ cc.Class({
     {
         this.task_info = {
             act_type:"Add",
-            act_cnt: 3,
+            act_cnt: 1,
             act_shape: "square",
             act_shape_cnt: 1,
+            act_mode: 0,
             scale:  2,
-            color:{r:255},
             stick_allignments:[
-                {x:-180, y:0, direction:0, status:1},
-                {x:180, y:0, direction:0, status:0},
-                {x:0, y:-180, direction:90, status:0},
-                {x:0, y:180, direction:90, status:0}
+                {x:-1, y:0, direction:0, status:1, movable: false,  index:0},
+                {x:1, y:0, direction:0, status:1, movable: false,   index:1},
+                {x:0, y:-1, direction:90, status:1, movable: false, index:2},
+                {x:0, y: 1, direction:90, status:0, movable: true,  index:3}
             ]
         };
 
@@ -301,12 +301,14 @@ cc.Class({
         this.level.string = "LEVEL " + this.game.curent_level;
         this.hint.string = this.game.hints;
 
-        this.task_content.string = this.task_info.act_type + " " + this.task_info.act_cnt + " matchmaticks to create " 
-            + this.task_info.act_shape_cnt + "\n" + this.task_info.act_shape + "s." ;
+        if(this.task_info.act_mode == 0)
+            this.task_content.string = this.task_info.act_type + " " + this.task_info.act_cnt + " matchsticks to create " 
+                + this.task_info.act_shape_cnt + "\n" + this.task_info.act_shape + "s." ;
+        else
+            this.task_content.string = this.task_info.act_type + " " + this.task_info.act_cnt + " matchsticks to correct the " 
+                + "\n" + this.task_info.act_shape + "." ;
 
-        this.b_game_on = true;
-        this.arr_sticks = [];
-        this.arr_sticks_shadow = [];
+        this.b_game_on = true;        
 
         this.load_task_sticks(true);     
         for(var j = 0; j < this.arr_sticks_shadow.length; j++)   
@@ -320,10 +322,8 @@ cc.Class({
                 cc.moveBy(0.2, cc.v2(0, -300)).easing(cc.easeExponentialIn()),
                 cc.callFunc(this.change_stick_direction, this, this.arr_sticks[j]),
                 cc.callFunc(this.start_game, this)
-            ));
+            ));        
         
-        this.arr_sticks_mini = [];
-
         this.set_task_sticks_mini();
         
     },
@@ -423,20 +423,27 @@ cc.Class({
             let item = cc.instantiate(this.stick);
             item.getComponent('stick').game = this;
             this.sticks.addChild(item);
-            var y = this.task_info.stick_allignments[i].y;
+            this.unit = 180;
+            var yPos = this.task_info.stick_allignments[i].y * this.unit;
+            var xPos = this.task_info.stick_allignments[i].x * this.unit;
             
             if(!bShadow)
             {
-                y -= 700;
-                item.getComponent('stick').status = 2;
+                yPos -= 700;
+                // item.getComponent('stick').status = 2;
+                item.getComponent('stick').status = this.task_info.stick_allignments[i].status;
                 item.zIndex = 999;
             }
             else
-                item.getComponent('stick').status = 0;
+                item.getComponent('stick').status = 0;            
 
             item.getComponent('stick').direction = this.task_info.stick_allignments[i].direction;
             item.getComponent('stick').scale = this.task_info.scale;
-            item.setPosition(this.task_info.stick_allignments[i].x, y);
+            // item.getComponent('stick').xVal = this.task_info.stick_allignments[i].x;
+            // item.getComponent('stick').yVal = this.task_info.stick_allignments[i].y;
+            item.getComponent('stick').index = this.task_info.stick_allignments[i].index;
+            item.getComponent('stick').movable = this.task_info.stick_allignments[i].movable;
+            item.setPosition(xPos, yPos);
                         
             if(!bShadow)          
                 this.arr_sticks.push(item);
@@ -445,7 +452,7 @@ cc.Class({
         }
     },
 
-    add_stick: function(pos, direction)
+    add_stick: function(pos, direction, index)
     {
         // if(this.game.curent_level == 1 && this.game.curent_stage && !this.hint_hand.active) return;
 
@@ -468,9 +475,9 @@ cc.Class({
                 break;
             }    
         }
-        item.setPosition(cc.v2(oldPos.x, pos.y));
+        item.setPosition(cc.v2(oldPos.x, pos.y - 100));
         item.runAction(cc.sequence(
-            cc.moveBy(0.1, cc.v2((pos.x - oldPos.x) / 2, 200)).easing(cc.easeExponentialInOut(0.1)),
+            cc.moveBy(0.1, cc.v2((pos.x - oldPos.x) / 2, 300)).easing(cc.easeExponentialInOut(0.1)),
             cc.moveBy(0.1, cc.v2((pos.x - oldPos.x) / 2, -200)).easing(cc.easeExponentialIn(0.1)),
         ));
 
@@ -484,8 +491,12 @@ cc.Class({
             cc.rotateBy(0.1, direction),
         ));
         item.getComponent('stick').direction = direction;
-        // item.getComponent('stick').scale = this.task_info.scale;
-
+        // item.getComponent('stick').xVal = xVal;
+        // item.getComponent('stick').yVal = yVal;
+        item.getComponent('stick').index = index;
+        this.arr_added_sticks.push(item);
+        this.arr_sticks.push(item);
+        this.check_game_result();
     },
 
     remove_stick: function(stick)
@@ -504,7 +515,7 @@ cc.Class({
 
         stick.runAction(cc.sequence(
             cc.moveBy(0.1, cc.v2(-(stick.position.x - oldPos.x) / 2, 200)).easing(cc.easeExponentialInOut(0.1)),
-            cc.moveBy(0.1, cc.v2(-(stick.position.x - oldPos.x) / 2, -200)).easing(cc.easeExponentialIn(0.1)),
+            cc.moveBy(0.1, cc.v2(-(stick.position.x - oldPos.x) / 2, -400)).easing(cc.easeExponentialIn(0.1)),
         ));
 
         stick.runAction(cc.sequence(
@@ -519,9 +530,104 @@ cc.Class({
         ));
     },
 
+    check_game_result: function()
+    {
+        if(this.task_info.act_shape == "square")
+        {
+            this.search_square(this.arr_sticks.length);            
+        }
+        else if(this.task_info.act_shape == "triangle")
+        {
+            
+        }
+        else
+        {
+
+        }
+        return false;
+    },
+
+    search_square: function(length)
+    {
+        var arr_stick_indexes = [];
+        for(var i = 0; i < this.arr_sticks.length; i++)
+            arr_stick_indexes.push(this.arr_sticks[i].getComponent('stick').index);
+
+        var result = this.get_pattern_square();
+        var temp = [];
+        var count = 0;
+        for(var i = 0; i < result.length; i++)
+        {
+            for(var j = 0; j < arr_stick_indexes.length; j++)
+            { 
+                if(arr_stick_indexes.indexOf(result[i]) > -1)
+                {
+                    temp.push(this.arr_sticks[j]);
+                    count++;
+                }
+            }
+
+            if(count == 4)            
+                this.arr_result.push(temp);   
+
+            temp = [];
+            count = 0;            
+            if(this.arr_result.length == this.task_info.act_cnt)
+            {
+                cc.log("successed game stage.");
+                this.go_next_stage();
+            }
+        }
+        
+    },
+
+    go_next_stage: function()
+    {
+        this.game.curent_stage++;
+        if(this.game.curent_stage == 50)
+            this.game.curent_level++;
+
+        if(this.curent_stage > this.game.stage)
+            this.game.stage ++;
+        if(this.game.curent_level > this.game.level)
+            this.game.level++;
+    },
+
+    get_pattern_square: function()
+    {
+        var result = [         
+            [[0 , 1, 2, 3]],
+            [[0 , 1, 2, 3]],
+        ];
+
+        return result[this.game.curent_level - 1][this.game.curent_stage - 1];
+    },
+
     destroy_stick: function(stk)
     {
+        this.arr_added_sticks.splice(this.arr_added_sticks.length - 1, 1);
+        this.arr_sticks.splice(this.arr_sticks.length - 1, 1);
         stk.destroy();
+    },
+
+    check_stick_movable: function(status)
+    {
+        for(var i = 0; i < this.arr_sticks_mini.length; i++)
+        {
+            if(status == 1)
+            {
+                //Real stick
+                if(!this.arr_sticks_mini[i].active)
+                    return true;
+            }
+            else
+            {
+                //Empty stick -- Shadow
+                if(this.arr_sticks_mini[i].active)
+                    return true;                
+            }            
+        }
+        return false;
     },
 
     reset_game: function()
@@ -530,6 +636,13 @@ cc.Class({
         this.b_game_on = false;
         this.b_game_start = false;
         this.bHintHand = false;
+        this.b_stick_movable = true;
+
+        this.arr_sticks = [];
+        this.arr_sticks_shadow = [];
+        this.arr_sticks_mini = [];
+        this.arr_added_sticks = [];
+        this.arr_result = [];
     },
 
     // start () {

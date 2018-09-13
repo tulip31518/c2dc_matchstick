@@ -18,6 +18,8 @@ cc.Class({
         bUpdated: true,
         status: 1,
         scale: 1,
+        movable:true,
+        index:0
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -29,9 +31,14 @@ cc.Class({
         this.updateInterval = 0.5;
 
         this.node.on(cc.Node.EventType.TOUCH_END, function () {
+
+            if(!this.game.check_stick_movable(this.status) || !this.movable)
+            // if(!this.movable)
+                return;
+
             if(this.status == 0)
             {
-                this.game.add_stick(this.node.position , this.direction);
+                this.game.add_stick(this.node.position , this.direction, this.index);
             }
             else
             {
@@ -39,6 +46,7 @@ cc.Class({
             }
         }, this);
     },
+    
 
     onCollisionEnter: function (other) 
     {
@@ -47,9 +55,10 @@ cc.Class({
 
     start () {     
         
-        if(this.status == 0)
-            this.sprite.spriteFrame = this.stick_spriteList[0];
-        else if(this.status == 2)
+        // if(this.status == 0)
+            this.sprite.spriteFrame = this.stick_spriteList[this.status];
+        // else if(this.status == 2)
+        if(!this.movable && this.status == 1)
         {
             var color = new cc.Color(200, 200, 200);
             this.node.color = color;     

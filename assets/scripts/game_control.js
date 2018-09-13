@@ -558,27 +558,92 @@ cc.Class({
         var count = 0;
         for(var i = 0; i < result.length; i++)
         {
-            for(var j = 0; j < arr_stick_indexes.length; j++)
-            { 
-                if(arr_stick_indexes.indexOf(result[i]) > -1)
-                {
-                    temp.push(this.arr_sticks[j]);
-                    count++;
-                }
-            }
-
-            if(count == 4)            
-                this.arr_result.push(temp);   
-
-            temp = [];
-            count = 0;            
-            if(this.arr_result.length == this.task_info.act_cnt)
+            for(var j = 0; j < result[i].length; j++)
             {
-                cc.log("successed game stage.");
-                this.go_next_stage();
+                for(var k = 0; k < arr_stick_indexes.length; k++)
+                {                     
+                    if(arr_stick_indexes.indexOf(result[i][j]) > -1)
+                    {                        
+                        temp.push(this.arr_sticks[j]);
+                        count++;
+                        break;
+                    }
+                }                
             }
+            if(count == result[i].length)            
+                this.arr_result.push(temp);
+            temp = [];
+            count = 0; 
         }
         
+        if(this.arr_result.length == this.task_info.act_cnt)
+        {            
+            this.success_stage();
+        }
+        
+    },
+
+    success_stage: function()
+    {       
+        this.spr_game_start.position = cc.v2(800, 0);
+        this.spr_game_start.runAction(cc.sequence(
+            cc.delayTime(0.5),
+            cc.moveBy(0.3, cc.v2(-800, 0)).easing(cc.easeExponentialOut()),
+            cc.delayTime(0.5),
+            cc.moveBy(0.3, cc.v2(800, 0)).easing(cc.easeExponentialIn()),
+            cc.delayTime(0.5),
+            cc.callFunc(this.animate_game_result, this)
+        ));        
+        
+    },
+
+    animate_game_result: function()
+    {        
+        var delay = 0.1;  
+        for(var i = 0; i < this.arr_result.length; i++)
+        {
+            var each_result = this.arr_result[i];            
+            for(var j = 0; j < each_result.length; j++)
+            {
+                var stick = each_result[j];
+                var seq = cc.sequence(
+                    cc.delayTime(delay),
+                    cc.moveBy(0.2, cc.v2(0, 25)).easing(cc.easeBounceIn()),
+                    cc.moveBy(0.2, cc.v2(0, -25)).easing(cc.easeBounceIn())
+                )
+
+                if(i == this.arr_result.length - 1)
+                    seq = cc.sequence(
+                        cc.delayTime(delay),
+                        cc.moveBy(0.2, cc.v2(0, 25)).easing(cc.easeBounceIn()),
+                        cc.moveBy(0.2, cc.v2(0, -25)).easing(cc.easeBounceIn()),
+                        cc.delayTime(0.5),
+                        // cc.callFunc(this.in_dlg_mavelous, this)
+                    );
+                stick.runAction(seq);
+            }
+
+            delay += 0.5;
+        }
+    },
+
+    in_dlg_mavelous: function()
+    {
+        if(!this.b_game_end)
+            return;
+        this.b_game_end = true;
+
+        this.dlg_mavelous.active = true;    
+        this.dlg_mavelous.position = cc.v2(0, 1500);
+        this.node.runAction(cc.sequence(
+            cc.delayTime(0.1),
+            cc.fadeOut(0.2)
+        ));
+        this.dlg_mavelous.runAction(cc.sequence(
+            cc.moveBy(0.3, cc.v2(0, -750)),
+            this.in_pause_Action
+        ));
+        this.background.active = false;
     },
 
     go_next_stage: function()
@@ -596,11 +661,11 @@ cc.Class({
     get_pattern_square: function()
     {
         var result = [         
-            [[0 , 1, 2, 3]],
+            [[0 , 1, 2, 3], [0, 1, 4, 3]],
             [[0 , 1, 2, 3]],
         ];
 
-        return result[this.game.curent_level - 1][this.game.curent_stage - 1];
+        return result[this.game.curent_stage - 1];
     },
 
     destroy_stick: function(stk)

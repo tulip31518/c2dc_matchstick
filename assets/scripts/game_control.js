@@ -194,7 +194,10 @@ cc.Class({
         this.game = this.canvas.getComponent('game');        
         this.reset_game();
         this.events();
-        this.actions();
+        this.actions();        
+    },
+
+    start () {
         this.load_game();
     },
 
@@ -299,15 +302,12 @@ cc.Class({
             this.reset_game();
             this.diable_game_pan();            
             this.home_pan.active = true;
+            this.dlg_mavelous.active = false;
         }, this);
 
         this.bucket_dlg_mavelous.on(cc.Node.EventType.TOUCH_END, function () {       
-            this.node.runAction(cc.sequence(
-                cc.delayTime(0.1),
-                cc.fadeIn(0.5)
-            ));
-            this.background.active = true;
-            this.dlg_mavelous.active = false;  
+            this.game.parent_node = this.dlg_mavelous;
+            this.game.in_dlg_buy_hint();
         }, this);
 
         this.forward_dlg_mavelous.on(cc.Node.EventType.TOUCH_END, function () {       
@@ -316,16 +316,25 @@ cc.Class({
                 cc.fadeIn(0.5)
             ));
             this.background.active = true;
-            this.dlg_mavelous.active = false;  
+            this.dlg_mavelous.active = false;
+            this.reset_game();
+            this.go_next_stage();
+            this.load_game();
         }, this);
 
         this.share_dlg_mavelous.on(cc.Node.EventType.TOUCH_END, function () {            
-            this.node.runAction(cc.sequence(
-                cc.delayTime(0.1),
-                cc.fadeIn(0.5)
-            ));
-            this.background.active = true;
-            this.dlg_mavelous.active = false; 
+            cc.loader.loadRes("textures/icon",function(err,data){
+                wx.shareAppMessage({
+                    title: "Enjoy Matchsticks!",
+                    imageUrl: cc.loader.md5Pipe.transformURL(data.url),
+                    success(res){
+                        console.log(res)
+                    },
+                    fail(res){
+                        console.log(res)
+                    }
+                })
+            }); 
         }, this);
     },
 
@@ -770,11 +779,7 @@ cc.Class({
         this.arr_sticks_mini = [];
         this.arr_added_sticks = [];
         this.arr_result = [];
-    },
-
-    // start () {
-
-    // },
+    },    
 
     // update (dt) {},
 });

@@ -199,6 +199,7 @@ cc.Class({
         this.level = this.curent_level = 1;
         this.stage = this.curent_stage = 1;
         this.updateInterval = 1;
+        this.parent_node = this.node;
         this.actions();
         this.events();
     },
@@ -233,7 +234,7 @@ cc.Class({
     },
 
     events: function()
-    {        
+    {                
         this.event_home_pan();
         this.event_dlg_gift();
         this.event_dlg_buy_hint();
@@ -304,33 +305,43 @@ cc.Class({
             cc.audioEngine.play(this.bk_sound, true, 1);
     },
 
+    in_dlg_buy_hint:function()
+    {
+        this.dlg_bucket.active = true;
+        this.lbl_dlg_bucket.string =  this.hints;
+        this.dlg_bucket.position = cc.v2(375, 2000);
+        this.parent_node.runAction(cc.sequence(
+            cc.delayTime(0.1),
+            cc.fadeOut(0.5)
+        ));
+        this.dlg_bucket.runAction(cc.sequence(
+            cc.moveBy(0.5, cc.v2(0, -700)),
+            this.in_gift_Action
+        ));    
+    },
+
+    out_dlg_buy_hint: function(parent)
+    {
+        this.parent_node.runAction(cc.sequence(
+            cc.delayTime(0.1),
+            cc.fadeIn(0.5)
+        ));
+        this.dlg_bucket.runAction(cc.sequence(
+            cc.moveBy(0.5, cc.v2(0, 700)),
+            this.out_gift_Action,
+
+        ));
+    },
+
     event_dlg_buy_hint: function()
     {
         this.btn_bucket.on(cc.Node.EventType.TOUCH_END, function () 
         {
-            this.dlg_bucket.active = true;
-            this.lbl_dlg_bucket.string =  this.hints;
-            this.dlg_bucket.position = cc.v2(375, 2000);
-            this.node.runAction(cc.sequence(
-                cc.delayTime(0.1),
-                cc.fadeOut(0.5)
-            ));
-            this.dlg_bucket.runAction(cc.sequence(
-                cc.moveBy(0.5, cc.v2(0, -700)),
-                this.in_gift_Action
-            ));
+            this.in_dlg_buy_hint();
         }, this);
 
         this.close_dlg_bucket.on(cc.Node.EventType.TOUCH_END, function () {
-            this.node.runAction(cc.sequence(
-                cc.delayTime(0.1),
-                cc.fadeIn(0.5)
-            ));
-            this.dlg_bucket.runAction(cc.sequence(
-                cc.moveBy(0.5, cc.v2(0, 700)),
-                this.out_gift_Action,
-
-            ));
+            this.out_dlg_buy_hint();
         }, this);
 
         this.hint1_video_dlg_bucket.on(cc.Node.EventType.TOUCH_END, function () {
@@ -469,7 +480,7 @@ cc.Class({
         this.game_pan.active = true;
         this.top_pan.active = false;
         this.level_pan.active = false;
-        this.game_pan.getComponent('game_control').load_game();
+        // this.game_pan.getComponent('game_control').load_game();
     },    
 
     load_level_detail_pan: function()

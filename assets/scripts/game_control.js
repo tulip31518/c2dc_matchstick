@@ -198,7 +198,7 @@ cc.Class({
     },
 
     start () {
-        this.load_game();
+        // this.load_game();
     },
 
     actions: function()
@@ -211,6 +211,10 @@ cc.Class({
         this.event_dlg_pause();
         this.event_dlg_progress();
         this.event_dlg_mavelous();
+        this.restart.on(cc.Node.EventType.TOUCH_END, function(){
+            for(var i = 0; i < this.arr_added_sticks.length; i++)
+                this.remove_stick(this.arr_added_sticks[i]);
+        }, this);
     },
 
     event_dlg_progress: function()
@@ -352,21 +356,7 @@ cc.Class({
 
     load_game: function()
     {
-        this.task_info = {
-            act_type:"Add",
-            act_cnt: 2,
-            act_shape: "square",
-            act_shape_cnt: 1,
-            act_mode: 0,
-            scale:  2,
-            stick_allignments:[
-                {x:-1, y:0, direction:0, status:1, movable: false,  index:0},
-                {x:1, y:0, direction:0, status:1, movable: false,   index:1},
-                {x:0, y:-1, direction:90, status:1, movable: false, index:2},
-                {x:0, y: 1, direction:90, status:0, movable: true,  index:3}
-            ]
-        };
-
+        this.task_info = this.get_stage_task();
         this.stage.string = "STAGE " + this.game.curent_stage;
         this.level.string = "LEVEL " + this.game.curent_level;
         this.hint.string = this.game.hints;
@@ -493,14 +483,13 @@ cc.Class({
             let item = cc.instantiate(this.stick);
             item.getComponent('stick').game = this;
             this.sticks.addChild(item);
-            this.unit = 180;
+            this.unit = this.task_info.unit;
             var yPos = this.task_info.stick_allignments[i].y * this.unit;
             var xPos = this.task_info.stick_allignments[i].x * this.unit;
             
             if(!bShadow)
             {
                 yPos -= 700;
-                // item.getComponent('stick').status = 2;
                 item.getComponent('stick').status = this.task_info.stick_allignments[i].status;
                 item.zIndex = 999;
             }
@@ -509,8 +498,6 @@ cc.Class({
 
             item.getComponent('stick').direction = this.task_info.stick_allignments[i].direction;
             item.getComponent('stick').scale = this.task_info.scale;
-            // item.getComponent('stick').xVal = this.task_info.stick_allignments[i].x;
-            // item.getComponent('stick').yVal = this.task_info.stick_allignments[i].y;
             item.getComponent('stick').index = this.task_info.stick_allignments[i].index;
             item.getComponent('stick').movable = this.task_info.stick_allignments[i].movable;
             item.setPosition(xPos, yPos);
@@ -536,14 +523,17 @@ cc.Class({
         this.change_stick_direction(item);
                 
         var oldPos = cc.v2(0,0);
+        var b_last_stick = false;
         for(var i = this.arr_sticks_mini.length - 1; i >= 0; i--)
         {            
             if(this.arr_sticks_mini[i].active)
             {
                 oldPos = this.arr_sticks_mini[i].position;               
                 this.arr_sticks_mini[i].active = false;
+                if(i == 0)
+                    b_last_stick = true;
                 break;
-            }    
+            }
         }
         item.setPosition(cc.v2(oldPos.x, pos.y - 100));
         item.runAction(cc.sequence(
@@ -561,17 +551,18 @@ cc.Class({
             cc.rotateBy(0.1, direction),
         ));
         item.getComponent('stick').direction = direction;
-        // item.getComponent('stick').xVal = xVal;
-        // item.getComponent('stick').yVal = yVal;
         item.getComponent('stick').index = index;
         this.arr_added_sticks.push(item);
         this.arr_sticks.push(item);
-        this.check_game_result();
+        
+        if(b_last_stick)
+        {            
+            this.check_game_result();
+        }    
     },
 
     remove_stick: function(stick)
-    {
-        // stick.destroy();
+    {       
         var oldPos = cc.v2(0,0);
         for(var i = 0; i < this.arr_sticks_mini.length; i++)
         {            
@@ -602,9 +593,10 @@ cc.Class({
 
     check_game_result: function()
     {
+        cc.log("check game result");
         if(this.task_info.act_shape == "square")
         {
-            this.search_square(this.arr_sticks.length);            
+            this.search_square();            
         }
         else if(this.task_info.act_shape == "triangle")
         {
@@ -617,37 +609,39 @@ cc.Class({
         return false;
     },
 
-    search_square: function(length)
+    search_square: function()
     {
         var arr_stick_indexes = [];
         for(var i = 0; i < this.arr_sticks.length; i++)
+        {            
             arr_stick_indexes.push(this.arr_sticks[i].getComponent('stick').index);
+        }    
 
-        var result = this.get_pattern_square();
+        var result = this.get_pattern_square();        
         var temp = [];
         var count = 0;
         for(var i = 0; i < result.length; i++)
         {
             for(var j = 0; j < result[i].length; j++)
-            {
-                for(var k = 0; k < arr_stick_indexes.length; k++)
-                {                     
-                    if(arr_stick_indexes.indexOf(result[i][j]) > -1)
-                    {                        
-                        temp.push(this.arr_sticks[j]);
-                        count++;
-                        break;
-                    }
-                }                
+            {       
+                var id = arr_stick_indexes.indexOf(result[i][j]);   
+                if(id > -1)
+                {            
+                    temp.push(this.arr_sticks[id]);
+                    count++;
+                }           
             }
             if(count == result[i].length)            
+            {                
                 this.arr_result.push(temp);
+                cc.log(this.arr_result.length);
+            }    
             temp = [];
             count = 0; 
         }
         
-        if(this.arr_result.length == this.task_info.act_cnt)
-        {            
+        if(this.arr_result.length == this.task_info.act_shape_cnt)
+        { 
             this.success_stage();
         }
         
@@ -728,11 +722,42 @@ cc.Class({
             this.game.level++;
     },
 
+    get_stage_task: function()
+    {  
+        var task = [
+            [
+                {
+                    act_type:"Add", act_cnt: 1, act_shape: "square", act_shape_cnt: 1,act_mode: 0, scale:  2, unit:180,
+                    stick_allignments:[
+                        {x:-1, y:0, direction:0, status:1, movable: false,  index:0},
+                        {x:1, y:0, direction:0, status:1, movable: false,   index:1},
+                        {x:0, y:-1, direction:90, status:1, movable: false, index:2},
+                        {x:0, y: 1, direction:90, status:0, movable: true,  index:3},
+                    ]
+                },
+                {
+                    act_type:"Add", act_cnt: 4, act_shape: "square", act_shape_cnt: 2,act_mode: 0, scale:  1.4, unit:130,
+                    stick_allignments:[
+                        {x:-1, y:1, direction:0, status:0, movable: true,  index:0},
+                        {x:-1, y:-1, direction:0, status:1, movable: false,   index:1},
+                        {x:0, y:-2, direction:90, status:0, movable: true, index:2},
+                        {x:1, y: -1, direction:0, status:0, movable: true,  index:3},
+                        {x:1, y:1, direction:0, status:1, movable: false,  index:4},
+                        {x:0, y:2, direction:90, status:0, movable: true,   index:5},
+                        {x:0, y:0, direction:90, status:1, movable: false, index:6},
+                    ]
+                }
+            ]
+        ];
+        return task[this.game.curent_level - 1][this.game.curent_stage - 1];
+
+    },
+
     get_pattern_square: function()
     {
         var result = [         
-            [[0 , 1, 2, 3], [0, 1, 2, 3]],
             [[0 , 1, 2, 3]],
+            [[0 ,6, 4, 5],[1 ,2, 3 ,6]],
         ];
 
         return result[this.game.curent_stage - 1];

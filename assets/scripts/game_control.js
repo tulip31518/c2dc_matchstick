@@ -154,6 +154,31 @@ cc.Class({
             type: cc.Node
         },
 
+        dlg_mavelous:{
+            default:null,
+            type: cc.Node
+        },
+
+        home_dlg_mavelous:{
+            default:null,
+            type: cc.Node
+        },
+
+        bucket_dlg_mavelous:{
+            default:null,
+            type: cc.Node
+        },
+
+        share_dlg_mavelous:{
+            default:null,
+            type: cc.Node
+        },
+
+        forward_dlg_mavelous:{
+            default:null,
+            type: cc.Node
+        },
+
         b_game_on:false,
 
         // act_type:    "",
@@ -182,7 +207,7 @@ cc.Class({
     {  
         this.event_dlg_pause();
         this.event_dlg_progress();
-        
+        this.event_dlg_mavelous();
     },
 
     event_dlg_progress: function()
@@ -268,6 +293,42 @@ cc.Class({
         }, this);
     },
 
+    event_dlg_mavelous: function()
+    {
+        this.home_dlg_mavelous.on(cc.Node.EventType.TOUCH_END, function () {       
+            this.reset_game();
+            this.diable_game_pan();            
+            this.home_pan.active = true;
+        }, this);
+
+        this.bucket_dlg_mavelous.on(cc.Node.EventType.TOUCH_END, function () {       
+            this.node.runAction(cc.sequence(
+                cc.delayTime(0.1),
+                cc.fadeIn(0.5)
+            ));
+            this.background.active = true;
+            this.dlg_mavelous.active = false;  
+        }, this);
+
+        this.forward_dlg_mavelous.on(cc.Node.EventType.TOUCH_END, function () {       
+            this.node.runAction(cc.sequence(
+                cc.delayTime(0.1),
+                cc.fadeIn(0.5)
+            ));
+            this.background.active = true;
+            this.dlg_mavelous.active = false;  
+        }, this);
+
+        this.share_dlg_mavelous.on(cc.Node.EventType.TOUCH_END, function () {            
+            this.node.runAction(cc.sequence(
+                cc.delayTime(0.1),
+                cc.fadeIn(0.5)
+            ));
+            this.background.active = true;
+            this.dlg_mavelous.active = false; 
+        }, this);
+    },
+
     diable_game_pan: function()
     {
         this.dlg_pause.position = cc.v2(0, 1500);   
@@ -284,7 +345,7 @@ cc.Class({
     {
         this.task_info = {
             act_type:"Add",
-            act_cnt: 1,
+            act_cnt: 2,
             act_shape: "square",
             act_shape_cnt: 1,
             act_mode: 0,
@@ -598,7 +659,7 @@ cc.Class({
     },
 
     animate_game_result: function()
-    {        
+    {                
         var delay = 0.1;  
         for(var i = 0; i < this.arr_result.length; i++)
         {
@@ -608,17 +669,17 @@ cc.Class({
                 var stick = each_result[j];
                 var seq = cc.sequence(
                     cc.delayTime(delay),
-                    cc.moveBy(0.2, cc.v2(0, 25)).easing(cc.easeBounceIn()),
-                    cc.moveBy(0.2, cc.v2(0, -25)).easing(cc.easeBounceIn())
+                    cc.moveBy(0.2, cc.v2(0, 25)).easing(cc.easeCubicActionIn()),
+                    cc.moveBy(0.2, cc.v2(0, -25)).easing(cc.easeCubicActionIn())
                 )
 
                 if(i == this.arr_result.length - 1)
                     seq = cc.sequence(
                         cc.delayTime(delay),
-                        cc.moveBy(0.2, cc.v2(0, 25)).easing(cc.easeBounceIn()),
-                        cc.moveBy(0.2, cc.v2(0, -25)).easing(cc.easeBounceIn()),
+                        cc.moveBy(0.2, cc.v2(0, 25)).easing(cc.easeCubicActionIn()),
+                        cc.moveBy(0.2, cc.v2(0, -25)).easing(cc.easeCubicActionIn()),
                         cc.delayTime(0.5),
-                        // cc.callFunc(this.in_dlg_mavelous, this)
+                        cc.callFunc(this.in_dlg_mavelous.bind(this))
                     );
                 stick.runAction(seq);
             }
@@ -629,10 +690,10 @@ cc.Class({
 
     in_dlg_mavelous: function()
     {
-        if(!this.b_game_end)
+        if(this.b_game_end)
             return;
         this.b_game_end = true;
-
+        cc.log(this.b_game_end);
         this.dlg_mavelous.active = true;    
         this.dlg_mavelous.position = cc.v2(0, 1500);
         this.node.runAction(cc.sequence(
@@ -661,7 +722,7 @@ cc.Class({
     get_pattern_square: function()
     {
         var result = [         
-            [[0 , 1, 2, 3], [0, 1, 4, 3]],
+            [[0 , 1, 2, 3], [0, 1, 2, 3]],
             [[0 , 1, 2, 3]],
         ];
 
@@ -700,6 +761,7 @@ cc.Class({
         this.sticks.removeAllChildren();
         this.b_game_on = false;
         this.b_game_start = false;
+        this.b_game_end = false;
         this.bHintHand = false;
         this.b_stick_movable = true;
 

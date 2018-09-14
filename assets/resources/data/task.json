@@ -1,7 +1,7 @@
 [
     [
         {
-            "act_type":"Add", "act_cnt": 1, "act_shape": "square", "act_shape_cnt": 1,"act_mode": 0, "scale":  2, "unit":180,
+            "act_type":"Add", "act_cnt": 1, "act_shape": "square", "act_shape_cnt": 1,"act_mode": 0, "scale":  2, "unit":180, "stage":1,
             "stick_allignments":[
                 {"x":-1,  "y":0,    "direction":0,    "status":1,   "movable": false,   "index":0},
                 {"x":1,   "y":0,    "direction":0,    "status":1,   "movable": false,   "index":1},
@@ -10,7 +10,7 @@
             ]
         },
         {
-            "act_type":"Add", "act_cnt": 4, "act_shape": "square", "act_shape_cnt": 2,"act_mode": 0, "scale":  1.4, "unit":130,
+            "act_type":"Add", "act_cnt": 4, "act_shape": "square", "act_shape_cnt": 2,"act_mode": 0, "scale":  1.4, "unit":130,"stage":2,
             "stick_allignments":[
                 {"x":-1,  "y":1,    "direction":0,    "status":0,   "movable": true,    "index":0},
                 {"x":-1,  "y":-1,   "direction":0,    "status":1,   "movable": false,   "index":1},
@@ -22,7 +22,7 @@
             ]
         },
         {
-            "act_type":"Add", "act_cnt": 1, "act_shape": "square", "act_shape_cnt": 3,"act_mode": 0, "scale": 1, "unit":90,
+            "act_type":"Add", "act_cnt": 1, "act_shape": "square", "act_shape_cnt": 3,"act_mode": 0, "scale": 1, "unit":90,"stage":3,
             "stick_allignments":[
                 {"x":-2,  "y":2,    "direction":0,    "status":1,   "movable": false,   "index":0},
                 {"x":-2,  "y":0,    "direction":0,    "status":1,   "movable": false,   "index":1},
@@ -42,7 +42,7 @@
             ]
         },
         {
-            "act_type":"Remove", "act_cnt": 1, "act_shape": "triangle", "act_shape_cnt": 1,"act_mode": 0, "scale": 1.2, "unit":120,
+            "act_type":"Remove", "act_cnt": 1, "act_shape": "triangle", "act_shape_cnt": 1,"act_mode": 0, "scale": 1.2, "unit":120,"stage":4,
             "stick_allignments":[
                 {"x":-0.5,  "y":0.87,   "direction":30,     "status":1,   "movable": true,   "index":0},
                 {"x":-1.5,  "y":-0.87,  "direction":30,     "status":1,   "movable": true,   "index":1},
@@ -54,7 +54,7 @@
             ]
         },
         {
-            "act_type":"Remove", "act_cnt": 1, "act_shape": "square", "act_shape_cnt": 2,"act_mode": 0, "scale": 1.5, "unit":140,
+            "act_type":"Remove", "act_cnt": 1, "act_shape": "square", "act_shape_cnt": 2,"act_mode": 0, "scale": 1.5, "unit":140,"stage":5,
             "stick_allignments":[
                 {"x":-2,    "y":1,      "direction":0,      "status":1,   "movable": true,   "index":0},
                 {"x":-2,    "y":-1,     "direction":0,      "status":1,   "movable": true,   "index":1},
@@ -67,6 +67,68 @@
                 {"x":-1,    "y":0,      "direction":90,     "status":1,   "movable": true,   "index":8},
                 {"x":0,     "y":-1,     "direction":0,      "status":1,   "movable": true,   "index":9},
                 {"x":0,     "y":1,      "direction":0,      "status":1,   "movable": true,   "index":10}
+            ]
+        },
+        {
+            "act_type":"Remove", "act_cnt": 2, "act_shape": "square", "act_shape_cnt": 2,"act_mode": 0, "scale": 1.5, "unit":140,"stage":6,
+            "stick_allignments":[
+                {"x":-1,    "y":0,      "direction":90,     "status":1,   "movable": true,   "index":0},
+                {"x":-2,    "y":-1,     "direction":0,      "status":1,   "movable": true,   "index":1},
+                {"x":-1,    "y":-2,     "direction":90,     "status":1,   "movable": true,   "index":2},
+                {"x":1,     "y":-2,     "direction":90,     "status":1,   "movable": true,   "index":3},
+                {"x":2,     "y":-1,     "direction":0,      "status":1,   "movable": true,   "index":4},
+                {"x":2,     "y":1,      "direction":0,      "status":1,   "movable": true,   "index":5},
+                {"x":1,     "y":2,      "direction":90,     "status":1,   "movable": true,   "index":6},
+                {"x":0,     "y":1,      "direction":0,      "status":1,   "movable": true,   "index":7},
+                {"x":0,     "y":-1,     "direction":0,      "status":1,   "movable": true,   "index":8},
+                {"x":1,     "y":0,      "direction":90,     "status":1,   "movable": true,   "index":9}
+            ]
+        },
+        {
+            "act_type":"Add", "act_cnt": 1, "act_shape": "triangle", "act_shape_cnt": 3,"act_mode": 0, "scale": 1.2, "unit":120,"stage":7,
+            "stick_allignments":[
+                {"x":-1.5,  "y":0,      "direction":30,     "status":1,   "movable": false,   "index":0},
+                {"x":-1,    "y":-0.87,  "direction":90,     "status":1,   "movable": false,   "index":1},
+                {"x":1,     "y":-0.87,  "direction":90,     "status":1,   "movable": false,   "index":2},
+                {"x":1.5,   "y":0,      "direction":-30,    "status":1,   "movable": false,   "index":3},
+                {"x":0,     "y":0.87,   "direction":90,     "status":0,   "movable": true,    "index":4},
+                {"x":-0.5,  "y":0,      "direction":-30,    "status":1,   "movable": false,   "index":5},
+                {"x":0.5,   "y":0,      "direction":30,     "status":1,   "movable": false,   "index":6}
+            ]
+        },
+        {
+            "act_type":"Remove", "act_cnt": 1, "act_shape": "square", "act_shape_cnt": 3,"act_mode": 0, "scale": 1, "unit":90,"stage":8,
+            "stick_allignments":[
+                {"x":-1,    "y":1,      "direction":90,     "status":1,   "movable": true,   "index":0},
+                {"x":-2,    "y":0,      "direction":0,      "status":1,   "movable": true,   "index":1},
+                {"x":-1,    "y":-1,     "direction":90,     "status":1,   "movable": true,   "index":2},
+                {"x":0,     "y":0,      "direction":0,      "status":1,   "movable": true,   "index":3},
+                {"x":1,     "y":-1,     "direction":90,     "status":1,   "movable": true,   "index":4},
+                {"x":0,     "y":-2,     "direction":0,      "status":1,   "movable": true,   "index":5},
+                {"x":1,     "y":-3,     "direction":90,     "status":1,   "movable": true,   "index":6},
+                {"x":2,     "y":-2,     "direction":0,      "status":1,   "movable": true,   "index":7},
+                {"x":2,     "y":0,      "direction":0,      "status":1,   "movable": true,   "index":8},
+                {"x":2,     "y":2,      "direction":0,      "status":1,   "movable": true,   "index":9},
+                {"x":1,     "y":3,      "direction":90,     "status":1,   "movable": true,   "index":10},
+                {"x":0,     "y":2,      "direction":0,      "status":1,   "movable": true,   "index":11},
+                {"x":1,     "y":1,      "direction":90,     "status":1,   "movable": true,   "index":12}
+            ]
+        },
+        {
+            "act_type":"Move", "act_cnt": 1, "act_shape": "square", "act_shape_cnt": 2,"act_mode": 0, "scale": 1.5, "unit":140,"stage":9,
+            "stick_allignments":[
+                {"x":-2,    "y":1,      "direction":0,      "status":1,   "movable": true,   "index":0},
+                {"x":-2,    "y":-1,     "direction":0,      "status":1,   "movable": true,   "index":1},
+                {"x":-1,    "y":-2,     "direction":90,     "status":1,   "movable": true,   "index":2},
+                {"x":1,     "y":-2,     "direction":90,     "status":1,   "movable": true,   "index":3},
+                {"x":2,     "y":-1,     "direction":0,      "status":1,   "movable": true,   "index":4},
+                {"x":2,     "y":1,      "direction":0,      "status":1,   "movable": true,   "index":5},
+                {"x":1,     "y":2,      "direction":90,     "status":1,   "movable": true,   "index":6},
+                {"x":-1,    "y":2,      "direction":90,     "status":1,   "movable": true,   "index":7},
+                {"x":-1,    "y":0,      "direction":90,     "status":0,   "movable": true,   "index":8},
+                {"x":0,     "y":-1,     "direction":0,      "status":1,   "movable": true,   "index":9},
+                {"x":0,     "y":1,      "direction":0,      "status":1,   "movable": true,   "index":10},
+                {"x":1,     "y":0,      "direction":90,     "status":0,   "movable": true,   "index":11}
             ]
         }
     ]

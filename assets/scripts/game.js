@@ -184,8 +184,8 @@ cc.Class({
             type: cc.Label
         },
 
-        level: 2,
-        stage: 1,
+        level: 3,
+        stage: 8,
         curent_level: 1,
         curent_stage: 1,
         hints:12,
@@ -201,7 +201,7 @@ cc.Class({
         this.load_game_info_asset();
         this.bsound_play = true;
         this.level = this.curent_level = 1;
-        this.stage = this.curent_stage = 3;
+        this.stage = this.curent_stage = 8;
         this.updateInterval = 1;
         this.parent_node = this.node;
         this.actions();

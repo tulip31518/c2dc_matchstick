@@ -357,8 +357,7 @@ cc.Class({
     load_game: function()
     {
         // this.task_info = this.get_stage_task();
-        this.task_info = this.game.task[this.game.curent_level - 1][this.game.curent_stage - 1]
-        cc.log(this.task_info);
+        this.task_info = this.game.task[this.game.curent_level - 1][this.game.curent_stage - 1];
         this.stage.string = "STAGE " + this.game.curent_stage;
         this.level.string = "LEVEL " + this.game.curent_level;
         this.hint.string = this.game.hints;
@@ -394,7 +393,7 @@ cc.Class({
     {
         if(this.task_info.act_type == "Add")
         {
-            this.make_sticks_mini("Remove", true);
+            // this.make_sticks_mini("Remove", true);
             this.make_sticks_mini("Add", true);            
         }
         else if(this.task_info.act_type == "Remove")
@@ -403,8 +402,8 @@ cc.Class({
         }
         else
         {
-            this.make_sticks_mini("Remove", false);
-            this.make_sticks_mini("Add", false);            
+            // this.make_sticks_mini("Remove", false);
+            // this.make_sticks_mini("Add", false);            
         }
     },
 
@@ -425,10 +424,10 @@ cc.Class({
             item.setPosition(i * 40 - 300, 0);
             item.active = status;
             
-            if(act_type == "Add")
+            // if(act_type == "Add")
                 this.arr_sticks_mini.push(item);
-            else
-                this.arr_sticks_mini_shadow.push(item);
+            // else
+            //     this.arr_sticks_mini_shadow.push(item);
         }
     },
 
@@ -530,10 +529,12 @@ cc.Class({
         var b_last_stick = false;
         for(var i = this.arr_sticks_mini.length - 1; i >= 0; i--)
         {            
-            if(this.arr_sticks_mini[i].active)
+            if(this.arr_sticks_mini[i].getComponent('stick_mini').status)
             {
                 oldPos = this.arr_sticks_mini[i].position;               
-                this.arr_sticks_mini[i].active = false;
+                // this.arr_sticks_mini[i].active = false;
+                this.arr_sticks_mini[i].getComponent('stick_mini').status = false;
+                this.arr_sticks_mini[i].getComponent('stick_mini').update_image();
                 if(i == 0)
                     b_last_stick = true;
                 break;
@@ -570,9 +571,10 @@ cc.Class({
         var oldPos = cc.v2(0,0);
         for(var i = 0; i < this.arr_sticks_mini.length; i++)
         {            
-            if(!this.arr_sticks_mini[i].active)
+            if(!this.arr_sticks_mini[i].getComponent('stick_mini').status)
             {                         
-                this.arr_sticks_mini[i].active = true;
+                this.arr_sticks_mini[i].getComponent('stick_mini').status = true;
+                this.arr_sticks_mini[i].getComponent('stick_mini').update_image();
                 oldPos = this.arr_sticks_mini[i].position;
                 break;
             }    
@@ -596,24 +598,7 @@ cc.Class({
     },
 
     check_game_result: function()
-    {        
-        if(this.task_info.act_shape == "square")
-        {
-            this.search_square();            
-        }
-        else if(this.task_info.act_shape == "triangle")
-        {
-            
-        }
-        else
-        {
-
-        }
-        return false;
-    },
-
-    search_square: function()
-    {
+    {  
         var arr_stick_indexes = [];
         for(var i = 0; i < this.arr_sticks.length; i++)
         {            
@@ -646,7 +631,6 @@ cc.Class({
         { 
             this.success_stage();
         }
-        
     },
 
     success_stage: function()
@@ -746,21 +730,19 @@ cc.Class({
     },
 
     check_stick_movable: function(status)
-    {
-        
+    {        
         for(var i = 0; i < this.arr_sticks_mini.length; i++)
-        {
-            cc.log(this.arr_sticks_mini[i].active);
+        {            
             if(status == 1)
             {
                 //Real stick
-                if(!this.arr_sticks_mini[i].active)
+                if(!this.arr_sticks_mini[i].getComponent('stick_mini').status)
                     return true;
             }
             else
             {
                 //Empty stick -- Shadow
-                if(this.arr_sticks_mini[i].active)
+                if(this.arr_sticks_mini[i].getComponent('stick_mini').status)
                     return true;                
             }            
         }

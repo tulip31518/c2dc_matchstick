@@ -21,8 +21,12 @@ cc.Class({
         this.sprite = this.getComponent(cc.Sprite);
     },
 
-    start () {     
-        
+    start () {  
+        this.update_image();        
+    },
+
+    update_image: function()
+    {
         if(this.status == 0)
             this.sprite.spriteFrame = this.stick_mini_spriteList[0];
         else 

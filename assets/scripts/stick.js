@@ -19,7 +19,7 @@ cc.Class({
         status: 1,
         scale: 1,
         movable:true,
-        index:0
+        index:0,
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -45,8 +45,7 @@ cc.Class({
                 this.game.remove_stick(this.node);
             }
         }, this);
-    },
-    
+    },   
 
     onCollisionEnter: function (other) 
     {

@@ -211,12 +211,31 @@ cc.Class({
         this.event_dlg_progress();
         this.event_dlg_mavelous();
         this.restart.on(cc.Node.EventType.TOUCH_END, function(){
-            for(var i = 0; i < this.arr_added_sticks.length; i++)
-                this.remove_stick(this.arr_added_sticks[i]);
+            this.event_restart();
         }, this);
+
         this.hint_btn.on(cc.Node.EventType.TOUCH_END, function(){
             this.execute_hint();
         }, this);
+    },
+
+    event_restart: function()
+    {
+        if(this.task_info.act_type == "Add")
+            for(var i = 0; i < this.arr_added_sticks.length; i++)
+                this.remove_stick(this.arr_added_sticks[i]);
+        else if(this.task_info.act_type == "Remove")
+        {
+            for(var i = 0; i < this.arr_removed_sticks.length; i++)
+            {
+                var index = this.arr_removed_sticks[i].getComponent('stick').index;
+                var x = this.task_info.stick_allignments[index].x * this.task_info.unit;
+                var y = this.task_info.stick_allignments[index].y * this.task_info.unit;
+                var direction = this.arr_removed_sticks[i].getComponent('stick').direction;
+                this.add_stick(cc.v2(x, y), direction, index);
+            }
+            this.arr_removed_sticks = [];
+        }    
     },
 
     event_dlg_progress: function()
@@ -407,7 +426,7 @@ cc.Class({
         this.level.string = "LEVEL " + this.game.curent_level;
         this.hint.string = this.game.hints;
 
-        if(this.task_info.act_mode == 0)
+        if(this.task_info.act_shape != "formula")
             this.task_content.string = this.task_info.act_type + " " + this.task_info.act_cnt + " matchsticks to create " 
                 + this.task_info.act_shape_cnt + "\n" + this.task_info.act_shape + "s." ;
         else
@@ -536,9 +555,8 @@ cc.Class({
             let item = cc.instantiate(this.stick);
             item.getComponent('stick').game = this;
             this.sticks.addChild(item);
-            this.unit = this.task_info.unit;
-            var yPos = this.task_info.stick_allignments[i].y * this.unit;
-            var xPos = this.task_info.stick_allignments[i].x * this.unit;
+            var yPos = this.task_info.stick_allignments[i].y * this.task_info.unit;
+            var xPos = this.task_info.stick_allignments[i].x * this.task_info.unit;
             
             if(!bShadow)
             {
@@ -635,7 +653,7 @@ cc.Class({
                     this.b_last_stick = true;
                 else
                     this.b_last_stick = false;
-                    this.progress.getComponent('progress').update_image();
+                this.progress.getComponent('progress').update_image();
                 break;
             }    
         }
@@ -821,15 +839,24 @@ cc.Class({
 
     destroy_stick: function(stk)
     {
-        for(var i = 0; i < this.arr_sticks.length; i++)
-            if(this.arr_sticks[i].getComponent('stick').index == stk.getComponent('stick').index)
-                this.arr_sticks.splice(i, 1);
-        this.arr_added_sticks.splice(this.arr_added_sticks.length - 1, 1);
-        stk.destroy();
+        this.destroy_stick_from_array(this.arr_sticks, stk);
+        this.destroy_stick_from_array(this.arr_added_sticks,stk);
+        this.destroy_stick_from_array(this.arr_removed_sticks, stk);
+        this.arr_removed_sticks.push(stk);        
+        stk.active = false;
         if(this.b_last_stick)
         {   
             this.check_game_result();
         } 
+    },
+
+    destroy_stick_from_array: function(ary, stk)
+    {
+        for(var i = 0; i < ary.length; i++)
+            if(ary[i].getComponent('stick').index == stk.getComponent('stick').index)
+            {
+                ary.splice(i, 1);
+            }
     },
 
     check_stick_movable: function(status)
@@ -870,8 +897,9 @@ cc.Class({
         this.arr_sticks_mini = [];
         this.arr_sticks_mini_shadow = [];
         this.arr_added_sticks = [];
+        this.arr_removed_sticks = [];
         this.arr_result = [];
-        this.hint_count = 0;
+        this.hint_count = 0;        
 
         this.progress.getComponent('progress').update_image();
     },    

@@ -222,7 +222,8 @@ cc.Class({
                 var info = asset.toString();
                 if (!info) {
                     if (asset instanceof cc.JsonAsset) {
-                        info = JSON.stringify(asset.json, null, 4);                        
+                        info = JSON.stringify(asset.json, null, 4);
+                        cc.log(asset.name);
                         this.task = JSON.parse(info);
                     }
                     else {

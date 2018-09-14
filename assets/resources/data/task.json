@@ -42,15 +42,31 @@
             ]
         },
         {
-            "act_type":"Remove", "act_cnt": 1, "act_shape": "triangle", "act_shape_cnt": 1,"act_mode": 0, "scale": 1, "unit":80,
+            "act_type":"Remove", "act_cnt": 1, "act_shape": "triangle", "act_shape_cnt": 1,"act_mode": 0, "scale": 1.2, "unit":120,
             "stick_allignments":[
                 {"x":-0.5,  "y":0.87,   "direction":30,     "status":1,   "movable": true,   "index":0},
                 {"x":-1.5,  "y":-0.87,  "direction":30,     "status":1,   "movable": true,   "index":1},
-                {"x":-1,    "y":-1.74,  "direction":90,      "status":1,   "movable": true,   "index":2},
-                {"x":1,     "y": -1.74, "direction":90,      "status":1,   "movable": true,   "index":3},
+                {"x":-1,    "y":-1.74,  "direction":90,     "status":1,   "movable": true,   "index":2},
+                {"x":1,     "y": -1.74, "direction":90,     "status":1,   "movable": true,   "index":3},
                 {"x":1.5,   "y":-0.87,  "direction":-30,    "status":1,   "movable": true,   "index":4},
                 {"x":0.5,   "y":0.87,   "direction":-30,    "status":1,   "movable": true,   "index":5},
-                {"x":0,     "y":0,      "direction":90,      "status":1,   "movable": true,   "index":6}
+                {"x":0,     "y":0,      "direction":90,     "status":1,   "movable": true,   "index":6}
+            ]
+        },
+        {
+            "act_type":"Remove", "act_cnt": 1, "act_shape": "square", "act_shape_cnt": 2,"act_mode": 0, "scale": 1.5, "unit":140,
+            "stick_allignments":[
+                {"x":-2,    "y":1,      "direction":0,      "status":1,   "movable": true,   "index":0},
+                {"x":-2,    "y":-1,     "direction":0,      "status":1,   "movable": true,   "index":1},
+                {"x":-1,    "y":-2,     "direction":90,     "status":1,   "movable": true,   "index":2},
+                {"x":1,     "y":-2,     "direction":90,     "status":1,   "movable": true,   "index":3},
+                {"x":2,     "y":-1,     "direction":0,      "status":1,   "movable": true,   "index":4},
+                {"x":2,     "y":1,      "direction":0,      "status":1,   "movable": true,   "index":5},
+                {"x":1,     "y":2,      "direction":90,     "status":1,   "movable": true,   "index":6},
+                {"x":-1,    "y":2,      "direction":90,     "status":1,   "movable": true,   "index":7},
+                {"x":-1,    "y":0,      "direction":90,     "status":1,   "movable": true,   "index":8},
+                {"x":0,     "y":-1,     "direction":0,      "status":1,   "movable": true,   "index":9},
+                {"x":0,     "y":1,      "direction":0,      "status":1,   "movable": true,   "index":10}
             ]
         }
     ]

@@ -526,7 +526,7 @@ cc.Class({
         this.change_stick_direction(item);
                 
         var oldPos = cc.v2(0,0);
-        var b_last_stick = false;
+        // var b_last_stick = false;
         for(var i = this.arr_sticks_mini.length - 1; i >= 0; i--)
         {            
             if(this.arr_sticks_mini[i].getComponent('stick_mini').status)
@@ -536,7 +536,7 @@ cc.Class({
                 this.arr_sticks_mini[i].getComponent('stick_mini').status = false;
                 this.arr_sticks_mini[i].getComponent('stick_mini').update_image();
                 if(i == 0)
-                    b_last_stick = true;
+                    this.b_last_stick = true;
                 break;
             }
         }
@@ -560,7 +560,7 @@ cc.Class({
         this.arr_added_sticks.push(item);
         this.arr_sticks.push(item);
         
-        if(b_last_stick)
+        if(this.b_last_stick)
         {            
             this.check_game_result();
         }    
@@ -569,6 +569,7 @@ cc.Class({
     remove_stick: function(stick)
     {       
         var oldPos = cc.v2(0,0);
+        // var b_last_stick = false;
         for(var i = 0; i < this.arr_sticks_mini.length; i++)
         {            
             if(!this.arr_sticks_mini[i].getComponent('stick_mini').status)
@@ -576,6 +577,8 @@ cc.Class({
                 this.arr_sticks_mini[i].getComponent('stick_mini').status = true;
                 this.arr_sticks_mini[i].getComponent('stick_mini').update_image();
                 oldPos = this.arr_sticks_mini[i].position;
+                if(i == this.arr_sticks_mini.length - 1)
+                    this.b_last_stick = true;
                 break;
             }    
         }
@@ -595,6 +598,11 @@ cc.Class({
             cc.delayTime(0.1),
             cc.callFunc(this.destroy_stick, this, stick)
         ));
+
+        // if(this.b_last_stick)
+        // {   
+        //     this.check_game_result();
+        // }   
     },
 
     check_game_result: function()
@@ -605,7 +613,7 @@ cc.Class({
             arr_stick_indexes.push(this.arr_sticks[i].getComponent('stick').index);
         }    
 
-        var result = this.get_pattern_square();        
+        var result = this.get_pattern_square();cc.log(arr_stick_indexes); 
         var temp = [];
         var count = 0;
         for(var i = 0; i < result.length; i++)
@@ -619,14 +627,14 @@ cc.Class({
                     count++;
                 }           
             }
-            if(count == result[i].length)            
+            if(count == result[i].length)
             {                
                 this.arr_result.push(temp);
             }    
             temp = [];
             count = 0; 
         }
-        
+        cc.log(this.arr_result); 
         if(this.arr_result.length == this.task_info.act_shape_cnt)
         { 
             this.success_stage();
@@ -716,6 +724,8 @@ cc.Class({
                 [[0 , 1, 2, 3]],
                 [[0 ,6, 4, 5],[1 ,2, 3 ,6]],
                 [[2, 3 ,11, 10],[11 , 4, 5 , 12],[0 ,1, 10, 12, 6,7, 8, 9]],
+                [[0, 1, 2, 3, 4, 5]],
+                [[0, 8, 10, 7], [1, 2, 9, 8], [0, 1, 2, 3, 4, 5, 6, 7]],
             ]
         ];
 
@@ -727,6 +737,10 @@ cc.Class({
         this.arr_added_sticks.splice(this.arr_added_sticks.length - 1, 1);
         this.arr_sticks.splice(this.arr_sticks.length - 1, 1);
         stk.destroy();
+        if(this.b_last_stick)
+        {   
+            this.check_game_result();
+        } 
     },
 
     check_stick_movable: function(status)
@@ -758,6 +772,7 @@ cc.Class({
         this.b_game_end = false;
         this.bHintHand = false;
         this.b_stick_movable = true;
+        this.b_last_stick = false;
 
         this.arr_sticks = [];
         this.arr_sticks_shadow = [];

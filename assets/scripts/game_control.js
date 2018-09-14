@@ -84,11 +84,6 @@ cc.Class({
             type: cc.Node
         },
 
-        hint_pan:{
-            default:null,
-            type: cc.Node
-        },
-
         dlg_progress:{
             default:null,
             type: cc.Node
@@ -102,6 +97,11 @@ cc.Class({
         hint:{
             default:null,
             type: cc.Label
+        },
+
+        hint_btn:{
+            default:null,
+            type: cc.Node
         },
 
         task_content:{
@@ -213,6 +213,9 @@ cc.Class({
         this.restart.on(cc.Node.EventType.TOUCH_END, function(){
             for(var i = 0; i < this.arr_added_sticks.length; i++)
                 this.remove_stick(this.arr_added_sticks[i]);
+        }, this);
+        this.hint_btn.on(cc.Node.EventType.TOUCH_END, function(){
+            this.execute_hint();
         }, this);
     },
 
@@ -336,6 +339,51 @@ cc.Class({
                 })
             }); 
         }, this);
+    },
+
+    execute_hint: function()
+    {
+        this.hint_count ++;
+        this.hints --;
+        var hint_add_or_remove = this.task_info.hint[0];
+        var hint_move = this.task_info.hint[1];
+        if(this.task_info.act_type == "Add")
+        {
+            this.hint_add_stick(hint_add_or_remove);
+        }
+        else if(this.task_info.act_type == "Remove")
+        {
+            this.hint_remove_stick(hint_add_or_remove);
+        }
+        else 
+        {
+            this.hint_remove_stick(hint_add_or_remove);
+            this.hint_add_stick(hint_move);
+        }
+    },
+
+    hint_add_stick: function(hint_add_or_remove)
+    {
+        for(var i = 0; i < this.arr_sticks_shadow.length; i++)
+        {
+            var stick_script = this.arr_sticks_shadow[i].getComponent('stick'); 
+            if(stick_script.index == hint_add_or_remove[this.hint_count - 1])
+            {                   
+                this.add_stick(this.arr_sticks_shadow[i].position, stick_script.direction, stick_script.index);
+            }    
+        }    
+    },
+
+    hint_remove_stick: function(hint_add_or_remove)
+    {
+        for(var i = 0; i < this.arr_sticks.length; i++)
+        {
+            var stick_script = this.arr_sticks[i].getComponent('stick'); 
+            if(stick_script.index == hint_add_or_remove[this.hint_count - 1])
+            {   
+                this.remove_stick(this.arr_sticks[i]);
+            }    
+        }
     },
 
     diable_game_pan: function()
@@ -823,6 +871,7 @@ cc.Class({
         this.arr_sticks_mini_shadow = [];
         this.arr_added_sticks = [];
         this.arr_result = [];
+        this.hint_count = 0;
 
         this.progress.getComponent('progress').update_image();
     },    

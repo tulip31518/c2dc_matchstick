@@ -219,7 +219,8 @@ cc.Class({
     event_dlg_progress: function()
     {
         this.progress.on(cc.Node.EventType.TOUCH_END, function () { 
-            this.dlg_progress.active = true;    
+            this.dlg_progress.active = true;
+            this.dlg_progress.getComponent('progress_dialog').update_info();
             this.dlg_progress.position = cc.v2(0, 1500);
             this.node.runAction(cc.sequence(
                 cc.delayTime(0.1),

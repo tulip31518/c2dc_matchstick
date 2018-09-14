@@ -56,7 +56,7 @@ cc.Class({
             this.spr_rule2.spriteFrame = this.spriteList[0];
     },
 
-    update (dt) {
+    // update (dt) {
         
-    },
+    // },
 });

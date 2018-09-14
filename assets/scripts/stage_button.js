@@ -67,6 +67,7 @@ cc.Class({
         /*
             In case that current level or stage is passed
         */
+       cc.log(this.game.stage);
         if(this.game.curent_level < this.game.level)            
         {
             this.level_sprite.spriteFrame = this.spriteList[0];

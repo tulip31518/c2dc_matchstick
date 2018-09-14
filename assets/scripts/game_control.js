@@ -291,6 +291,7 @@ cc.Class({
             this.top_pan.active = true;
             this.reset_game();
             this.diable_game_pan();
+            this.game.update_stage_button();
         }, this);
 
         this.home_dlg_pause.on(cc.Node.EventType.TOUCH_END, function () {       
@@ -709,11 +710,12 @@ cc.Class({
         if(this.game.curent_stage == 50)
             this.game.curent_level++;
 
-        if(this.curent_stage > this.game.stage)
+        if(this.game.curent_stage == this.game.stage)
             this.game.stage ++;
+        if(this.game.curent_stage > this.game.stage)
+            this.game.stage  = this.game.curent_stage;
         if(this.game.curent_level > this.game.level)
             this.game.level++;
-
         this.game.update_stage_button();
     },    
 

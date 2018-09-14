@@ -533,6 +533,7 @@ cc.Class({
 
     update_stage_button: function()
     {
+        cc.log("update stage panel");
         var btns = this.lvl_detail_pan.getComponentsInChildren("stage_button");
         for(var i = 0; i < btns.length; i++) 
             btns[i].brefresh = true;

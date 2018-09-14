@@ -195,6 +195,10 @@ cc.Class({
     // LIFE-CYCLE CALLBACKS:
 
     onLoad () {
+        this.task = null;
+        this._assets = [];
+        this._hasLoading = false;
+        this.load_game_info_asset();
         this.bsound_play = true;
         this.level = this.curent_level = 1;
         this.stage = this.curent_stage = 1;
@@ -202,6 +206,32 @@ cc.Class({
         this.parent_node = this.node;
         this.actions();
         this.events();
+    },
+
+    load_game_info_asset: function()
+    {
+        if (this._hasLoading) { return; }
+        this._hasLoading = true;
+        cc.loader.loadResDir("data", (err, assets) => {
+            if (!this.isValid) {
+                return;
+            }
+            this._assets = assets;
+            for (var i = 0; i < assets.length; ++i) {
+                var asset = assets[i];
+                var info = asset.toString();
+                if (!info) {
+                    if (asset instanceof cc.JsonAsset) {
+                        info = JSON.stringify(asset.json, null, 4);                        
+                        this.task = JSON.parse(info);
+                    }
+                    else {
+                        info = info || asset.name || cc.js.getClassName(asset);
+                    }
+                }
+            }
+            this._hasLoading = false;
+        });
     },
 
     actions: function()
@@ -497,6 +527,11 @@ cc.Class({
             cc.moveBy(0.2, cc.v2(0, 50)),
             this.comein_levelAction
         ));
+        this.update_stage_button();
+    },
+
+    update_stage_button: function()
+    {
         var btns = this.lvl_detail_pan.getComponentsInChildren("stage_button");
         for(var i = 0; i < btns.length; i++) 
             btns[i].brefresh = true;

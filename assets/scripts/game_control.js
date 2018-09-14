@@ -327,7 +327,7 @@ cc.Class({
             this.background.active = true;
             this.dlg_mavelous.active = false;
             this.reset_game();
-            this.go_next_stage();
+            // this.stage_up();
             this.load_game();
         }, this);
 
@@ -361,7 +361,9 @@ cc.Class({
 
     load_game: function()
     {
-        this.task_info = this.get_stage_task();
+        // this.task_info = this.get_stage_task();
+        this.task_info = this.game.task[this.game.curent_level - 1][this.game.curent_stage - 1]
+        cc.log(this.task_info);
         this.stage.string = "STAGE " + this.game.curent_stage;
         this.level.string = "LEVEL " + this.game.curent_level;
         this.hint.string = this.game.hints;
@@ -430,6 +432,8 @@ cc.Class({
             
             if(act_type == "Add")
                 this.arr_sticks_mini.push(item);
+            else
+                this.arr_sticks_mini_shadow.push(item);
         }
     },
 
@@ -651,7 +655,8 @@ cc.Class({
     },
 
     success_stage: function()
-    {       
+    {
+        this.stage_up();       
         this.spr_game_clear.position = cc.v2(800, 0);
         this.spr_game_clear.runAction(cc.sequence(
             cc.delayTime(0.5),
@@ -660,8 +665,7 @@ cc.Class({
             cc.moveBy(0.3, cc.v2(800, 0)).easing(cc.easeExponentialIn()),
             cc.delayTime(0.5),
             cc.callFunc(this.animate_game_result, this)
-        ));        
-        
+        ));
     },
 
     animate_game_result: function()
@@ -712,7 +716,7 @@ cc.Class({
         this.background.active = false;
     },
 
-    go_next_stage: function()
+    stage_up: function()
     {
         this.game.curent_stage++;
         if(this.game.curent_stage == 50)
@@ -722,58 +726,9 @@ cc.Class({
             this.game.stage ++;
         if(this.game.curent_level > this.game.level)
             this.game.level++;
-    },
 
-    get_stage_task: function()
-    {  
-        var task = [
-            [
-                {
-                    act_type:"Add", act_cnt: 1, act_shape: "square", act_shape_cnt: 1,act_mode: 0, scale:  2, unit:180,
-                    stick_allignments:[
-                        {x:-1,  y:0,    direction:0,    status:1,   movable: false,   index:0},
-                        {x:1,   y:0,    direction:0,    status:1,   movable: false,   index:1},
-                        {x:0,   y:-1,   direction:90,   status:1,   movable: false,   index:2},
-                        {x:0,   y: 1,   direction:90,   status:0,   movable: true,    index:3},
-                    ]
-                },
-                {
-                    act_type:"Add", act_cnt: 4, act_shape: "square", act_shape_cnt: 2,act_mode: 0, scale:  1.4, unit:130,
-                    stick_allignments:[
-                        {x:-1,  y:1,    direction:0,    status:0,   movable: true,    index:0},
-                        {x:-1,  y:-1,   direction:0,    status:1,   movable: false,   index:1},
-                        {x:0,   y:-2,   direction:90,   status:0,   movable: true,    index:2},
-                        {x:1,   y: -1,  direction:0,    status:0,   movable: true,    index:3},
-                        {x:1,   y:1,    direction:0,    status:1,   movable: false,   index:4},
-                        {x:0,   y:2,    direction:90,   status:0,   movable: true,    index:5},
-                        {x:0,   y:0,    direction:90,   status:1,   movable: false,   index:6},
-                    ]
-                },
-                {
-                    act_type:"Add", act_cnt: 1, act_shape: "square", act_shape_cnt: 3,act_mode: 0, scale: 1, unit:90,
-                    stick_allignments:[
-                        {x:-2,  y:2,    direction:0,    status:1,   movable: false,   index:0},
-                        {x:-2,  y:0,    direction:0,    status:1,   movable: false,   index:1},
-                        {x:-2,  y:-2,   direction:0,    status:1,   movable: false,   index:2},
-                        {x:-1,  y: -3,  direction:90,   status:1,   movable: false,   index:3},
-                        {x:1,   y:-3,   direction:90,   status:1,   movable: false,   index:4},
-                        {x:2,   y:-2,   direction:0,    status:1,   movable: false,   index:5},
-                        {x:2,   y:0,    direction:0,    status:1,   movable: false,   index:6},
-                        {x:2,   y:2,    direction:0,    status:1,   movable: false,   index:7},
-                        {x:1,   y:3,    direction:90,   status:1,   movable: false,   index:8},
-                        {x:-1,  y:3,    direction:90,   status:1,   movable: false,   index:9},
-                        {x:-1,  y:-1,   direction:90,   status:1,   movable: false,   index:10},
-                        {x:0,   y:-2,   direction:0,    status:0,   movable: true,    index:11},
-                        {x:1,   y:-1,   direction:90,   status:1,   movable: false,   index:12},
-                        {x:0,   y:0,    direction:0,    status:0,   movable: true,    index:13},
-                        {x:0,   y:2,    direction:0,    status:0,   movable: true,    index:14},
-                    ]
-                }
-            ]
-        ];
-        return task[this.game.curent_level - 1][this.game.curent_stage - 1];
-
-    },
+        this.game.update_stage_button();
+    },    
 
     get_pattern_square: function()
     {
@@ -818,6 +773,7 @@ cc.Class({
     reset_game: function()
     {
         this.sticks.removeAllChildren();
+        this.footer.removeAllChildren();
         this.b_game_on = false;
         this.b_game_start = false;
         this.b_game_end = false;
@@ -827,6 +783,7 @@ cc.Class({
         this.arr_sticks = [];
         this.arr_sticks_shadow = [];
         this.arr_sticks_mini = [];
+        this.arr_sticks_mini_shadow = [];
         this.arr_added_sticks = [];
         this.arr_result = [];
     },    

@@ -1,0 +1,57 @@
+[
+    [
+        {
+            "act_type":"Add", "act_cnt": 1, "act_shape": "square", "act_shape_cnt": 1,"act_mode": 0, "scale":  2, "unit":180,
+            "stick_allignments":[
+                {"x":-1,  "y":0,    "direction":0,    "status":1,   "movable": false,   "index":0},
+                {"x":1,   "y":0,    "direction":0,    "status":1,   "movable": false,   "index":1},
+                {"x":0,   "y":-1,   "direction":90,   "status":1,   "movable": false,   "index":2},
+                {"x":0,   "y": 1,   "direction":90,   "status":0,   "movable": true,    "index":3}
+            ]
+        },
+        {
+            "act_type":"Add", "act_cnt": 4, "act_shape": "square", "act_shape_cnt": 2,"act_mode": 0, "scale":  1.4, "unit":130,
+            "stick_allignments":[
+                {"x":-1,  "y":1,    "direction":0,    "status":0,   "movable": true,    "index":0},
+                {"x":-1,  "y":-1,   "direction":0,    "status":1,   "movable": false,   "index":1},
+                {"x":0,   "y":-2,   "direction":90,   "status":0,   "movable": true,    "index":2},
+                {"x":1,   "y": -1,  "direction":0,    "status":0,   "movable": true,    "index":3},
+                {"x":1,   "y":1,    "direction":0,    "status":1,   "movable": false,   "index":4},
+                {"x":0,   "y":2,    "direction":90,   "status":0,   "movable": true,    "index":5},
+                {"x":0,   "y":0,    "direction":90,   "status":1,   "movable": false,   "index":6}
+            ]
+        },
+        {
+            "act_type":"Add", "act_cnt": 1, "act_shape": "square", "act_shape_cnt": 3,"act_mode": 0, "scale": 1, "unit":90,
+            "stick_allignments":[
+                {"x":-2,  "y":2,    "direction":0,    "status":1,   "movable": false,   "index":0},
+                {"x":-2,  "y":0,    "direction":0,    "status":1,   "movable": false,   "index":1},
+                {"x":-2,  "y":-2,   "direction":0,    "status":1,   "movable": false,   "index":2},
+                {"x":-1,  "y": -3,  "direction":90,   "status":1,   "movable": false,   "index":3},
+                {"x":1,   "y":-3,   "direction":90,   "status":1,   "movable": false,   "index":4},
+                {"x":2,   "y":-2,   "direction":0,    "status":1,   "movable": false,   "index":5},
+                {"x":2,   "y":0,    "direction":0,    "status":1,   "movable": false,   "index":6},
+                {"x":2,   "y":2,    "direction":0,    "status":1,   "movable": false,   "index":7},
+                {"x":1,   "y":3,    "direction":90,   "status":1,   "movable": false,   "index":8},
+                {"x":-1,  "y":3,    "direction":90,   "status":1,   "movable": false,   "index":9},
+                {"x":-1,  "y":-1,   "direction":90,   "status":1,   "movable": false,   "index":10},
+                {"x":0,   "y":-2,   "direction":0,    "status":0,   "movable": true,    "index":11},
+                {"x":1,   "y":-1,   "direction":90,   "status":1,   "movable": false,   "index":12},
+                {"x":0,   "y":0,    "direction":0,    "status":0,   "movable": true,    "index":13},
+                {"x":0,   "y":2,    "direction":0,    "status":0,   "movable": true,    "index":14}
+            ]
+        },
+        {
+            "act_type":"Remove", "act_cnt": 1, "act_shape": "triangle", "act_shape_cnt": 1,"act_mode": 0, "scale": 1, "unit":80,
+            "stick_allignments":[
+                {"x":-0.5,  "y":0.87,   "direction":30,     "status":1,   "movable": true,   "index":0},
+                {"x":-1.5,  "y":-0.87,  "direction":30,     "status":1,   "movable": true,   "index":1},
+                {"x":-1,    "y":-1.74,  "direction":90,      "status":1,   "movable": true,   "index":2},
+                {"x":1,     "y": -1.74, "direction":90,      "status":1,   "movable": true,   "index":3},
+                {"x":1.5,   "y":-0.87,  "direction":-30,    "status":1,   "movable": true,   "index":4},
+                {"x":0.5,   "y":0.87,   "direction":-30,    "status":1,   "movable": true,   "index":5},
+                {"x":0,     "y":0,      "direction":90,      "status":1,   "movable": true,   "index":6}
+            ]
+        }
+    ]
+]

@@ -29,6 +29,11 @@ cc.Class({
             type: cc.Node
         },
 
+        spr_game_clear:{
+            default: null,
+            type: cc.Node
+        },
+
         stage:{
             default:null,
             type: cc.Label
@@ -592,8 +597,7 @@ cc.Class({
     },
 
     check_game_result: function()
-    {
-        cc.log("check game result");
+    {        
         if(this.task_info.act_shape == "square")
         {
             this.search_square();            
@@ -634,7 +638,6 @@ cc.Class({
             if(count == result[i].length)            
             {                
                 this.arr_result.push(temp);
-                cc.log(this.arr_result.length);
             }    
             temp = [];
             count = 0; 
@@ -649,8 +652,8 @@ cc.Class({
 
     success_stage: function()
     {       
-        this.spr_game_start.position = cc.v2(800, 0);
-        this.spr_game_start.runAction(cc.sequence(
+        this.spr_game_clear.position = cc.v2(800, 0);
+        this.spr_game_clear.runAction(cc.sequence(
             cc.delayTime(0.5),
             cc.moveBy(0.3, cc.v2(-800, 0)).easing(cc.easeExponentialOut()),
             cc.delayTime(0.5),
@@ -696,7 +699,6 @@ cc.Class({
         if(this.b_game_end)
             return;
         this.b_game_end = true;
-        cc.log(this.b_game_end);
         this.dlg_mavelous.active = true;    
         this.dlg_mavelous.position = cc.v2(0, 1500);
         this.node.runAction(cc.sequence(
@@ -729,22 +731,42 @@ cc.Class({
                 {
                     act_type:"Add", act_cnt: 1, act_shape: "square", act_shape_cnt: 1,act_mode: 0, scale:  2, unit:180,
                     stick_allignments:[
-                        {x:-1, y:0, direction:0, status:1, movable: false,  index:0},
-                        {x:1, y:0, direction:0, status:1, movable: false,   index:1},
-                        {x:0, y:-1, direction:90, status:1, movable: false, index:2},
-                        {x:0, y: 1, direction:90, status:0, movable: true,  index:3},
+                        {x:-1,  y:0,    direction:0,    status:1,   movable: false,   index:0},
+                        {x:1,   y:0,    direction:0,    status:1,   movable: false,   index:1},
+                        {x:0,   y:-1,   direction:90,   status:1,   movable: false,   index:2},
+                        {x:0,   y: 1,   direction:90,   status:0,   movable: true,    index:3},
                     ]
                 },
                 {
                     act_type:"Add", act_cnt: 4, act_shape: "square", act_shape_cnt: 2,act_mode: 0, scale:  1.4, unit:130,
                     stick_allignments:[
-                        {x:-1, y:1, direction:0, status:0, movable: true,  index:0},
-                        {x:-1, y:-1, direction:0, status:1, movable: false,   index:1},
-                        {x:0, y:-2, direction:90, status:0, movable: true, index:2},
-                        {x:1, y: -1, direction:0, status:0, movable: true,  index:3},
-                        {x:1, y:1, direction:0, status:1, movable: false,  index:4},
-                        {x:0, y:2, direction:90, status:0, movable: true,   index:5},
-                        {x:0, y:0, direction:90, status:1, movable: false, index:6},
+                        {x:-1,  y:1,    direction:0,    status:0,   movable: true,    index:0},
+                        {x:-1,  y:-1,   direction:0,    status:1,   movable: false,   index:1},
+                        {x:0,   y:-2,   direction:90,   status:0,   movable: true,    index:2},
+                        {x:1,   y: -1,  direction:0,    status:0,   movable: true,    index:3},
+                        {x:1,   y:1,    direction:0,    status:1,   movable: false,   index:4},
+                        {x:0,   y:2,    direction:90,   status:0,   movable: true,    index:5},
+                        {x:0,   y:0,    direction:90,   status:1,   movable: false,   index:6},
+                    ]
+                },
+                {
+                    act_type:"Add", act_cnt: 1, act_shape: "square", act_shape_cnt: 3,act_mode: 0, scale: 1, unit:90,
+                    stick_allignments:[
+                        {x:-2,  y:2,    direction:0,    status:1,   movable: false,   index:0},
+                        {x:-2,  y:0,    direction:0,    status:1,   movable: false,   index:1},
+                        {x:-2,  y:-2,   direction:0,    status:1,   movable: false,   index:2},
+                        {x:-1,  y: -3,  direction:90,   status:1,   movable: false,   index:3},
+                        {x:1,   y:-3,   direction:90,   status:1,   movable: false,   index:4},
+                        {x:2,   y:-2,   direction:0,    status:1,   movable: false,   index:5},
+                        {x:2,   y:0,    direction:0,    status:1,   movable: false,   index:6},
+                        {x:2,   y:2,    direction:0,    status:1,   movable: false,   index:7},
+                        {x:1,   y:3,    direction:90,   status:1,   movable: false,   index:8},
+                        {x:-1,  y:3,    direction:90,   status:1,   movable: false,   index:9},
+                        {x:-1,  y:-1,   direction:90,   status:1,   movable: false,   index:10},
+                        {x:0,   y:-2,   direction:0,    status:0,   movable: true,    index:11},
+                        {x:1,   y:-1,   direction:90,   status:1,   movable: false,   index:12},
+                        {x:0,   y:0,    direction:0,    status:0,   movable: true,    index:13},
+                        {x:0,   y:2,    direction:0,    status:0,   movable: true,    index:14},
                     ]
                 }
             ]
@@ -755,12 +777,15 @@ cc.Class({
 
     get_pattern_square: function()
     {
-        var result = [         
-            [[0 , 1, 2, 3]],
-            [[0 ,6, 4, 5],[1 ,2, 3 ,6]],
+        var result = [
+            [         
+                [[0 , 1, 2, 3]],
+                [[0 ,6, 4, 5],[1 ,2, 3 ,6]],
+                [[2, 3 ,11, 10],[11 , 4, 5 , 12],[0 ,1, 10, 12, 6,7, 8, 9]],
+            ]
         ];
 
-        return result[this.game.curent_stage - 1];
+        return result[this.game.curent_level - 1][this.game.curent_stage - 1];
     },
 
     destroy_stick: function(stk)

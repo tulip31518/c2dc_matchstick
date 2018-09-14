@@ -201,7 +201,7 @@ cc.Class({
         this.load_game_info_asset();
         this.bsound_play = true;
         this.level = this.curent_level = 1;
-        this.stage = this.curent_stage = 1;
+        this.stage = this.curent_stage = 3;
         this.updateInterval = 1;
         this.parent_node = this.node;
         this.actions();

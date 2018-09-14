@@ -185,11 +185,6 @@ cc.Class({
         },
 
         b_game_on:false,
-
-        // act_type:    "",
-        // act_cnt:     0,
-        // act_shape:   "",
-        // act_shape_cnt:0,
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -752,8 +747,10 @@ cc.Class({
 
     check_stick_movable: function(status)
     {
+        
         for(var i = 0; i < this.arr_sticks_mini.length; i++)
         {
+            cc.log(this.arr_sticks_mini[i].active);
             if(status == 1)
             {
                 //Real stick

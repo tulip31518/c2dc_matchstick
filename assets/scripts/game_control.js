@@ -191,8 +191,7 @@ cc.Class({
 
     onLoad () 
     {
-        this.game = this.canvas.getComponent('game');        
-        this.reset_game();
+        this.game = this.canvas.getComponent('game'); 
         this.events();
         this.actions();        
     },
@@ -289,13 +288,11 @@ cc.Class({
         this.stage_dlg_pause.on(cc.Node.EventType.TOUCH_END, function () {            
             this.level_pan.active = true;
             this.top_pan.active = true;
-            this.reset_game();
             this.diable_game_pan();
             this.game.update_stage_button();
         }, this);
 
-        this.home_dlg_pause.on(cc.Node.EventType.TOUCH_END, function () {       
-            this.reset_game();
+        this.home_dlg_pause.on(cc.Node.EventType.TOUCH_END, function () {   
             this.diable_game_pan();            
             this.home_pan.active = true;
         }, this);
@@ -303,8 +300,7 @@ cc.Class({
 
     event_dlg_mavelous: function()
     {
-        this.home_dlg_mavelous.on(cc.Node.EventType.TOUCH_END, function () {       
-            this.reset_game();
+        this.home_dlg_mavelous.on(cc.Node.EventType.TOUCH_END, function () { 
             this.diable_game_pan();            
             this.home_pan.active = true;
             this.dlg_mavelous.active = false;
@@ -322,8 +318,6 @@ cc.Class({
             ));
             this.background.active = true;
             this.dlg_mavelous.active = false;
-            this.reset_game();
-            // this.stage_up();
             this.load_game();
         }, this);
 
@@ -357,6 +351,7 @@ cc.Class({
 
     load_game: function()
     {
+        this.reset_game();
         // this.task_info = this.get_stage_task();
         this.task_info = this.game.task[this.game.curent_level - 1][this.game.curent_stage - 1];
         this.stage.string = "STAGE " + this.game.curent_stage;
@@ -532,7 +527,6 @@ cc.Class({
         this.change_stick_direction(item);
                 
         var oldPos = cc.v2(0,0);
-        // var b_last_stick = false;
         for(var i = this.arr_sticks_mini.length - 1; i >= 0; i--)
         {            
             if(this.arr_sticks_mini[i].getComponent('stick_mini').status)
@@ -541,8 +535,11 @@ cc.Class({
                 // this.arr_sticks_mini[i].active = false;
                 this.arr_sticks_mini[i].getComponent('stick_mini').status = false;
                 this.arr_sticks_mini[i].getComponent('stick_mini').update_image();
-                if(i == 0)
+                if(i == 0 && this.task_info.act_type != "Remove")
                     this.b_last_stick = true;
+                else
+                    this.b_last_stick = false;
+                this.progress.getComponent('progress').update_image();
                 break;
             }
         }
@@ -585,8 +582,11 @@ cc.Class({
                 this.arr_sticks_mini[i].getComponent('stick_mini').status = true;                
                 this.arr_sticks_mini[i].getComponent('stick_mini').update_image();
                 oldPos = this.arr_sticks_mini[i].position;
-                if(i == this.arr_sticks_mini.length - 1)
+                if(i == this.arr_sticks_mini.length - 1 && this.task_info.act_type == "Remove")
                     this.b_last_stick = true;
+                else
+                    this.b_last_stick = false;
+                    this.progress.getComponent('progress').update_image();
                 break;
             }    
         }
@@ -605,23 +605,20 @@ cc.Class({
             cc.rotateBy(0.1, -stick.getComponent('stick').direction),
             cc.delayTime(0.1),
             cc.callFunc(this.destroy_stick, this, stick)
-        ));
-
-        // if(this.b_last_stick)
-        // {   
-        //     this.check_game_result();
-        // }   
+        )); 
     },
 
     check_game_result: function()
     {  
         this.arr_result = [];
         var arr_stick_indexes = [];
+        this.b_shape_count = true;
         for(var i = 0; i < this.arr_sticks.length; i++)
         {            
             arr_stick_indexes.push(this.arr_sticks[i].getComponent('stick').index);
         }    
         
+
         var result = this.get_pattern_square(); 
         var temp = [];
         var count = 0;
@@ -644,10 +641,37 @@ cc.Class({
             count = 0; 
         }
         // cc.log(this.arr_result); 
+        this.check_stick_place_rule(arr_stick_indexes);
         if(this.arr_result.length == this.task_info.act_shape_cnt)
-        { 
+            this.b_shape_count = true;
+        else
+            this.b_shape_count = false;
+
+        this.progress.getComponent('progress').update_image();
+
+        if(this.b_all_placed && this.b_shape_count && this.b_last_stick)    
             this.success_stage();
+    },
+
+    check_stick_place_rule: function(arr_stick_indexes)
+    {
+        var arr_indexes_of_result = [];
+        this.b_all_placed = false;
+        for(var i = 0; i < this.arr_result.length; i++)
+        {
+            for(var j = 0; j < this.arr_result[i].length; j++)
+                arr_indexes_of_result.push(this.arr_result[i][j].getComponent('stick').index);
         }
+
+        for(var i = 0; i < arr_stick_indexes.length; i++)
+        {
+            if(arr_indexes_of_result.indexOf(arr_stick_indexes[i]) == -1)
+            {                
+                return this.b_all_placed;
+            }
+        }
+        this.b_all_placed = true;
+        return this.b_all_placed;
     },
 
     success_stage: function()
@@ -752,7 +776,6 @@ cc.Class({
             if(this.arr_sticks[i].getComponent('stick').index == stk.getComponent('stick').index)
                 this.arr_sticks.splice(i, 1);
         this.arr_added_sticks.splice(this.arr_added_sticks.length - 1, 1);
-        // this.arr_sticks.splice(this.arr_sticks.length - 1, 1);
         stk.destroy();
         if(this.b_last_stick)
         {   
@@ -790,6 +813,8 @@ cc.Class({
         this.bHintHand = false;
         this.b_stick_movable = true;
         this.b_last_stick = false;
+        this.b_all_placed = false;
+        this.b_shape_count = false;
 
         this.arr_sticks = [];
         this.arr_sticks_shadow = [];
@@ -797,6 +822,8 @@ cc.Class({
         this.arr_sticks_mini_shadow = [];
         this.arr_added_sticks = [];
         this.arr_result = [];
+
+        this.progress.getComponent('progress').update_image();
     },    
 
     // update (dt) {},

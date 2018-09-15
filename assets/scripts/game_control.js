@@ -376,7 +376,9 @@ cc.Class({
         }
         else 
         {
+            cc.log("hint_remove");
             this.hint_remove_stick(hint_add_or_remove);
+            cc.log("hint_Add");
             this.hint_add_stick(hint_move);
         }
     },
@@ -400,7 +402,9 @@ cc.Class({
             var stick_script = this.arr_sticks[i].getComponent('stick'); 
             if(stick_script.index == hint_add_or_remove[this.hint_count - 1])
             {   
-                this.remove_stick(this.arr_sticks[i]);
+                var stk = this.arr_sticks[i];
+                this.arr_sticks.splice(i, 1);
+                this.remove_stick(stk);
             }    
         }
     },
@@ -426,16 +430,16 @@ cc.Class({
         this.level.string = "LEVEL " + this.game.curent_level;
         this.hint.string = this.game.hints;
 
-        if(this.task_info.act_shape != "formula")
+        if(this.task_info.act_shape != "formula")            
+                this.task_content.string = this.task_info.act_type + " " + this.task_info.act_cnt + " matchsticks to create " 
+                + this.task_info.act_shape_cnt + "\n" + this.task_info.act_shape + "s." ;
+        else
             if(this.task_info.math_string != "")
                 this.task_content.string = this.task_info.act_type + " " + this.task_info.act_cnt + " matchsticks \n to " 
                 + this.task_info.math_string + "." ;
             else
-                this.task_content.string = this.task_info.act_type + " " + this.task_info.act_cnt + " matchsticks to create " 
-                + this.task_info.act_shape_cnt + "\n" + this.task_info.act_shape + "s." ;
-        else
-            this.task_content.string = this.task_info.act_type + " " + this.task_info.act_cnt + " matchsticks to correct the " 
-                + "\n" + this.task_info.act_shape + "." ;
+                this.task_content.string = this.task_info.act_type + " " + this.task_info.act_cnt + " matchsticks to correct the " 
+                    + "\n" + this.task_info.act_shape + "." ;
 
         this.b_game_on = true;        
 
@@ -599,13 +603,13 @@ cc.Class({
                 
         var oldPos = cc.v2(0,0);
         for(var i = this.arr_sticks_mini.length - 1; i >= 0; i--)
-        {            
+        {       
             if(this.arr_sticks_mini[i].getComponent('stick_mini').status)
             {
-                oldPos = this.arr_sticks_mini[i].position;               
-                // this.arr_sticks_mini[i].active = false;
+                oldPos = this.arr_sticks_mini[i].position;
                 this.arr_sticks_mini[i].getComponent('stick_mini').status = false;
                 this.arr_sticks_mini[i].getComponent('stick_mini').update_image();
+                
                 if(i == 0 && this.task_info.act_type != "Remove")
                     this.b_last_stick = true;
                 else
@@ -643,7 +647,6 @@ cc.Class({
     remove_stick: function(stick)
     {       
         var oldPos = cc.v2(0,0);
-        // var b_last_stick = false;
         for(var i = 0; i < this.arr_sticks_mini.length; i++)
         {            
             if(!this.arr_sticks_mini[i].getComponent('stick_mini').status)
@@ -689,7 +692,9 @@ cc.Class({
             arr_stick_indexes.push(this.arr_sticks[i].getComponent('stick').index);
         }        
 
-        var result = this.get_pattern_square(); 
+        // var result = this.get_pattern_square(); 
+        var result = this.get_pattern_square(this.task_info.result);
+        cc.log(this.task_info.result);
         var temp = [];
         var count = 0;
         for(var i = 0; i < result.length; i++)
@@ -704,13 +709,14 @@ cc.Class({
                 }           
             }
             if(count == result[i].length)
-            {               
+            {          
+                cc.log(result[i]);
                 this.arr_result.push(temp);
+                
             }    
             temp = [];
             count = 0; 
         }
-        // cc.log(this.arr_result); 
         this.check_stick_place_rule(arr_stick_indexes);
         if(this.arr_result.length == this.task_info.act_shape_cnt)
             this.b_shape_count = true;
@@ -746,7 +752,9 @@ cc.Class({
 
     success_stage: function()
     {
-        this.stage_up();       
+        if(this.b_game_successed)
+            return;
+        this.b_game_successed = true;
         this.spr_game_clear.position = cc.v2(800, 0);
         this.spr_game_clear.runAction(cc.sequence(
             cc.delayTime(0.5),
@@ -804,6 +812,7 @@ cc.Class({
             this.in_pause_Action
         ));
         this.background.active = false;
+        this.stage_up();
     },
 
     stage_up: function()
@@ -821,29 +830,31 @@ cc.Class({
         this.game.update_stage_button();
     },    
 
-    get_pattern_square: function()
+    get_pattern_square: function(index)
     {
-        var result = [
-            [         
-                [[0 , 1, 2, 3]],
-                [[0 ,6, 4, 5],[1 ,2, 3 ,6]],
-                [[2, 3 ,11, 10],[11 , 4, 5 , 12],[0 ,1, 10, 12, 6,7, 8, 9]],
-                [[0, 1, 2, 3, 4, 5]],
-                [[0, 8, 10, 7], [1, 2, 9, 8], [0, 1, 2, 3, 4, 5, 6, 7]],                    //Stage 5
-                [[0, 1, 2, 8], [9, 8, 3, 4], [6, 7, 9, 5]],
-                [[0, 1, 5], [6,2,3], [4,5,6]],
-                [[0, 1, 2, 3], [4, 5, 6, 7], [9, 10, 11, 12],[4, 8, 12, 3]],
-                [[0, 8, 10, 7], [8, 1, 2, 9], [11, 9, 3, 4],[5, 6, 10, 11],[0,1,2,3,4,5,6,7]],
-                [[3, 4, 7, 8, 12, 13, 16, 17, 19, 20, 22, 23, 24]],                         //Stage 10
-                [[0,18,3],[3,4,5],[5, 6, 15],[6,7,8],[8,9,10],[10,11,12],[12,13,14],[14,15,16],[16,17,2],[1,2,18],[5,2,17,13,12,6],[3,16,14,8,7,4]],
-                [[1,10,11,12], [12,13,14,6], [1, 2, 3, 4, 5, 6, 13, 10],[6,7,8,9,0,1,11,14]],
-                [[0,18,3],[3,4,5],[5, 6, 15],[6,7,8],[8,9,10],[10,11,12],[12,13,14],[14,15,16],[16,17,2],[1,2,18],[5,2,17,13,12,6],[3,16,14,8,7,4]],
-                [[0,2,3,4,5,6]], 
-                [[0,1,2],[2,3,4],[4,5,6],[6,7,8]],                                          //Stage 15
-            ]
+        var result = [                     
+            [[0 , 1, 2, 3]],
+            [[0 ,6, 4, 5],[1 ,2, 3 ,6]],
+            [[2, 3 ,11, 10],[11 , 4, 5 , 12],[0 ,1, 10, 12, 6,7, 8, 9]],
+            [[0, 1, 2, 3, 4, 5]],
+            [[0, 8, 10, 7], [1, 2, 9, 8], [0, 1, 2, 3, 4, 5, 6, 7]],                    //Stage 5
+            [[0, 1, 2, 8], [9, 8, 3, 4], [6, 7, 9, 5]],
+            [[0, 1, 5], [6,2,3], [4,5,6]],
+            [[0, 1, 2, 3], [4, 5, 6, 7], [9, 10, 11, 12],[4, 8, 12, 3]],
+            [[0, 8, 10, 7], [8, 1, 2, 9], [11, 9, 3, 4],[5, 6, 10, 11],[0,1,2,3,4,5,6,7]],
+            [[3, 4, 7, 8, 12, 13, 16, 17, 19, 20, 22, 23, 24]],                         
+            [[0,18,3],[3,4,5],[5, 6, 15],[6,7,8],[8,9,10],[10,11,12],[12,13,14],[14,15,16],[16,17,2],[1,2,18],[5,2,17,13,12,6],[3,16,14,8,7,4]],
+            [[1,10,11,12], [12,13,14,6], [1, 2, 3, 4, 5, 6, 13, 10],[6,7,8,9,0,1,11,14]],
+            [[0,2,3,4,5,6]], 
+            [[0,1,2],[2,3,4],[4,5,6],[6,7,8]],
+            [[0,1,2,3,4,5,6]],
+            [[0,6,5],[7,1,8],[8,2,9],[9,3,10],[4,5,10]],
+            [[0,3,4,6]],
+            [[0,1,2,3,4,5,6,8,9,12,13,14,16,17,21,22]],                                 
+            [[0,12,19,11],[10,19,23,18], [8,9,17,18],[1,13,20,12],[20,21,22,23],[22,16,7,17],[2,3,13,14],[21,14,4,15],[5,6,10,15],
+                [0,1,13,21,22,18,10,11],[7,8,9,10,19,20,21,16],[1,2,3,4,15,22,23,12],[4,5,6,7,17,23,20,14],[0,1,2,3,4,5,6,7,8,9,10,11]],            
         ];
-
-        return result[this.game.curent_level - 1][this.game.curent_stage - 1];
+        return result[index];
     },
 
     destroy_stick: function(stk)
@@ -895,6 +906,7 @@ cc.Class({
         this.b_game_on = false;
         this.b_game_start = false;
         this.b_game_end = false;
+        this.b_game_successed = false;
         this.bHintHand = false;
         this.b_stick_movable = true;
         this.b_last_stick = false;

@@ -201,7 +201,7 @@ cc.Class({
         this.load_game_info_asset();
         this.bsound_play = true;
         this.level = this.curent_level = 1;
-        this.stage = this.curent_stage = 15;
+        this.stage = this.curent_stage = 22;
         this.updateInterval = 1;
         this.parent_node = this.node;
         this.actions();
@@ -223,7 +223,6 @@ cc.Class({
                 if (!info) {
                     if (asset instanceof cc.JsonAsset) {
                         info = JSON.stringify(asset.json, null, 4);
-                        cc.log(asset.name);
                         this.task = JSON.parse(info);
                     }
                     else {
@@ -532,8 +531,7 @@ cc.Class({
     },
 
     update_stage_button: function()
-    {
-        cc.log("update stage panel");
+    {        
         var btns = this.lvl_detail_pan.getComponentsInChildren("stage_button");
         for(var i = 0; i < btns.length; i++) 
             btns[i].brefresh = true;

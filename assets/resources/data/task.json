@@ -2,7 +2,7 @@
     [
         {
             "act_type":"Add", "act_cnt": 1, "act_shape": "square", "act_shape_cnt": 1, "scale":  2, "unit":180, "stage":1,
-            "hint":[[0],[]],
+            "result":0, "hint":[[0],[]],
             "stick_allignments":[
                 {"x":-1,  "y":0,    "direction":0,    "status":1,   "movable": false,   "index":0},
                 {"x":1,   "y":0,    "direction":0,    "status":1,   "movable": false,   "index":1},
@@ -12,7 +12,7 @@
         },
         {
             "act_type":"Add", "act_cnt": 4, "act_shape": "square", "act_shape_cnt": 2, "scale":  1.4, "unit":130,"stage":2,
-            "hint":[[0, 2, 3, 5],[]],
+            "result":1, "hint":[[0, 2, 3, 5],[]],
             "stick_allignments":[
                 {"x":-1,  "y":1,    "direction":0,    "status":0,   "movable": true,    "index":0},
                 {"x":-1,  "y":-1,   "direction":0,    "status":1,   "movable": false,   "index":1},
@@ -25,7 +25,7 @@
         },
         {
             "act_type":"Add", "act_cnt": 1, "act_shape": "square", "act_shape_cnt": 3, "scale": 1, "unit":90,"stage":3,
-            "hint":[[11],[]],
+            "result":2, "hint":[[11],[]],
             "stick_allignments":[
                 {"x":-2,  "y":2,    "direction":0,    "status":1,   "movable": false,   "index":0},
                 {"x":-2,  "y":0,    "direction":0,    "status":1,   "movable": false,   "index":1},
@@ -46,7 +46,7 @@
         },
         {
             "act_type":"Remove", "act_cnt": 1, "act_shape": "triangle", "act_shape_cnt": 1, "scale": 1.2, "unit":120,"stage":4,
-            "hint":[[6],[]],
+            "result":3, "hint":[[6],[]],
             "stick_allignments":[
                 {"x":-0.5,  "y":0.87,   "direction":30,     "status":1,   "movable": true,   "index":0},
                 {"x":-1.5,  "y":-0.87,  "direction":30,     "status":1,   "movable": true,   "index":1},
@@ -59,7 +59,7 @@
         },
         {
             "act_type":"Remove", "act_cnt": 1, "act_shape": "square", "act_shape_cnt": 2, "scale": 1.5, "unit":140,"stage":5,
-            "hint":[[9],[]],
+            "result":4, "hint":[[9],[]],
             "stick_allignments":[
                 {"x":-2,    "y":1,      "direction":0,      "status":1,   "movable": true,   "index":0},
                 {"x":-2,    "y":-1,     "direction":0,      "status":1,   "movable": true,   "index":1},
@@ -76,7 +76,7 @@
         },
         {
             "act_type":"Remove", "act_cnt": 2, "act_shape": "square", "act_shape_cnt": 2, "scale": 1.5, "unit":140,"stage":6,
-            "hint":[[3, 4],[]],
+            "result":5, "hint":[[3, 4],[]],
             "stick_allignments":[
                 {"x":-1,    "y":0,      "direction":90,     "status":1,   "movable": true,   "index":0},
                 {"x":-2,    "y":-1,     "direction":0,      "status":1,   "movable": true,   "index":1},
@@ -92,7 +92,7 @@
         },
         {
             "act_type":"Add", "act_cnt": 1, "act_shape": "triangle", "act_shape_cnt": 3, "scale": 1.2, "unit":120,"stage":7,
-            "hint":[[4],[]],
+            "result" :6, "hint":[[4],[]],
             "stick_allignments":[
                 {"x":-1.5,  "y":0,      "direction":30,     "status":1,   "movable": false,   "index":0},
                 {"x":-1,    "y":-0.87,  "direction":90,     "status":1,   "movable": false,   "index":1},
@@ -105,7 +105,7 @@
         },
         {
             "act_type":"Remove", "act_cnt": 1, "act_shape": "square", "act_shape_cnt": 3, "scale": 1, "unit":90,"stage":8,
-            "hint":[[8],[]],
+            "result" :7, "hint":[[8],[]],
             "stick_allignments":[
                 {"x":-1,    "y":1,      "direction":90,     "status":1,   "movable": true,   "index":0},
                 {"x":-2,    "y":0,      "direction":0,      "status":1,   "movable": true,   "index":1},
@@ -124,7 +124,7 @@
         },
         {
             "act_type":"Move", "act_cnt": 1, "act_shape": "square", "act_shape_cnt": 2, "scale": 1.5, "unit":140,"stage":9,
-            "hint":[[9],[11]],
+            "result" :8, "hint":[[9],[11]],
             "stick_allignments":[
                 {"x":-2,    "y":1,      "direction":0,      "status":1,   "movable": true,   "index":0},
                 {"x":-2,    "y":-1,     "direction":0,      "status":1,   "movable": true,   "index":1},
@@ -142,7 +142,7 @@
         },
         {
             "act_type":"Add", "act_cnt": 1, "act_shape": "formula", "act_shape_cnt": 1, "scale": 0.8, "unit":70,"stage":10,"math_string":"",
-            "hint":[[7],[]],
+            "result" :9, "hint":[[7],[]],
             "stick_allignments":[
                 {"x":-4,        "y":3.5,        "direction":0,      "status":0,   "movable": true,   "index":0},
                 {"x":-4,        "y":1.5,        "direction":0,      "status":0,   "movable": true,   "index":1},
@@ -173,7 +173,7 @@
         },
         {
             "act_type":"Add", "act_cnt": 1, "act_shape": "triangle", "act_shape_cnt": 3, "scale": 1.2, "unit":120,"stage":11,
-            "hint":[[6],[]],
+            "result" :10, "hint":[[6],[]],
             "stick_allignments":[
                 {"x":-2.5,      "y":0.87,       "direction":30,      "status":0,   "movable": true,     "index":0},
                 {"x":-2.5,      "y":-0.87,      "direction":-30,     "status":0,   "movable": true,     "index":1},
@@ -198,7 +198,7 @@
         },
         {
             "act_type":"Remove", "act_cnt": 1, "act_shape": "square", "act_shape_cnt": 2, "scale": 1, "unit":90,"stage":12,
-            "hint":[[12],[]],
+            "result" :11, "hint":[[12],[]],
             "stick_allignments":[
                 {"x":-2,    "y":2,      "direction":0,      "status":1,   "movable": true,   "index":0},
                 {"x":-2,    "y":0,      "direction":0,      "status":1,   "movable": true,   "index":1},
@@ -219,7 +219,7 @@
         },
         {
             "act_type":"Move", "act_cnt": 2, "act_shape": "triangle", "act_shape_cnt": 3, "scale": 1.2, "unit":120,"stage":13,
-            "hint":[[10,11],[16,14]],
+            "result" :10, "hint":[[10,11],[16,14]],
             "stick_allignments":[
                 {"x":-2.5,      "y":0.87,       "direction":30,      "status":0,   "movable": true,     "index":0},
                 {"x":-2.5,      "y":-0.87,      "direction":-30,     "status":0,   "movable": true,     "index":1},
@@ -243,8 +243,8 @@
             ]
         },
         {
-            "act_type":"Add", "act_cnt": 1, "act_shape": "formula", "act_shape_cnt": 1, "scale":  1.4, "unit":130,"stage":2,"math_string":"multiply 3 by 3",
-            "hint":[[0],[]],
+            "act_type":"Add", "act_cnt": 1, "act_shape": "formula", "act_shape_cnt": 1, "scale":  1.4, "unit":130,"stage":14,"math_string":"multiply 3 by 3",
+            "result" :12, "hint":[[0],[]],
             "stick_allignments":[
                 {"x":-1,  "y":1,    "direction":0,    "status":0,   "movable": true,     "index":0},
                 {"x":-1,  "y":-1,   "direction":0,    "status":0,   "movable": true,     "index":1},
@@ -256,8 +256,8 @@
             ]
         },
         {
-            "act_type":"Remove", "act_cnt": 1, "act_shape": "triangle", "act_shape_cnt": 3, "scale": 1, "unit":100,"stage":7,
-            "hint":[[3],[]],
+            "act_type":"Remove", "act_cnt": 1, "act_shape": "triangle", "act_shape_cnt": 3, "scale": 1, "unit":100,"stage":15,
+            "result" :13, "hint":[[3],[]],
             "stick_allignments":[
                 {"x":-2,    "y":0,      "direction":30,     "status":1,   "movable": true,   "index":0},
                 {"x":-1.5,  "y":-0.87,  "direction":90,     "status":1,   "movable": true,   "index":1},
@@ -268,6 +268,221 @@
                 {"x":1,     "y":0,      "direction":-30,    "status":1,   "movable": true,   "index":6},
                 {"x":1.5,   "y":0.87,   "direction":90,     "status":1,   "movable": true,   "index":7},
                 {"x":2,     "y":0,      "direction":30,     "status":1,   "movable": true,   "index":8}
+            ]
+        },
+        {
+            "act_type":"Add", "act_cnt": 2, "act_shape": "triangle", "act_shape_cnt": 5, "scale": 1.2, "unit":120,"stage":16,
+            "result" :10, "hint":[[16,14],[]],
+            "stick_allignments":[
+                {"x":-2.5,      "y":0.87,       "direction":30,      "status":0,   "movable": true,     "index":0},
+                {"x":-2.5,      "y":-0.87,      "direction":-30,     "status":0,   "movable": true,     "index":1},
+                {"x":-1.5,      "y":-0.87,      "direction":30,      "status":1,   "movable": false,    "index":2},
+                {"x":-1.5,      "y":0.87,       "direction":-30,     "status":0,   "movable": true,     "index":3},
+                {"x":-1,        "y":1.74,       "direction":90,      "status":0,   "movable": true,     "index":4},
+                {"x":-0.5,      "y":0.87,       "direction":30,      "status":1,   "movable": false,    "index":5},
+                {"x":0.5,       "y":0.87,       "direction":-30,     "status":1,   "movable": false,    "index":6},
+                {"x":1,         "y":1.74,       "direction":90,      "status":0,   "movable": true,     "index":7},
+                {"x":1.5,       "y":0.87,       "direction":30,      "status":0,   "movable": true,     "index":8},
+                {"x":2.5,       "y":0.87,       "direction":-30,     "status":0,   "movable": true,     "index":9},
+                {"x":2,         "y":0,          "direction":90,      "status":0,   "movable": true,     "index":10},
+                {"x":2.5,       "y":-0.87,      "direction":30,      "status":0,   "movable": true,     "index":11},
+                {"x":1.5,       "y":-0.87,      "direction":-30,     "status":1,   "movable": false,    "index":12},
+                {"x":1,         "y":-1.74,      "direction":90,      "status":1,   "movable": false,    "index":13},
+                {"x":0.5,       "y":-0.87,      "direction":30,      "status":0,   "movable": true,     "index":14},
+                {"x":0,         "y":0,          "direction":90,      "status":1,   "movable": false,    "index":15},
+                {"x":-0.5,      "y":-0.87,      "direction":-30,     "status":0,   "movable": true,     "index":16},
+                {"x":-1,        "y":-1.74,      "direction":90,      "status":1,   "movable": false,    "index":17},
+                {"x":-2,        "y":0,          "direction":90,      "status":0,   "movable": true,     "index":18}                
+            ]
+        },
+        {
+            "act_type":"Add", "act_cnt": 3, "act_shape": "formula", "act_shape_cnt": 1, "scale":  1.4, "unit":130,"stage":17,"math_string":"multiply 4 by 2",
+            "result" :14, "hint":[[1,2,5],[]],
+            "stick_allignments":[
+                {"x":-1,  "y":1,    "direction":0,    "status":1,   "movable": false,    "index":0},
+                {"x":-1,  "y":-1,   "direction":0,    "status":0,   "movable": true,     "index":1},
+                {"x":0,   "y":-2,   "direction":90,   "status":0,   "movable": true,     "index":2},
+                {"x":1,   "y": -1,  "direction":0,    "status":1,   "movable": false,    "index":3},
+                {"x":1,   "y":1,    "direction":0,    "status":1,   "movable": false,    "index":4},
+                {"x":0,   "y":2,    "direction":90,   "status":0,   "movable": true,     "index":5},
+                {"x":0,   "y":0,    "direction":90,   "status":1,   "movable": false,    "index":6}
+            ]
+        },
+        {
+            "act_type":"Remove", "act_cnt": 1, "act_shape": "triangle", "act_shape_cnt": 4, "scale": 1.2, "unit":120,"stage":18,
+            "result" :15, "hint":[[4],[]],
+            "stick_allignments":[
+                {"x":-1.5,      "y":0.87,       "direction":30,      "status":1,   "movable": true,     "index":0},
+                {"x":0,         "y":-1.74,      "direction":90,      "status":1,   "movable": true,     "index":1},
+                {"x":1.5,       "y":-0.87,      "direction":30,      "status":1,   "movable": true,     "index":2},
+                {"x":1.5,       "y":0.87,       "direction":-30,     "status":1,   "movable": true,     "index":3},
+                {"x":0,         "y":1.74,       "direction":90,      "status":1,   "movable": true,     "index":4},
+                {"x":-0.5,      "y":0.87,       "direction":-30,     "status":1,   "movable": true,     "index":5},
+                {"x":-1,        "y":0,          "direction":90,      "status":1,   "movable": true,     "index":6},
+                {"x":-0.5,      "y":-0.87,      "direction":30,      "status":1,   "movable": true,     "index":7},
+                {"x":0.5,       "y":-0.87,      "direction":-30,     "status":1,   "movable": true,     "index":8},
+                {"x":1,         "y":0,          "direction":90,      "status":1,   "movable": true,     "index":9},
+                {"x":0.5,       "y":0.87,       "direction":30,      "status":1,   "movable": true,     "index":10}            
+            ]
+        },
+        {
+            "act_type":"Move", "act_cnt": 1, "act_shape": "triangle", "act_shape_cnt": 3, "scale": 1.2, "unit":120,"stage":19,
+            "result" :10, "hint":[[4],[5]],
+            "stick_allignments":[
+                {"x":-2.5,      "y":0.87,       "direction":30,      "status":1,   "movable": true,     "index":0},
+                {"x":-2.5,      "y":-0.87,      "direction":-30,     "status":0,   "movable": true,     "index":1},
+                {"x":-1.5,      "y":-0.87,      "direction":30,      "status":1,   "movable": true,     "index":2},
+                {"x":-1.5,      "y":0.87,       "direction":-30,     "status":1,   "movable": true,     "index":3},
+                {"x":-1,        "y":1.74,       "direction":90,      "status":1,   "movable": true,     "index":4},
+                {"x":-0.5,      "y":0.87,       "direction":30,      "status":0,   "movable": true,     "index":5},
+                {"x":0.5,       "y":0.87,       "direction":-30,     "status":1,   "movable": true,     "index":6},
+                {"x":1,         "y":1.74,       "direction":90,      "status":1,   "movable": true,     "index":7},
+                {"x":1.5,       "y":0.87,       "direction":30,      "status":1,   "movable": true,     "index":8},
+                {"x":2.5,       "y":0.87,       "direction":-30,     "status":0,   "movable": true,     "index":9},
+                {"x":2,         "y":0,          "direction":90,      "status":0,   "movable": true,     "index":10},
+                {"x":2.5,       "y":-0.87,      "direction":30,      "status":0,   "movable": true,     "index":11},
+                {"x":1.5,       "y":-0.87,      "direction":-30,     "status":1,   "movable": true,     "index":12},
+                {"x":1,         "y":-1.74,      "direction":90,      "status":1,   "movable": true,     "index":13},
+                {"x":0.5,       "y":-0.87,      "direction":30,      "status":0,   "movable": true,     "index":14},
+                {"x":0,         "y":0,          "direction":90,      "status":0,   "movable": true,     "index":15},
+                {"x":-0.5,      "y":-0.87,      "direction":-30,     "status":0,   "movable": true,     "index":16},
+                {"x":-1,        "y":-1.74,      "direction":90,      "status":1,   "movable": true,     "index":17},
+                {"x":-2,        "y":0,          "direction":90,      "status":1,   "movable": true,     "index":18}                
+            ]
+        },
+        {
+            "act_type":"Add", "act_cnt": 2, "act_shape": "formula", "act_shape_cnt": 1, "scale":  1.4, "unit":130,"stage":20,"math_string":"multiply 2 by 4",
+            "result" :14, "hint":[[0,3],[]],
+            "stick_allignments":[
+                {"x":-1,  "y":1,    "direction":0,    "status":0,   "movable": true,     "index":0},
+                {"x":-1,  "y":-1,   "direction":0,    "status":1,   "movable": false,    "index":1},
+                {"x":0,   "y":-2,   "direction":90,   "status":1,   "movable": false,    "index":2},
+                {"x":1,   "y": -1,  "direction":0,    "status":0,   "movable": true,     "index":3},
+                {"x":1,   "y":1,    "direction":0,    "status":1,   "movable": false,    "index":4},
+                {"x":0,   "y":2,    "direction":90,   "status":1,   "movable": false,    "index":5},
+                {"x":0,   "y":0,    "direction":90,   "status":1,   "movable": false,    "index":6}
+            ]
+        },
+        {
+            "act_type":"Remove", "act_cnt": 2, "act_shape": "square", "act_shape_cnt": 2, "scale": 1.5, "unit":140,"stage":21,
+            "result" :8, "hint":[[8,10],[]],
+            "stick_allignments":[
+                {"x":-2,    "y":1,      "direction":0,      "status":1,   "movable": true,   "index":0},
+                {"x":-2,    "y":-1,     "direction":0,      "status":1,   "movable": true,   "index":1},
+                {"x":-1,    "y":-2,     "direction":90,     "status":1,   "movable": true,   "index":2},
+                {"x":1,     "y":-2,     "direction":90,     "status":1,   "movable": true,   "index":3},
+                {"x":2,     "y":-1,     "direction":0,      "status":1,   "movable": true,   "index":4},
+                {"x":2,     "y":1,      "direction":0,      "status":1,   "movable": true,   "index":5},
+                {"x":1,     "y":2,      "direction":90,     "status":1,   "movable": true,   "index":6},
+                {"x":-1,    "y":2,      "direction":90,     "status":1,   "movable": true,   "index":7},
+                {"x":-1,    "y":0,      "direction":90,     "status":1,   "movable": true,   "index":8},
+                {"x":0,     "y":-1,     "direction":0,      "status":1,   "movable": true,   "index":9},
+                {"x":0,     "y":1,      "direction":0,      "status":1,   "movable": true,   "index":10},
+                {"x":1,     "y":0,      "direction":90,     "status":1,   "movable": true,   "index":11}
+            ]
+        },
+        {
+            "act_type":"Move", "act_cnt": 1, "act_shape": "square", "act_shape_cnt":3, "scale": 1, "unit":90,"stage":22,
+            "result" :18, "hint":[[16],[22]],
+            "stick_allignments":[
+                {"x":-3,    "y":2,      "direction":0,      "status":1,   "movable": true,   "index":0},
+                {"x":-3,    "y":0,      "direction":0,      "status":1,   "movable": true,   "index":1},
+                {"x":-3,    "y":-2,     "direction":0,      "status":0,   "movable": true,   "index":2},
+                {"x":-2,    "y":-3,     "direction":90,     "status":0,   "movable": true,   "index":3},
+                {"x":0,     "y":-3,     "direction":90,     "status":1,   "movable": true,   "index":4},
+                {"x":2,     "y":-3,     "direction":90,     "status":1,   "movable": true,   "index":5},
+                {"x":3,     "y":-2,     "direction":0,      "status":1,   "movable": true,   "index":6},
+                {"x":3,     "y":0,      "direction":0,      "status":1,   "movable": true,   "index":7},
+                {"x":3,     "y":2,      "direction":0,      "status":0,   "movable": true,   "index":8},
+                {"x":2,     "y":3,      "direction":90,     "status":0,   "movable": true,   "index":9},
+                {"x":0,     "y":3,      "direction":90,     "status":1,   "movable": true,   "index":10},
+                {"x":-2,    "y":3,      "direction":90,     "status":1,   "movable": true,   "index":11},
+                {"x":-2,    "y":1,      "direction":90,      "status":0,   "movable": true,   "index":12},
+                {"x":-2,    "y":-1,     "direction":90,      "status":1,   "movable": true,   "index":13},
+                {"x":-1,    "y":-2,     "direction":0,     "status":1,   "movable": true,   "index":14},
+                {"x":1,     "y":-2,     "direction":0,     "status":0,   "movable": true,   "index":15},
+                {"x":2,     "y":-1,     "direction":90,      "status":1,   "movable": true,   "index":16},
+                {"x":2,     "y":1,      "direction":90,      "status":1,   "movable": true,   "index":17},
+                {"x":1,     "y":2,      "direction":0,     "status":1,   "movable": true,   "index":18},
+                {"x":-1,    "y":2,      "direction":0,     "status":0,   "movable": true,   "index":19},
+                {"x":-1,    "y":0,      "direction":0,     "status":1,   "movable": true,   "index":20},
+                {"x":0,     "y":-1,     "direction":90,      "status":1,   "movable": true,   "index":21},
+                {"x":1,     "y":0,      "direction":0,     "status":0,   "movable": true,   "index":22},
+                {"x":0,     "y":1,      "direction":90,      "status":1,   "movable": true,   "index":23}
+            ]
+        },
+        {
+            "act_type":"Remove", "act_cnt": 3, "act_shape": "formula", "act_shape_cnt": 1, "scale":  1.4, "unit":130,"stage":23,"math_string":"halve the 8",
+            "result" :16, "hint":[[1,2,5],[]],
+            "stick_allignments":[
+                {"x":-1,  "y":1,    "direction":0,    "status":1,   "movable": true,    "index":0},
+                {"x":-1,  "y":-1,   "direction":0,    "status":1,   "movable": true,    "index":1},
+                {"x":0,   "y":-2,   "direction":90,   "status":1,   "movable": true,    "index":2},
+                {"x":1,   "y": -1,  "direction":0,    "status":1,   "movable": true,    "index":3},
+                {"x":1,   "y":1,    "direction":0,    "status":1,   "movable": true,    "index":4},
+                {"x":0,   "y":2,    "direction":90,   "status":1,   "movable": true,    "index":5},
+                {"x":0,   "y":0,    "direction":90,   "status":1,   "movable": true,    "index":6}
+            ]
+        },
+        {
+            "act_type":"Add", "act_cnt": 1, "act_shape": "formula", "act_shape_cnt": 1, "scale": 0.8, "unit":70,"stage":10,"math_string":"",
+            "result" :17, "hint":[[4],[]],
+            "stick_allignments":[
+                {"x":-4,        "y":3.5,        "direction":0,      "status":1,   "movable": false,   "index":0},
+                {"x":-4,        "y":1.5,        "direction":0,      "status":1,   "movable": false,   "index":1},
+                {"x":-3,        "y":0.5,        "direction":90,     "status":1,   "movable": false,   "index":2},
+                {"x":-2,        "y":1.5,        "direction":0,      "status":1,   "movable": false,   "index":3},
+                {"x":-2,        "y":3.5,        "direction":0,      "status":0,   "movable": true,   "index":4},
+                {"x":-3,        "y":4.5,        "direction":90,     "status":1,   "movable": false,   "index":5},
+                {"x":-3,        "y":2.5,        "direction":90,     "status":1,   "movable": false,   "index":6},
+                {"x":0,         "y":2.5,        "direction":0,      "status":0,   "movable": true,    "index":7},
+                {"x":0,         "y":2.5,        "direction":90,     "status":1,   "movable": false,   "index":8},
+                {"x":2,         "y":3.5,        "direction":0,      "status":1,   "movable": false,   "index":9},
+                {"x":2,         "y":1.5,        "direction":0,      "status":0,   "movable": true,    "index":10},
+                {"x":3,         "y":0.5,        "direction":90,     "status":0,   "movable": true,    "index":11},
+                {"x":4,         "y":1.5,        "direction":0,      "status":1,   "movable": false,   "index":12},
+                {"x":4,         "y":3.5,        "direction":0,      "status":1,   "movable": false,   "index":13},
+                {"x":3,         "y":4.5,        "direction":90,     "status":1,   "movable": false,   "index":14},
+                {"x":3,         "y":2.5,        "direction":90,     "status":0,   "movable": true,    "index":15},
+                {"x":-1.5,      "y":-2,         "direction":90,     "status":1,   "movable": false,   "index":16},
+                {"x":-1.5,      "y":-3,         "direction":90,     "status":1,   "movable": false,   "index":17},
+                {"x":0.5,       "y":-1.5,       "direction":0,      "status":0,   "movable": true,    "index":18},
+                {"x":0.5,       "y":-3.5,       "direction":0,      "status":0,   "movable": true,    "index":19},
+                {"x":1.5,       "y":-4.5,       "direction":90,     "status":0,   "movable": true,    "index":20},
+                {"x":2.5,       "y":-3.5,       "direction":0,      "status":1,   "movable": false,   "index":21},
+                {"x":2.5,       "y":-1.5,       "direction":0,      "status":1,   "movable": false,   "index":22},
+                {"x":1.5,       "y":-0.5,       "direction":90,     "status":0,   "movable": true,    "index":23},
+                {"x":1.5,       "y":-2.5,       "direction":90,     "status":0,   "movable": true,    "index":24}
+            ]
+        },
+        {
+            "act_type":"Move", "act_cnt": 1, "act_shape": "square", "act_shape_cnt":4, "scale": 1, "unit":90,"stage":25,
+            "result" :18, "hint":[[12],[23]],
+            "stick_allignments":[
+                {"x":-3,    "y":2,      "direction":0,      "status":1,   "movable": true,   "index":0},
+                {"x":-3,    "y":0,      "direction":0,      "status":1,   "movable": true,   "index":1},
+                {"x":-3,    "y":-2,     "direction":0,      "status":1,   "movable": true,   "index":2},
+                {"x":-2,    "y":-3,     "direction":90,     "status":1,   "movable": true,   "index":3},
+                {"x":0,     "y":-3,     "direction":90,     "status":1,   "movable": true,   "index":4},
+                {"x":2,     "y":-3,     "direction":90,     "status":1,   "movable": true,   "index":5},
+                {"x":3,     "y":-2,     "direction":0,      "status":1,   "movable": true,   "index":6},
+                {"x":3,     "y":0,      "direction":0,      "status":1,   "movable": true,   "index":7},
+                {"x":3,     "y":2,      "direction":0,      "status":1,   "movable": true,   "index":8},
+                {"x":2,     "y":3,      "direction":90,     "status":1,   "movable": true,   "index":9},
+                {"x":0,     "y":3,      "direction":90,     "status":1,   "movable": true,   "index":10},
+                {"x":-2,    "y":3,      "direction":90,     "status":1,   "movable": true,   "index":11},
+                {"x":-2,    "y":1,      "direction":90,     "status":1,   "movable": true,   "index":12},
+                {"x":-2,    "y":-1,     "direction":90,     "status":0,   "movable": true,   "index":13},
+                {"x":-1,    "y":-2,     "direction":0,      "status":0,   "movable": true,   "index":14},
+                {"x":1,     "y":-2,     "direction":0,      "status":0,   "movable": true,   "index":15},
+                {"x":2,     "y":-1,     "direction":90,     "status":1,   "movable": true,   "index":16},
+                {"x":2,     "y":1,      "direction":90,     "status":0,   "movable": true,   "index":17},
+                {"x":1,     "y":2,      "direction":0,      "status":1,   "movable": true,   "index":18},
+                {"x":-1,    "y":2,      "direction":0,      "status":1,   "movable": true,   "index":19},
+                {"x":-1,    "y":0,      "direction":0,      "status":1,   "movable": true,   "index":20},
+                {"x":0,     "y":-1,     "direction":90,     "status":1,   "movable": true,   "index":21},
+                {"x":1,     "y":0,      "direction":0,      "status":1,   "movable": true,   "index":22},
+                {"x":0,     "y":1,      "direction":90,     "status":0,   "movable": true,   "index":23}
             ]
         }
     ]

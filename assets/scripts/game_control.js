@@ -427,7 +427,11 @@ cc.Class({
         this.hint.string = this.game.hints;
 
         if(this.task_info.act_shape != "formula")
-            this.task_content.string = this.task_info.act_type + " " + this.task_info.act_cnt + " matchsticks to create " 
+            if(this.task_info.math_string != "")
+                this.task_content.string = this.task_info.act_type + " " + this.task_info.act_cnt + " matchsticks \n to " 
+                + this.task_info.math_string + "." ;
+            else
+                this.task_content.string = this.task_info.act_type + " " + this.task_info.act_cnt + " matchsticks to create " 
                 + this.task_info.act_shape_cnt + "\n" + this.task_info.act_shape + "s." ;
         else
             this.task_content.string = this.task_info.act_type + " " + this.task_info.act_cnt + " matchsticks to correct the " 
@@ -683,8 +687,7 @@ cc.Class({
         for(var i = 0; i < this.arr_sticks.length; i++)
         {            
             arr_stick_indexes.push(this.arr_sticks[i].getComponent('stick').index);
-        }    
-        
+        }        
 
         var result = this.get_pattern_square(); 
         var temp = [];
@@ -826,11 +829,17 @@ cc.Class({
                 [[0 ,6, 4, 5],[1 ,2, 3 ,6]],
                 [[2, 3 ,11, 10],[11 , 4, 5 , 12],[0 ,1, 10, 12, 6,7, 8, 9]],
                 [[0, 1, 2, 3, 4, 5]],
-                [[0, 8, 10, 7], [1, 2, 9, 8], [0, 1, 2, 3, 4, 5, 6, 7]],
+                [[0, 8, 10, 7], [1, 2, 9, 8], [0, 1, 2, 3, 4, 5, 6, 7]],                    //Stage 5
                 [[0, 1, 2, 8], [9, 8, 3, 4], [6, 7, 9, 5]],
                 [[0, 1, 5], [6,2,3], [4,5,6]],
                 [[0, 1, 2, 3], [4, 5, 6, 7], [9, 10, 11, 12],[4, 8, 12, 3]],
                 [[0, 8, 10, 7], [8, 1, 2, 9], [11, 9, 3, 4],[5, 6, 10, 11],[0,1,2,3,4,5,6,7]],
+                [[3, 4, 7, 8, 12, 13, 16, 17, 19, 20, 22, 23, 24]],                         //Stage 10
+                [[0,18,3],[3,4,5],[5, 6, 15],[6,7,8],[8,9,10],[10,11,12],[12,13,14],[14,15,16],[16,17,2],[1,2,18],[5,2,17,13,12,6],[3,16,14,8,7,4]],
+                [[1,10,11,12], [12,13,14,6], [1, 2, 3, 4, 5, 6, 13, 10],[6,7,8,9,0,1,11,14]],
+                [[0,18,3],[3,4,5],[5, 6, 15],[6,7,8],[8,9,10],[10,11,12],[12,13,14],[14,15,16],[16,17,2],[1,2,18],[5,2,17,13,12,6],[3,16,14,8,7,4]],
+                [[0,2,3,4,5,6]], 
+                [[0,1,2],[2,3,4],[4,5,6],[6,7,8]],                                          //Stage 15
             ]
         ];
 

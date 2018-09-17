@@ -32,8 +32,10 @@ cc.Class({
 
         this.node.on(cc.Node.EventType.TOUCH_END, function () {
 
-            if(!this.game.check_stick_movable(this.status) || !this.movable)
-            // if(!this.movable)
+            if(!this.game.check_stick_movable(this.status) || !this.movable)            
+                return;
+
+            if(this.game.b_game_start_animation || this.game.b_game_end_animation) 
                 return;
 
             if(this.status == 0)

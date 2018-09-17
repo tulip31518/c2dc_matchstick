@@ -184,11 +184,16 @@ cc.Class({
             type: cc.Label
         },
 
-        level: 3,
-        stage: 8,
+        level_all_stages:{
+            default:null,
+            type: cc.Label
+        },
+
+        level: 1,
+        stage: 1,
         curent_level: 1,
         curent_stage: 1,
-        hints:12,
+        hints:2,
         blevel_detail: false,
     },
 
@@ -201,7 +206,7 @@ cc.Class({
         this.load_game_info_asset();
         this.bsound_play = true;
         this.level = this.curent_level = 1;
-        this.stage = this.curent_stage = 49;
+        this.stage = this.curent_stage = 1;
         this.updateInterval = 1;
         this.parent_node = this.node;
         this.actions();
@@ -289,7 +294,8 @@ cc.Class({
                 this.lvl_large_pan.active = true;
                 this.lvl_detail_pan.active = false;
                 this.toppan_title.string = "LEVEL";
-                this.passed_stages.string = (this.level - 1) * 50 + this.stage;
+                this.passed_stages.string = (this.level - 1) * 10 + this.stage;
+                this.update_stage_button();
             }
             else
             {
@@ -532,9 +538,22 @@ cc.Class({
 
     update_stage_button: function()
     {        
+        this.passed_stages.string = (this.level - 1) * 10 + this.stage;
+        this.level_all_stages.string = " / 50";
+        if(this.lvl_detail_pan.active)
+        {
+            this.passed_stages.string = this.stage;
+            this.level_all_stages.string = " / 10";
+        }
         var btns = this.lvl_detail_pan.getComponentsInChildren("stage_button");
         for(var i = 0; i < btns.length; i++) 
             btns[i].brefresh = true;
+        
+        var btns_level = this.lvl_large_pan.getComponentsInChildren("level_button");
+            for(var i = 0; i < btns_level.length; i++) 
+            {
+                btns_level[i].brefresh = true;
+            }    
     },
 
     load_game_menu: function()
@@ -545,12 +564,12 @@ cc.Class({
         this.lvl_detail_pan.active = false;
         this.lvl_large_pan.active = true;
         this.toppan_title.string = "LEVEL";
-        this.level_pan.position = cc.v2(0, -200);
-        this.passed_stages.string = (this.level - 1) * 50 + this.stage;
+        this.level_pan.position = cc.v2(0, -200);        
+        this.update_stage_button();
         this.level_pan.runAction(cc.sequence(
             cc.moveBy(0.2, cc.v2(0, 50)),
             this.comein_levelAction
-        )); 
+        ));        
     },
 
     start () {

@@ -45,9 +45,10 @@ cc.Class({
         this.level_sprite = this.getComponent(cc.Sprite); 
         this.refresh_btn_info();
 
-        this.node.on(cc.Node.EventType.TOUCH_END, function () {
-            if(this.stage < this.game.stage + 3)                                    //Available stage
-            {
+        this.node.on(cc.Node.EventType.TOUCH_END, function () 
+        {
+            if(this.game.curent_level < this.game.level || this.stage < this.game.stage + 3)                                    //Available stage
+            {                
                 this.game.curent_stage = this.stage;
                 this.game.load_game_pan();
             }

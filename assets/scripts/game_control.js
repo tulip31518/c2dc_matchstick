@@ -211,10 +211,12 @@ cc.Class({
         this.event_dlg_progress();
         this.event_dlg_mavelous();
         this.restart.on(cc.Node.EventType.TOUCH_END, function(){
+            if(this.b_game_start_animation || this.b_game_successed) return;
             this.event_restart();
         }, this);
 
         this.hint_btn.on(cc.Node.EventType.TOUCH_END, function(){
+            if(this.b_game_start_animation || this.b_game_successed) return;
             this.execute_hint();
         }, this);
     },
@@ -240,7 +242,9 @@ cc.Class({
 
     event_dlg_progress: function()
     {
-        this.progress.on(cc.Node.EventType.TOUCH_END, function () { 
+        this.progress.on(cc.Node.EventType.TOUCH_END, function () 
+        { 
+            if(this.b_game_start_animation || this.b_game_successed) return;
             this.dlg_progress.active = true;
             this.dlg_progress.getComponent('progress_dialog').update_info();
             this.dlg_progress.position = cc.v2(0, 1500);
@@ -255,7 +259,8 @@ cc.Class({
             this.background.active = false;
         }, this);
 
-        this.close_dlg_progress.on(cc.Node.EventType.TOUCH_END, function () {       
+        this.close_dlg_progress.on(cc.Node.EventType.TOUCH_END, function () 
+        {       
             this.node.runAction(cc.sequence(
                 cc.delayTime(0.1),
                 cc.fadeIn(0.5)
@@ -276,7 +281,9 @@ cc.Class({
 
     event_dlg_pause: function()
     {
-        this.pause.on(cc.Node.EventType.TOUCH_END, function () { 
+        this.pause.on(cc.Node.EventType.TOUCH_END, function () 
+        { 
+            if(this.b_game_start_animation || this.b_game_successed) return;
             this.dlg_pause.active = true;    
             this.dlg_pause.position = cc.v2(0, 1500);
             this.node.runAction(cc.sequence(
@@ -362,8 +369,10 @@ cc.Class({
 
     execute_hint: function()
     {
+        if(this.game.hints == 0) return;
+        this.game.hints --;
+        this.hint.string = this.game.hints;
         this.hint_count ++;
-        this.hints --;
         var hint_add_or_remove = this.task_info.hint[0];
         var hint_move = this.task_info.hint[1];
         if(this.task_info.act_type == "Add")
@@ -512,7 +521,7 @@ cc.Class({
     {
         if(this.b_game_start)
             return;
-        this.b_game_start = true;
+        this.b_game_start = true;        
         this.spr_game_start.position = cc.v2(800, 0);
         this.spr_game_start.runAction(cc.sequence(
             cc.delayTime(0.5),
@@ -537,6 +546,7 @@ cc.Class({
         }
         else
             this.hint_hand.active = false;
+        this.b_game_start_animation = false;
     },
 
     change_hint_hand_image: function()
@@ -752,7 +762,7 @@ cc.Class({
     },
 
     success_stage: function()
-    {
+    {        
         if(this.b_game_successed)
             return;
         this.b_game_successed = true;
@@ -819,15 +829,21 @@ cc.Class({
     stage_up: function()
     {
         this.game.curent_stage++;
-        if(this.game.curent_stage == 50)
+        if(this.game.curent_stage > 10)
+        {
             this.game.curent_level++;
+            this.game.curent_stage = 1;
+            this.game.stage = 1;
+        }
 
-        if(this.game.curent_stage == this.game.stage)
-            this.game.stage ++;
-        if(this.game.curent_stage > this.game.stage)
-            this.game.stage  = this.game.curent_stage;
         if(this.game.curent_level > this.game.level)
             this.game.level++;
+
+        if(this.game.curent_level == this.game.level)        
+        {
+            if(this.game.curent_stage >= this.game.stage)
+                this.game.stage  = this.game.curent_stage;
+        }
         this.game.update_stage_button();
     },    
 
@@ -928,6 +944,7 @@ cc.Class({
         this.b_last_stick = false;
         this.b_all_placed = false;
         this.b_shape_count = false;
+        this.b_game_start_animation = true;
 
         this.arr_sticks = [];
         this.arr_sticks_shadow = [];

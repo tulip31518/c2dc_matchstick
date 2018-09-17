@@ -170,9 +170,11 @@
                 {"x":1.5,       "y":-0.5,       "direction":90,     "status":1,   "movable": false,  "index":23},
                 {"x":1.5,       "y":-2.5,       "direction":90,     "status":1,   "movable": false,  "index":24}
             ]
-        },
+        }        
+    ],
+    [
         {
-            "act_type":"Add", "act_cnt": 1, "act_shape": "triangle", "act_shape_cnt": 3, "scale": 1.2, "unit":120,"stage":11,
+            "act_type":"Add", "act_cnt": 1, "act_shape": "triangle", "act_shape_cnt": 3, "scale": 1.2, "unit":120,"stage":1,
             "result" :10, "hint":[[6],[]],
             "stick_allignments":[
                 {"x":-2.5,      "y":0.87,       "direction":30,      "status":0,   "movable": true,     "index":0},
@@ -197,7 +199,7 @@
             ]
         },
         {
-            "act_type":"Remove", "act_cnt": 1, "act_shape": "square", "act_shape_cnt": 2, "scale": 1, "unit":90,"stage":12,
+            "act_type":"Remove", "act_cnt": 1, "act_shape": "square", "act_shape_cnt": 2, "scale": 1, "unit":90,"stage":2,
             "result" :11, "hint":[[12],[]],
             "stick_allignments":[
                 {"x":-2,    "y":2,      "direction":0,      "status":1,   "movable": true,   "index":0},
@@ -218,7 +220,7 @@
             ]
         },
         {
-            "act_type":"Move", "act_cnt": 2, "act_shape": "triangle", "act_shape_cnt": 3, "scale": 1.2, "unit":120,"stage":13,
+            "act_type":"Move", "act_cnt": 2, "act_shape": "triangle", "act_shape_cnt": 3, "scale": 1.2, "unit":120,"stage":3,
             "result" :10, "hint":[[10,11],[16,14]],
             "stick_allignments":[
                 {"x":-2.5,      "y":0.87,       "direction":30,      "status":0,   "movable": true,     "index":0},
@@ -243,7 +245,7 @@
             ]
         },
         {
-            "act_type":"Add", "act_cnt": 1, "act_shape": "formula", "act_shape_cnt": 1, "scale":  1.4, "unit":130,"stage":14,"math_string":"multiply 3 by 3",
+            "act_type":"Add", "act_cnt": 1, "act_shape": "formula", "act_shape_cnt": 1, "scale":  1.4, "unit":130,"stage":4,"math_string":"multiply 3 by 3",
             "result" :12, "hint":[[0],[]],
             "stick_allignments":[
                 {"x":-1,  "y":1,    "direction":0,    "status":0,   "movable": true,     "index":0},
@@ -256,7 +258,7 @@
             ]
         },
         {
-            "act_type":"Remove", "act_cnt": 1, "act_shape": "triangle", "act_shape_cnt": 3, "scale": 1, "unit":100,"stage":15,
+            "act_type":"Remove", "act_cnt": 1, "act_shape": "triangle", "act_shape_cnt": 3, "scale": 1, "unit":100,"stage":5,
             "result" :13, "hint":[[3],[]],
             "stick_allignments":[
                 {"x":-2,    "y":0,      "direction":30,     "status":1,   "movable": true,   "index":0},
@@ -271,7 +273,7 @@
             ]
         },
         {
-            "act_type":"Add", "act_cnt": 2, "act_shape": "triangle", "act_shape_cnt": 5, "scale": 1.2, "unit":120,"stage":16,
+            "act_type":"Add", "act_cnt": 2, "act_shape": "triangle", "act_shape_cnt": 5, "scale": 1.2, "unit":120,"stage":6,
             "result" :10, "hint":[[16,14],[]],
             "stick_allignments":[
                 {"x":-2.5,      "y":0.87,       "direction":30,      "status":0,   "movable": true,     "index":0},
@@ -296,7 +298,7 @@
             ]
         },
         {
-            "act_type":"Add", "act_cnt": 3, "act_shape": "formula", "act_shape_cnt": 1, "scale":  1.4, "unit":130,"stage":17,"math_string":"multiply 4 by 2",
+            "act_type":"Add", "act_cnt": 3, "act_shape": "formula", "act_shape_cnt": 1, "scale":  1.4, "unit":130,"stage":7,"math_string":"multiply 4 by 2",
             "result" :14, "hint":[[1,2,5],[]],
             "stick_allignments":[
                 {"x":-1,  "y":1,    "direction":0,    "status":1,   "movable": false,    "index":0},
@@ -309,7 +311,7 @@
             ]
         },
         {
-            "act_type":"Remove", "act_cnt": 1, "act_shape": "triangle", "act_shape_cnt": 4, "scale": 1.2, "unit":120,"stage":48,
+            "act_type":"Remove", "act_cnt": 1, "act_shape": "triangle", "act_shape_cnt": 4, "scale": 1.2, "unit":120,"stage":8,
             "result" :15, "hint":[[5],[]],
             "stick_allignments":[
                 {"x":-1.5,      "y":0.87,       "direction":30,      "status":1,   "movable": true,     "index":0},
@@ -328,7 +330,7 @@
             ]
         },
         {
-            "act_type":"Move", "act_cnt": 1, "act_shape": "triangle", "act_shape_cnt": 3, "scale": 1.2, "unit":120,"stage":19,
+            "act_type":"Move", "act_cnt": 1, "act_shape": "triangle", "act_shape_cnt": 3, "scale": 1.2, "unit":120,"stage":9,
             "result" :10, "hint":[[4],[5]],
             "stick_allignments":[
                 {"x":-2.5,      "y":0.87,       "direction":30,      "status":1,   "movable": true,     "index":0},
@@ -353,7 +355,7 @@
             ]
         },
         {
-            "act_type":"Add", "act_cnt": 2, "act_shape": "formula", "act_shape_cnt": 1, "scale":  1.4, "unit":130,"stage":20,"math_string":"multiply 2 by 4",
+            "act_type":"Add", "act_cnt": 2, "act_shape": "formula", "act_shape_cnt": 1, "scale":  1.4, "unit":130,"stage":10,"math_string":"multiply 2 by 4",
             "result" :14, "hint":[[0,3],[]],
             "stick_allignments":[
                 {"x":-1,  "y":1,    "direction":0,    "status":0,   "movable": true,     "index":0},
@@ -364,9 +366,11 @@
                 {"x":0,   "y":2,    "direction":90,   "status":1,   "movable": false,    "index":5},
                 {"x":0,   "y":0,    "direction":90,   "status":1,   "movable": false,    "index":6}
             ]
-        },
+        }
+    ],
+    [
         {
-            "act_type":"Remove", "act_cnt": 2, "act_shape": "square", "act_shape_cnt": 2, "scale": 1.5, "unit":140,"stage":21,
+            "act_type":"Remove", "act_cnt": 2, "act_shape": "square", "act_shape_cnt": 2, "scale": 1.5, "unit":140,"stage":1,
             "result" :8, "hint":[[8,10],[]],
             "stick_allignments":[
                 {"x":-2,    "y":1,      "direction":0,      "status":1,   "movable": true,   "index":0},
@@ -384,7 +388,7 @@
             ]
         },
         {
-            "act_type":"Move", "act_cnt": 1, "act_shape": "square", "act_shape_cnt":3, "scale": 1, "unit":90,"stage":22,
+            "act_type":"Move", "act_cnt": 1, "act_shape": "square", "act_shape_cnt":3, "scale": 1, "unit":90,"stage":2,
             "result" :18, "hint":[[16],[22]],
             "stick_allignments":[
                 {"x":-3,    "y":2,      "direction":0,      "status":1,   "movable": true,   "index":0},
@@ -414,7 +418,7 @@
             ]
         },
         {
-            "act_type":"Remove", "act_cnt": 3, "act_shape": "formula", "act_shape_cnt": 1, "scale":  1.4, "unit":130,"stage":23,"math_string":"halve the 8",
+            "act_type":"Remove", "act_cnt": 3, "act_shape": "formula", "act_shape_cnt": 1, "scale":  1.4, "unit":130,"stage":3,"math_string":"halve the 8",
             "result" :16, "hint":[[1,2,5],[]],
             "stick_allignments":[
                 {"x":-1,  "y":1,    "direction":0,    "status":1,   "movable": true,    "index":0},
@@ -427,7 +431,7 @@
             ]
         },
         {
-            "act_type":"Add", "act_cnt": 1, "act_shape": "formula", "act_shape_cnt": 1, "scale": 0.8, "unit":70,"stage":24,"math_string":"",
+            "act_type":"Add", "act_cnt": 1, "act_shape": "formula", "act_shape_cnt": 1, "scale": 0.8, "unit":70,"stage":4,"math_string":"",
             "result" :17, "hint":[[4],[]],
             "stick_allignments":[
                 {"x":-4,        "y":3.5,        "direction":0,      "status":1,   "movable": false,   "index":0},
@@ -458,7 +462,7 @@
             ]
         },
         {
-            "act_type":"Move", "act_cnt": 1, "act_shape": "square", "act_shape_cnt":4, "scale": 1, "unit":90,"stage":25,
+            "act_type":"Move", "act_cnt": 1, "act_shape": "square", "act_shape_cnt":4, "scale": 1, "unit":90,"stage":5,
             "result" :18, "hint":[[12],[23]],
             "stick_allignments":[
                 {"x":-3,    "y":2,      "direction":0,      "status":1,   "movable": true,   "index":0},
@@ -488,7 +492,7 @@
             ]
         },
         {
-            "act_type":"Move", "act_cnt": 1, "act_shape": "triangle", "act_shape_cnt": 3, "scale": 1.2, "unit":120,"stage":26,
+            "act_type":"Move", "act_cnt": 1, "act_shape": "triangle", "act_shape_cnt": 3, "scale": 1.2, "unit":120,"stage":6,
             "result" :10, "hint":[[16],[18]],
             "stick_allignments":[
                 {"x":-2.5,      "y":0.87,       "direction":30,      "status":1,   "movable": true,     "index":0},
@@ -513,7 +517,7 @@
             ]
         },
         {
-            "act_type":"Move", "act_cnt": 1, "act_shape": "square", "act_shape_cnt":3, "scale": 0.8, "unit":70,"stage":27,
+            "act_type":"Move", "act_cnt": 1, "act_shape": "square", "act_shape_cnt":3, "scale": 0.8, "unit":70,"stage":7,
             "result" :19, "hint":[[18],[21]],
             "stick_allignments":[
                 {"x":-4,    "y":3,      "direction":0,      "status":1,   "movable": true,   "index":0},
@@ -559,7 +563,7 @@
             ]
         },
         {
-            "act_type":"Add", "act_cnt": 1, "act_shape": "formula", "act_shape_cnt": 1, "scale": 0.8, "unit":70,"stage":28,"math_string":"",
+            "act_type":"Add", "act_cnt": 1, "act_shape": "formula", "act_shape_cnt": 1, "scale": 0.8, "unit":70,"stage":8,"math_string":"",
             "result" :20, "hint":[[1],[]],
             "stick_allignments":[
                 {"x":-4,        "y":3.5,        "direction":0,      "status":1,   "movable": false,   "index":0},
@@ -603,7 +607,7 @@
             ]
         },
         {
-            "act_type":"Add", "act_cnt": 2, "act_shape": "square", "act_shape_cnt": 4, "scale": 1, "unit":90,"stage":29,
+            "act_type":"Add", "act_cnt": 2, "act_shape": "square", "act_shape_cnt": 4, "scale": 1, "unit":90,"stage":9,
             "result" :11, "hint":[[1,13],[]],
             "stick_allignments":[
                 {"x":-2,    "y":2,      "direction":0,      "status":1,   "movable": false,   "index":0},
@@ -626,7 +630,7 @@
             ]
         },
         {
-            "act_type":"Move", "act_cnt": 1, "act_shape": "triangle", "act_shape_cnt": 2, "scale": 1.2, "unit":120,"stage":30,
+            "act_type":"Move", "act_cnt": 1, "act_shape": "triangle", "act_shape_cnt": 2, "scale": 1.2, "unit":120,"stage":10,
             "result" :10, "hint":[[15],[5]],
             "stick_allignments":[
                 {"x":-2.5,      "y":0.87,       "direction":30,      "status":0,   "movable": true,     "index":0},
@@ -649,9 +653,11 @@
                 {"x":-1,        "y":-1.74,      "direction":90,      "status":1,   "movable": true,     "index":17},
                 {"x":-2,        "y":0,          "direction":90,      "status":0,   "movable": true,     "index":18}                
             ]
-        },
+        }
+    ],
+    [
         {
-            "act_type":"Add", "act_cnt": 1, "act_shape": "formula", "act_shape_cnt": 1, "scale": 0.8, "unit":70,"stage":31,"math_string":"",
+            "act_type":"Add", "act_cnt": 1, "act_shape": "formula", "act_shape_cnt": 1, "scale": 0.8, "unit":70,"stage":1,"math_string":"",
             "result" :21, "hint":[[1],[]],
             "stick_allignments":[
                 {"x":-4,        "y":3.5,        "direction":0,      "status":1,   "movable": false,   "index":0},
@@ -682,7 +688,7 @@
             ]
         },
         {
-            "act_type":"Move", "act_cnt": 1, "act_shape": "square", "act_shape_cnt": 4, "scale": 0.9, "unit":80,"stage":32,
+            "act_type":"Move", "act_cnt": 1, "act_shape": "square", "act_shape_cnt": 4, "scale": 0.9, "unit":80,"stage":2,
             "result" :22, "hint":[[1],[17]],
             "stick_allignments":[
                 {"x":-2,    "y":3,      "direction":0,      "status":1,   "movable": true,   "index":0},
@@ -710,7 +716,7 @@
             ]
         },
         {
-            "act_type":"Remove", "act_cnt": 2, "act_shape": "triangle", "act_shape_cnt": 4, "scale": 1.2, "unit":120,"stage":33,
+            "act_type":"Remove", "act_cnt": 2, "act_shape": "triangle", "act_shape_cnt": 4, "scale": 1.2, "unit":120,"stage":3,
             "result" :10, "hint":[[4,15],[]],
             "stick_allignments":[
                 {"x":-2.5,      "y":0.87,       "direction":30,      "status":1,   "movable": true,     "index":0},
@@ -735,7 +741,7 @@
             ]
         },
         {
-            "act_type":"Remove", "act_cnt": 2, "act_shape": "square", "act_shape_cnt": 3, "scale": 1, "unit":90,"stage":34,
+            "act_type":"Remove", "act_cnt": 2, "act_shape": "square", "act_shape_cnt": 3, "scale": 1, "unit":90,"stage":4,
             "result" :11, "hint":[[10,12],[]],
             "stick_allignments":[
                 {"x":-2,    "y":2,      "direction":0,      "status":1,   "movable": true,   "index":0},
@@ -758,7 +764,7 @@
             ]
         },
         {
-            "act_type":"Move", "act_cnt": 1, "act_shape": "square", "act_shape_cnt":4, "scale": 1, "unit":90,"stage":35,
+            "act_type":"Move", "act_cnt": 1, "act_shape": "square", "act_shape_cnt":4, "scale": 1, "unit":90,"stage":5,
             "result" :18, "hint":[[12],[23]],
             "stick_allignments":[
                 {"x":-3,    "y":2,      "direction":0,      "status":1,   "movable": true,   "index":0},
@@ -788,7 +794,7 @@
             ]
         },
         {
-            "act_type":"Add", "act_cnt": 1, "act_shape": "formula", "act_shape_cnt": 1, "scale": 0.8, "unit":70,"stage":36,"math_string":"",
+            "act_type":"Add", "act_cnt": 1, "act_shape": "formula", "act_shape_cnt": 1, "scale": 0.8, "unit":70,"stage":6,"math_string":"",
             "result" :23, "hint":[[1],[]],
             "stick_allignments":[
                 {"x":-4,        "y":3.5,        "direction":0,      "status":1,   "movable": false,   "index":0},
@@ -819,7 +825,7 @@
             ]
         },
         {
-            "act_type":"Add", "act_cnt": 2, "act_shape": "triangle", "act_shape_cnt": 7, "scale": 1.2, "unit":120,"stage":37,
+            "act_type":"Add", "act_cnt": 2, "act_shape": "triangle", "act_shape_cnt": 7, "scale": 1.2, "unit":120,"stage":7,
             "result" :10, "hint":[[12,13],[]],
             "stick_allignments":[
                 {"x":-2.5,      "y":0.87,       "direction":30,      "status":1,   "movable": false,     "index":0},
@@ -844,7 +850,7 @@
             ]
         },
         {
-            "act_type":"Add", "act_cnt": 1, "act_shape": "square", "act_shape_cnt":3, "scale": 1, "unit":90,"stage":38,
+            "act_type":"Add", "act_cnt": 1, "act_shape": "square", "act_shape_cnt":3, "scale": 1, "unit":90,"stage":8,
             "result" :18, "hint":[[1],[]],
             "stick_allignments":[
                 {"x":-3,    "y":2,      "direction":0,      "status":1,   "movable": false,   "index":0},
@@ -874,7 +880,7 @@
             ]
         },
         {
-            "act_type":"Remove", "act_cnt": 1, "act_shape": "formula", "act_shape_cnt": 1, "scale": 0.8, "unit":70,"stage":39,"math_string":"",
+            "act_type":"Remove", "act_cnt": 1, "act_shape": "formula", "act_shape_cnt": 1, "scale": 0.8, "unit":70,"stage":9,"math_string":"",
             "result" :24, "hint":[[22],[]],
             "stick_allignments":[
                 {"x":-4,        "y":3.5,        "direction":0,      "status":1,   "movable": true,   "index":0},
@@ -905,7 +911,7 @@
             ]
         },
         {
-            "act_type":"Add", "act_cnt": 1, "act_shape": "square", "act_shape_cnt":3, "scale": 1, "unit":90,"stage":40,
+            "act_type":"Add", "act_cnt": 1, "act_shape": "square", "act_shape_cnt":3, "scale": 1, "unit":90,"stage":10,
             "result" :18, "hint":[[14],[]],
             "stick_allignments":[
                 {"x":-3,    "y":2,      "direction":0,      "status":1,   "movable": false,   "index":0},
@@ -933,9 +939,11 @@
                 {"x":1,     "y":0,      "direction":0,      "status":0,   "movable": true,     "index":22},
                 {"x":0,     "y":1,      "direction":90,     "status":1,   "movable": false,    "index":23}
             ]
-        },
+        }
+    ],
+    [
         {
-            "act_type":"Remove", "act_cnt": 1, "act_shape": "formula", "act_shape_cnt": 1, "scale": 0.8, "unit":70,"stage":41,"math_string":"",
+            "act_type":"Remove", "act_cnt": 1, "act_shape": "formula", "act_shape_cnt": 1, "scale": 0.8, "unit":70,"stage":1,"math_string":"",
             "result" :25, "hint":[[1],[]],
             "stick_allignments":[
                 {"x":-4,        "y":3.5,        "direction":0,      "status":1,   "movable": true,   "index":0},
@@ -979,7 +987,7 @@
             ]
         },
         {
-            "act_type":"Remove", "act_cnt": 2, "act_shape": "triangle", "act_shape_cnt": 5, "scale": 1.2, "unit":120,"stage":42,
+            "act_type":"Remove", "act_cnt": 2, "act_shape": "triangle", "act_shape_cnt": 5, "scale": 1.2, "unit":120,"stage":2,
             "result" :10, "hint":[[0,9],[]],
             "stick_allignments":[
                 {"x":-2.5,      "y":0.87,       "direction":30,      "status":1,   "movable": true,      "index":0},
@@ -1004,7 +1012,7 @@
             ]
         },
         {
-            "act_type":"Move", "act_cnt": 1, "act_shape": "formula", "act_shape_cnt": 1, "scale": 0.8, "unit":70,"stage":43,"math_string":"",
+            "act_type":"Move", "act_cnt": 1, "act_shape": "formula", "act_shape_cnt": 1, "scale": 0.8, "unit":70,"stage":3,"math_string":"",
             "result" :26, "hint":[[22],[19]],
             "stick_allignments":[
                 {"x":-4,        "y":3.5,        "direction":0,      "status":1,   "movable": true,   "index":0},
@@ -1039,7 +1047,7 @@
             ]
         },
         {
-            "act_type":"Move", "act_cnt": 2, "act_shape": "square", "act_shape_cnt": 2, "scale": 1.5, "unit":140,"stage":44,
+            "act_type":"Move", "act_cnt": 2, "act_shape": "square", "act_shape_cnt": 2, "scale": 1.5, "unit":140,"stage":4,
             "result" :8, "hint":[[8,10],[5,6]],
             "stick_allignments":[
                 {"x":-2,    "y":1,      "direction":0,      "status":1,   "movable": true,   "index":0},
@@ -1057,7 +1065,7 @@
             ]
         },
         {
-            "act_type":"Move", "act_cnt": 2, "act_shape": "triangle", "act_shape_cnt": 2, "scale": 1.2, "unit":120,"stage":45,
+            "act_type":"Move", "act_cnt": 2, "act_shape": "triangle", "act_shape_cnt": 2, "scale": 1.2, "unit":120,"stage":5,
             "result" :15, "hint":[[0,1],[6,8]],
             "stick_allignments":[
                 {"x":-1.5,      "y":0.87,       "direction":30,      "status":1,   "movable": true,     "index":0},
@@ -1076,7 +1084,7 @@
             ]
         },
         {
-            "act_type":"Remove", "act_cnt": 1, "act_shape": "formula", "act_shape_cnt": 1, "scale": 0.8, "unit":70,"stage":46,"math_string":"",
+            "act_type":"Remove", "act_cnt": 1, "act_shape": "formula", "act_shape_cnt": 1, "scale": 0.8, "unit":70,"stage":6,"math_string":"",
             "result" :27, "hint":[[18],[]],
             "stick_allignments":[
                 {"x":-4,        "y":3.5,        "direction":0,      "status":1,   "movable": true,   "index":0},
@@ -1111,7 +1119,7 @@
             ]
         },
         {
-            "act_type":"Move", "act_cnt": 2, "act_shape": "square", "act_shape_cnt": 4, "scale": 0.9, "unit":80,"stage":47,
+            "act_type":"Move", "act_cnt": 2, "act_shape": "square", "act_shape_cnt": 4, "scale": 0.9, "unit":80,"stage":7,
             "result" :22, "hint":[[13,20],[12,16]],
             "stick_allignments":[
                 {"x":-2,    "y":3,      "direction":0,      "status":1,   "movable": true,   "index":0},
@@ -1139,7 +1147,7 @@
             ]
         },
         {
-            "act_type":"Move", "act_cnt": 2, "act_shape": "triangle", "act_shape_cnt": 2, "scale": 1.2, "unit":120,"stage":42,
+            "act_type":"Move", "act_cnt": 2, "act_shape": "triangle", "act_shape_cnt": 2, "scale": 1.2, "unit":120,"stage":8,
             "result" :10, "hint":[[14,16],[12,13]],
             "stick_allignments":[
                 {"x":-2.5,      "y":0.87,       "direction":30,      "status":0,   "movable": true,      "index":0},
@@ -1164,7 +1172,7 @@
             ]
         },
         {
-            "act_type":"Move", "act_cnt": 2, "act_shape": "square", "act_shape_cnt":3, "scale": 1, "unit":90,"stage":49,
+            "act_type":"Move", "act_cnt": 2, "act_shape": "square", "act_shape_cnt":3, "scale": 1, "unit":90,"stage":9,
             "result" :18, "hint":[[13,21],[12,14]],
             "stick_allignments":[
                 {"x":-3,    "y":2,      "direction":0,      "status":1,   "movable": true,    "index":0},
@@ -1194,7 +1202,7 @@
             ]
         },
         {
-            "act_type":"Move", "act_cnt": 1, "act_shape": "formula", "act_shape_cnt": 1, "scale": 0.8, "unit":70,"stage":50,"math_string":"",
+            "act_type":"Move", "act_cnt": 1, "act_shape": "formula", "act_shape_cnt": 1, "scale": 0.8, "unit":70,"stage":10,"math_string":"",
             "result" :28, "hint":[[31],[1]],
             "stick_allignments":[
                 {"x":-4,        "y":3.5,        "direction":0,      "status":1,   "movable": true,   "index":0},

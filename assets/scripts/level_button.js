@@ -34,6 +34,7 @@ cc.Class({
             type: cc.Node
         },
         level: 1,
+        brefresh: false,
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -41,34 +42,7 @@ cc.Class({
     onLoad () 
     {
         this.game = this.canvas.getComponent('game');
-
-        /*
-            Display current level
-        */
-        this.level_name.string = "LEVEL " + this.level ;
-        if(this.level == this.game.level)
-            this.stage.string = this.game.stage;
-        else
-            this.stage.string = "50";
-
-         /*
-            Delete Mark on Level Lock
-        */
-        if(this.level <= this.game.level || (this.level == this.game.level + 1 && this.game.stage >= 20))
-        {
-            this.level_locked.active = false;
-            this.stage.node.active = true;
-            this.lvl_count.active = true;
-        }
-
-        /*
-            Display Medal on Level Success
-        */
-        if(this.level < this.game.level)
-        {
-            this.medal.active = true;
-        }    
-
+        this.refresh_btn_info();
         this.node.on(cc.Node.EventType.TOUCH_END, function () {
             if(this.level_locked.active)
             {
@@ -85,9 +59,46 @@ cc.Class({
 
     },
 
+    refresh_btn_info: function()
+    {
+        /*
+            Display current level
+        */
+       
+        this.level_name.string = "LEVEL " + this.level ;
+        if(this.level == this.game.level)
+           this.stage.string = this.game.stage;
+        else if(this.game.level > this.level)
+            this.stage.string = "10";
+        else
+           this.stage.string = "1";
+
+        /*
+           Delete Mark on Level Lock
+        */
+        if(this.level <= this.game.level || (this.level == this.game.level + 1 && this.game.stage >= 8))
+        {
+            this.level_locked.active = false;
+            this.stage.node.active = true;
+            this.lvl_count.active = true;
+        }
+        /*
+            Display Medal on Level Success
+        */
+        if(this.level < this.game.level)
+        {
+            this.medal.active = true;
+        }    
+        this.brefresh = false;
+    },
+
+
     // start () {
 
     // },
 
-    // update (dt) {},
+    update (dt) {
+        if(this.brefresh)
+            this.refresh_btn_info();
+    },
 });

@@ -23,6 +23,10 @@ cc.Class({
             default: [],
             type: [cc.SpriteFrame]
         },
+        snd_btn_click:{
+            default:null,
+            type: cc.AudioClip
+        },
 
         stage: 1,
         brefresh: false,
@@ -47,6 +51,8 @@ cc.Class({
 
         this.node.on(cc.Node.EventType.TOUCH_END, function () 
         {
+            if(this.game.bsound_play)
+                cc.audioEngine.play(this.snd_btn_click, false, 1);
             if(this.game.curent_level < this.game.level || this.stage < this.game.stage + 3)                                    //Available stage
             {                
                 this.game.curent_stage = this.stage;
@@ -67,15 +73,22 @@ cc.Class({
     {
         /*
             In case that current level or stage is passed
-        */
-        if(this.game.curent_level < this.game.level)            
+        */         
+
+        if(this.game.curent_level < this.game.level || this.stage < this.game.stage)            
         {
-            this.level_sprite.spriteFrame = this.spriteList[0];
-        }    
-        else if(this.stage < this.game.stage)
-        {
-            this.level_sprite.spriteFrame = this.spriteList[0];                                  //Yellow Button
-        }                                 
+            var game_info = this.game.level_detail_info;
+            if(game_info != null && game_info.length > this.game.curent_level - 1)            
+            {
+                var levelInfo = game_info[this.game.curent_level - 1];
+                if(levelInfo.indexOf(this.stage) == -1)                    
+                    this.level_sprite.spriteFrame = this.spriteList[1];
+                else
+                    this.level_sprite.spriteFrame = this.spriteList[0];
+            } 
+            else 
+                this.level_sprite.spriteFrame = this.spriteList[0];
+        }                                
         else if(this.stage >= this.game.stage && this.stage < this.game.stage + 3)
             this.level_sprite.spriteFrame = this.spriteList[1];                                 //Yellow Empty Button
         else

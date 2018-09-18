@@ -79,7 +79,23 @@ cc.Class({
             type: [cc.SpriteFrame]
         },
 
-        bk_sound:{
+        snd_home:{
+            default:null,
+            type: cc.AudioClip
+        },
+        snd_btn_click:{
+            default:null,
+            type: cc.AudioClip
+        },
+        snd_level_1:{
+            default:null,
+            type: cc.AudioClip
+        },
+        snd_level_2:{
+            default:null,
+            type: cc.AudioClip
+        },
+        snd_level_3:{
             default:null,
             type: cc.AudioClip
         },
@@ -205,8 +221,6 @@ cc.Class({
         this._hasLoading = false;
         this.load_game_info_asset();
         this.bsound_play = true;
-        this.level = this.curent_level = 1;
-        this.stage = this.curent_stage = 1;
         this.updateInterval = 1;
         this.parent_node = this.node;
         this.actions();
@@ -237,6 +251,8 @@ cc.Class({
             }
             this._hasLoading = false;
         });
+
+        this.load_saved_game_info();
     },
 
     actions: function()
@@ -282,6 +298,8 @@ cc.Class({
     {
         this.home_pan.on(cc.Node.EventType.TOUCH_END, function (event) 
         {       
+            if(this.bsound_play)
+                cc.audioEngine.play(this.snd_btn_click, false, 1);
             var touches = event.getTouches();
             if(touches[0].getLocation().y > this.daily_gift.position. y + this.daily_gift.height / 2 + this.node.height / 2) 
                 this.load_game_menu(); 
@@ -289,6 +307,8 @@ cc.Class({
         }, this);
 
         this.btn_backhome.on(cc.Node.EventType.TOUCH_END, function () {
+            if(this.bsound_play)
+                cc.audioEngine.play(this.snd_btn_click, false, 1);
             if(this.lvl_detail_pan.active)
             {
                 this.lvl_large_pan.active = true;
@@ -312,7 +332,7 @@ cc.Class({
             if(this.bsound_play)
             {
                 sprite.spriteFrame = this.snd_spriteList[0];
-                cc.audioEngine.play(this.bk_sound, true, 1);
+                cc.audioEngine.play(this.snd_home, true, 1);
             }    
             else
             {
@@ -323,6 +343,8 @@ cc.Class({
         }, this);
 
         this.btn_share.on(cc.Node.EventType.TOUCH_END, function(){
+            if(this.bsound_play)
+                cc.audioEngine.play(this.snd_btn_click, false, 1);
             cc.loader.loadRes("textures/icon",function(err,data){
                 wx.shareAppMessage({
                     title: "Enjoy Matchsticks!",
@@ -338,7 +360,7 @@ cc.Class({
         }, this);
 
         if(this.bsound_play)
-            cc.audioEngine.play(this.bk_sound, true, 1);
+            cc.audioEngine.play(this.snd_home, true, 1);
     },
 
     in_dlg_buy_hint:function()
@@ -373,15 +395,20 @@ cc.Class({
     {
         this.btn_bucket.on(cc.Node.EventType.TOUCH_END, function () 
         {
+            if(this.bsound_play)
+                cc.audioEngine.play(this.snd_btn_click, false, 1);
             this.in_dlg_buy_hint();
         }, this);
 
         this.close_dlg_bucket.on(cc.Node.EventType.TOUCH_END, function () {
+            if(this.bsound_play)
+                cc.audioEngine.play(this.snd_btn_click, false, 1);
             this.out_dlg_buy_hint();
         }, this);
 
         this.hint1_video_dlg_bucket.on(cc.Node.EventType.TOUCH_END, function () {
-            cc.log("hint1 clicked");
+            if(this.bsound_play)
+                cc.audioEngine.play(this.snd_btn_click, false, 1);
             this.dlg_no_video.active = true;
             this.dlg_no_video.position = cc.v2(375, 2000);
             this.dlg_bucket.runAction(cc.sequence(
@@ -395,6 +422,8 @@ cc.Class({
         }, this);
 
         this.ok_dlg_no_video.on(cc.Node.EventType.TOUCH_END, function () {
+            if(this.bsound_play)
+                cc.audioEngine.play(this.snd_btn_click, false, 1);
             this.dlg_bucket.runAction(cc.sequence(
                 cc.delayTime(0.1),
                 cc.fadeIn(0.5)
@@ -403,6 +432,8 @@ cc.Class({
         }, this);
 
         this.close_dlg_no_video.on(cc.Node.EventType.TOUCH_END, function () {
+            if(this.bsound_play)
+                cc.audioEngine.play(this.snd_btn_click, false, 1);
             this.dlg_bucket.runAction(cc.sequence(
                 cc.delayTime(0.1),
                 cc.fadeIn(0.5)
@@ -415,6 +446,8 @@ cc.Class({
     {
         this.daily_gift.on(cc.Node.EventType.TOUCH_END, function () 
         {
+            if(this.bsound_play)
+                cc.audioEngine.play(this.snd_btn_click, false, 1);
             this.dlg_gift.active = true;
             this.hints += 1;
             this.lbl_dlg_gift.string = "The number of hints \nyou have has\n incresed to " + this.hints + ".";
@@ -430,6 +463,8 @@ cc.Class({
         }, this);
 
         this.ok_dlg_gift.on(cc.Node.EventType.TOUCH_END, function () {
+            if(this.bsound_play)
+                cc.audioEngine.play(this.snd_btn_click, false, 1);
             this.node.runAction(cc.sequence(
                 cc.delayTime(0.1),
                 cc.fadeIn(0.5)
@@ -445,6 +480,8 @@ cc.Class({
     event_dlg_level_locked: function()
     {
         this.close_dlg_level_locked.on(cc.Node.EventType.TOUCH_END, function () {
+            if(this.bsound_play)
+                cc.audioEngine.play(this.snd_btn_click, false, 1);
             this.node.runAction(cc.sequence(
                 cc.delayTime(0.1),
                 cc.fadeIn(0.5)
@@ -453,6 +490,8 @@ cc.Class({
         }, this);
 
         this.play_dlg_level_locked.on(cc.Node.EventType.TOUCH_END, function () {
+            if(this.bsound_play)
+                cc.audioEngine.play(this.snd_btn_click, false, 1);
             this.node.runAction(cc.sequence(
                 cc.delayTime(0.1),
                 cc.fadeIn(0.5)
@@ -464,6 +503,8 @@ cc.Class({
     event_dlg_get_hint: function()
     {
         this.close_dlg_get_hint.on(cc.Node.EventType.TOUCH_END, function () {
+            if(this.bsound_play)
+                cc.audioEngine.play(this.snd_btn_click, false, 1);
             this.node.runAction(cc.sequence(
                 cc.delayTime(0.1),
                 cc.fadeIn(0.5)
@@ -472,6 +513,8 @@ cc.Class({
         }, this);
 
         this.ok_dlg_get_hint.on(cc.Node.EventType.TOUCH_END, function () {
+            if(this.bsound_play)
+                cc.audioEngine.play(this.snd_btn_click, false, 1);
             this.node.runAction(cc.sequence(
                 cc.delayTime(0.1),
                 cc.fadeIn(0.5)
@@ -515,7 +558,7 @@ cc.Class({
     {
         this.game_pan.active = true;
         this.top_pan.active = false;
-        this.level_pan.active = false;
+        this.level_pan.active = false;             
         this.game_pan.getComponent('game_control').load_game();
     },    
 
@@ -572,9 +615,44 @@ cc.Class({
         ));        
     },
 
-    start () {
-
+    save_data: function()
+    {
+        var userData = {
+            name: 'Matchstick',
+            level: this.level,
+            stage: this.stage,
+            hints: this.hints,
+            detail:this.level_detail_info
+        };
+        cc.sys.localStorage.setItem('userData', JSON.stringify(userData));
     },
+
+    load_saved_game_info: function()
+    {
+        // cc.sys.localStorage.removeItem("userData");
+        this.userData = JSON.parse(cc.sys.localStorage.getItem('userData'));
+        cc.log(this.userData);
+        if(this.userData == null)
+        {
+            this.level = this.curent_level = 1;
+            this.stage = this.curent_stage = 1;
+            this.hints = 15;
+            this.level_detail_info = [
+                []
+            ];
+        }
+        else
+        {
+            this.level = this.userData.level;
+            this.stage = this.userData.stage;
+            this.hints = this.userData.hints;
+            this.level_detail_info = this.userData.detail;
+        }                
+    },
+
+    // start () {
+
+    // },
 
     update (dt) 
     {

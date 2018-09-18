@@ -12,7 +12,10 @@ cc.Class({
             default:[],
             type: [cc.SpriteFrame]
         },
-        
+        snd_stick_click:{
+            default:null,
+            type: cc.AudioClip
+        },
         updateInterval: 0,
         direction: 0,
         bUpdated: true,
@@ -31,12 +34,16 @@ cc.Class({
         this.updateInterval = 0.5;
 
         this.node.on(cc.Node.EventType.TOUCH_END, function () {
-
+            
             if(!this.game.check_stick_movable(this.status) || !this.movable)            
                 return;
 
             if(this.game.b_game_start_animation || this.game.b_game_end_animation) 
                 return;
+            // cc.log(this.snd_stick_click);
+            if(this.game.game.bsound_play)
+                cc.audioEngine.play(this.snd_stick_click, false, 1);
+
 
             if(this.status == 0)
             {

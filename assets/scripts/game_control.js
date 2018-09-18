@@ -184,6 +184,16 @@ cc.Class({
             type: cc.Node
         },
 
+        snd_success:{
+            default:null,
+            type: cc.AudioClip
+        },
+
+        snd_select:{
+            default:null,
+            type: cc.AudioClip
+        },
+
         b_game_on:false,
     },
 
@@ -211,11 +221,15 @@ cc.Class({
         this.event_dlg_progress();
         this.event_dlg_mavelous();
         this.restart.on(cc.Node.EventType.TOUCH_END, function(){
+            if(this.game.bsound_play)
+                cc.audioEngine.play(this.game.snd_btn_click, false, 1);
             if(this.b_game_start_animation || this.b_game_successed) return;
             this.event_restart();
         }, this);
 
         this.hint_btn.on(cc.Node.EventType.TOUCH_END, function(){
+            if(this.game.bsound_play)
+                cc.audioEngine.play(this.game.snd_btn_click, false, 1);
             if(this.b_game_start_animation || this.b_game_successed) return;
             this.execute_hint();
         }, this);
@@ -243,8 +257,10 @@ cc.Class({
     event_dlg_progress: function()
     {
         this.progress.on(cc.Node.EventType.TOUCH_END, function () 
-        { 
+        {             
             if(this.b_game_start_animation || this.b_game_successed) return;
+            if(this.game.bsound_play)
+                cc.audioEngine.play(this.game.snd_btn_click, false, 1);
             this.dlg_progress.active = true;
             this.dlg_progress.getComponent('progress_dialog').update_info();
             this.dlg_progress.position = cc.v2(0, 1500);
@@ -261,6 +277,8 @@ cc.Class({
 
         this.close_dlg_progress.on(cc.Node.EventType.TOUCH_END, function () 
         {       
+            if(this.game.bsound_play)
+                cc.audioEngine.play(this.game.snd_btn_click, false, 1);
             this.node.runAction(cc.sequence(
                 cc.delayTime(0.1),
                 cc.fadeIn(0.5)
@@ -269,7 +287,9 @@ cc.Class({
             this.dlg_progress.active = false;  
         }, this);
 
-        this.ok_dlg_progress.on(cc.Node.EventType.TOUCH_END, function () {       
+        this.ok_dlg_progress.on(cc.Node.EventType.TOUCH_END, function () {   
+            if(this.game.bsound_play)
+                cc.audioEngine.play(this.game.snd_btn_click, false, 1);    
             this.node.runAction(cc.sequence(
                 cc.delayTime(0.1),
                 cc.fadeIn(0.5)
@@ -284,6 +304,8 @@ cc.Class({
         this.pause.on(cc.Node.EventType.TOUCH_END, function () 
         { 
             if(this.b_game_start_animation || this.b_game_successed) return;
+            if(this.game.bsound_play)
+                cc.audioEngine.play(this.game.snd_btn_click, false, 1);
             this.dlg_pause.active = true;    
             this.dlg_pause.position = cc.v2(0, 1500);
             this.node.runAction(cc.sequence(
@@ -297,7 +319,9 @@ cc.Class({
             this.background.active = false;
         }, this);
 
-        this.close_dlg_pause.on(cc.Node.EventType.TOUCH_END, function () {       
+        this.close_dlg_pause.on(cc.Node.EventType.TOUCH_END, function () {   
+            if(this.game.bsound_play)
+                cc.audioEngine.play(this.game.snd_btn_click, false, 1);    
             this.node.runAction(cc.sequence(
                 cc.delayTime(0.1),
                 cc.fadeIn(0.5)
@@ -306,7 +330,9 @@ cc.Class({
             this.dlg_pause.active = false;  
         }, this);
 
-        this.continue_dlg_pause.on(cc.Node.EventType.TOUCH_END, function () {       
+        this.continue_dlg_pause.on(cc.Node.EventType.TOUCH_END, function () {  
+            if(this.game.bsound_play)
+                cc.audioEngine.play(this.game.snd_btn_click, false, 1);     
             this.node.runAction(cc.sequence(
                 cc.delayTime(0.1),
                 cc.fadeIn(0.5)
@@ -315,33 +341,43 @@ cc.Class({
             this.dlg_pause.active = false;  
         }, this);
 
-        this.stage_dlg_pause.on(cc.Node.EventType.TOUCH_END, function () {            
+        this.stage_dlg_pause.on(cc.Node.EventType.TOUCH_END, function () {  
+            if(this.game.bsound_play)
+                cc.audioEngine.play(this.game.snd_btn_click, false, 1);          
             this.level_pan.active = true;
             this.top_pan.active = true;
             this.diable_game_pan();
             this.game.update_stage_button();
         }, this);
 
-        this.home_dlg_pause.on(cc.Node.EventType.TOUCH_END, function () {   
+        this.home_dlg_pause.on(cc.Node.EventType.TOUCH_END, function () { 
+            if(this.game.bsound_play)
+                cc.audioEngine.play(this.game.snd_btn_click, false, 1);  
             this.diable_game_pan();            
-            this.home_pan.active = true;
+            this.home_pan.active = true;               
         }, this);
     },
 
     event_dlg_mavelous: function()
     {
         this.home_dlg_mavelous.on(cc.Node.EventType.TOUCH_END, function () { 
+            if(this.game.bsound_play)
+                cc.audioEngine.play(this.game.snd_btn_click, false, 1);
             this.diable_game_pan();            
             this.home_pan.active = true;
-            this.dlg_mavelous.active = false;
+            this.dlg_mavelous.active = false;              
         }, this);
 
-        this.bucket_dlg_mavelous.on(cc.Node.EventType.TOUCH_END, function () {       
+        this.bucket_dlg_mavelous.on(cc.Node.EventType.TOUCH_END, function () {   
+            if(this.game.bsound_play)
+                cc.audioEngine.play(this.game.snd_btn_click, false, 1);    
             this.game.parent_node = this.dlg_mavelous;
             this.game.in_dlg_buy_hint();
         }, this);
 
-        this.forward_dlg_mavelous.on(cc.Node.EventType.TOUCH_END, function () {       
+        this.forward_dlg_mavelous.on(cc.Node.EventType.TOUCH_END, function () {  
+            if(this.game.bsound_play)
+                cc.audioEngine.play(this.game.snd_btn_click, false, 1);     
             this.node.runAction(cc.sequence(
                 cc.delayTime(0.1),
                 cc.fadeIn(0.5)
@@ -351,7 +387,9 @@ cc.Class({
             this.load_game();
         }, this);
 
-        this.share_dlg_mavelous.on(cc.Node.EventType.TOUCH_END, function () {            
+        this.share_dlg_mavelous.on(cc.Node.EventType.TOUCH_END, function () {    
+            if(this.game.bsound_play)
+                cc.audioEngine.play(this.game.snd_btn_click, false, 1);        
             cc.loader.loadRes("textures/icon",function(err,data){
                 wx.shareAppMessage({
                     title: "Enjoy Matchsticks!",
@@ -385,9 +423,7 @@ cc.Class({
         }
         else 
         {
-            cc.log("hint_remove");
             this.hint_remove_stick(hint_add_or_remove);
-            cc.log("hint_Add");
             this.hint_add_stick(hint_move);
         }
     },
@@ -427,11 +463,27 @@ cc.Class({
             cc.delayTime(0.1),
             cc.fadeIn(0.1)
         ));
-        this.node.active = false;   
+        this.node.active = false;
+        if(this.game.bsound_play)
+            {
+                cc.audioEngine.stopAll();
+                cc.audioEngine.play(this.game.snd_home, true, 1);
+            }    
     },
 
     load_game: function()
     {
+        if(this.game.bsound_play)
+        {
+            cc.audioEngine.stopAll();
+            switch(this.game.curent_stage % 3)
+            {
+                case 0:cc.audioEngine.play(this.game.snd_level_1, true, 1);break;
+                case 1: cc.audioEngine.play(this.game.snd_level_2, true, 1);break;
+                case 2: cc.audioEngine.play(this.game.snd_level_3, true, 1);break;
+            }
+            
+        } 
         this.reset_game();
         // this.task_info = this.get_stage_task();
         this.task_info = this.game.task[this.game.curent_level - 1][this.game.curent_stage - 1];
@@ -700,11 +752,9 @@ cc.Class({
         for(var i = 0; i < this.arr_sticks.length; i++)
         {            
             arr_stick_indexes.push(this.arr_sticks[i].getComponent('stick').index);
-        }        
-
-        // var result = this.get_pattern_square(); 
+        } 
+       
         var result = this.get_pattern_square(this.task_info.result);
-        cc.log(this.task_info.result);
         var temp = [];
         var count = 0;
         for(var i = 0; i < result.length; i++)
@@ -719,15 +769,14 @@ cc.Class({
                 }           
             }
             if(count == result[i].length)
-            {          
-                cc.log(result[i]);
+            {  
                 this.arr_result.push(temp);
                 
             }    
             temp = [];
             count = 0; 
         }
-        cc.log(this.arr_result);
+        
         this.check_stick_place_rule(arr_stick_indexes);
         if(this.arr_result.length == this.task_info.act_shape_cnt)
             this.b_shape_count = true;
@@ -766,6 +815,7 @@ cc.Class({
         if(this.b_game_successed)
             return;
         this.b_game_successed = true;
+        
         this.spr_game_clear.position = cc.v2(800, 0);
         this.spr_game_clear.runAction(cc.sequence(
             cc.delayTime(0.5),
@@ -778,7 +828,12 @@ cc.Class({
     },
 
     animate_game_result: function()
-    {                
+    {        
+        if(this.game.bsound_play)
+        {
+            cc.audioEngine.stopAll();
+            cc.audioEngine.play(this.snd_success, false, 1);
+        }                
         var delay = 0.1;  
         for(var i = 0; i < this.arr_result.length; i++)
         {
@@ -790,22 +845,39 @@ cc.Class({
                     cc.delayTime(delay),
                     cc.moveBy(0.2, cc.v2(0, 25)).easing(cc.easeCubicActionIn()),
                     cc.moveBy(0.2, cc.v2(0, -25)).easing(cc.easeCubicActionIn())
-                )
+                );
+
+                if(j == each_result.length - 1)
+                    seq = cc.sequence(
+                        cc.delayTime(delay),
+                        cc.moveBy(0.2, cc.v2(0, 25)).easing(cc.easeCubicActionIn()),
+                        cc.moveBy(0.2, cc.v2(0, -25)).easing(cc.easeCubicActionIn()),
+                        // this.play_sound()
+                    );
 
                 if(i == this.arr_result.length - 1)
                     seq = cc.sequence(
                         cc.delayTime(delay),
                         cc.moveBy(0.2, cc.v2(0, 25)).easing(cc.easeCubicActionIn()),
                         cc.moveBy(0.2, cc.v2(0, -25)).easing(cc.easeCubicActionIn()),
+                        // this.play_sound(),
                         cc.delayTime(0.5),
                         cc.callFunc(this.in_dlg_mavelous.bind(this))
                     );
                 stick.runAction(seq);
             }
-
             delay += 0.5;
         }
     },
+
+    play_sound: function()
+    {
+
+        if(this.game.bsound_play)
+        {            
+            cc.audioEngine.play(this.snd_select, false, 1);
+        }        
+    },    
 
     in_dlg_mavelous: function()
     {
@@ -828,12 +900,12 @@ cc.Class({
 
     stage_up: function()
     {
+        
         this.game.curent_stage++;
-        if(this.game.curent_stage > 10)
+        if(this.game.level == this.game.curent_level)
         {
-            this.game.curent_level++;
-            this.game.curent_stage = 1;
-            this.game.stage = 1;
+            if((this.game.curent_stage - 1) % 10 == 0)
+                this.game.hints ++;
         }
 
         if(this.game.curent_level > this.game.level)
@@ -844,7 +916,24 @@ cc.Class({
             if(this.game.curent_stage >= this.game.stage)
                 this.game.stage  = this.game.curent_stage;
         }
-        this.game.update_stage_button();
+
+        if(this.game.level_detail_info != null && this.game.level_detail_info.length < this.game.curent_level)
+        {
+            var newLevel = [];
+            this.level_detail_info.push(newLevel);   
+        }
+        var levelInfo = this.game.level_detail_info[this.game.curent_level - 1];
+        if(levelInfo.indexOf(this.game.curent_stage - 1) == -1)
+            levelInfo.push(this.game.curent_stage - 1);
+        this.game.save_data();
+
+        if(this.game.curent_stage > 10)
+        {  
+            this.game.curent_level++;
+            this.game.curent_stage = 1;
+            this.game.stage = 1;            
+        }   
+        this.game.update_stage_button();        
     },    
 
     get_pattern_square: function(index)
@@ -944,7 +1033,7 @@ cc.Class({
         this.b_last_stick = false;
         this.b_all_placed = false;
         this.b_shape_count = false;
-        this.b_game_start_animation = true;
+        this.b_game_start_animation = true;        
 
         this.arr_sticks = [];
         this.arr_sticks_shadow = [];

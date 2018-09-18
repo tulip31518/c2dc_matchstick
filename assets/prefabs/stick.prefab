@@ -73,7 +73,7 @@
     },
     "_skewX": 0,
     "_skewY": 0,
-    "_localZOrder": 1719,
+    "_localZOrder": 1240,
     "groupIndex": 0,
     "_id": ""
   },
@@ -103,7 +103,7 @@
     "_isTrimmedMode": true,
     "_state": 0,
     "_atlas": null,
-    "_id": "fbYDV6HVxJurkMjY5oAXI9"
+    "_id": "b2sjogHLNOSr/L2bnqRelo"
   },
   {
     "__type__": "1ac04YEv25L5pibq2YC0O7d",
@@ -122,11 +122,17 @@
         "__uuid__": "a94b5d07-8fb1-4798-b930-bda0187bcb66"
       }
     ],
+    "snd_stick_click": {
+      "__uuid__": "8e33fe3e-a829-43b9-a511-722cb1caf3db"
+    },
     "updateInterval": 0,
-    "status": 0,
     "direction": 0,
     "bUpdated": false,
-    "_id": "b1SWmZtnJPlrkqkfgxlm/S"
+    "status": 0,
+    "scale": 1,
+    "movable": true,
+    "index": 0,
+    "_id": "43oyVWQZ5GYLjRq4SAKp4M"
   },
   {
     "__type__": "cc.BoxCollider",
@@ -147,7 +153,7 @@
       "width": 27,
       "height": 160
     },
-    "_id": "af/GqAm1NBLJ5l3TsuXJ8g"
+    "_id": "4dHc5psotI94Py+ob+bybq"
   },
   {
     "__type__": "cc.PrefabInfo",

@@ -205,10 +205,16 @@ cc.Class({
             type: cc.Label
         },
 
+        lbl_gift_timer:{
+            default:null,
+            type: cc.Label
+        },
+
         level: 1,
         stage: 1,
         curent_level: 1,
         curent_stage: 1,
+        all_stages:0,
         hints:2,
         blevel_detail: false,
     },
@@ -314,7 +320,8 @@ cc.Class({
                 this.lvl_large_pan.active = true;
                 this.lvl_detail_pan.active = false;
                 this.toppan_title.string = "LEVEL";
-                this.passed_stages.string = (this.level - 1) * 10 + this.stage;
+                // this.passed_stages.string = (this.level - 1) * 50 + this.stage;
+                this.passed_stages.string = this.all_stages;
                 this.update_stage_button();
             }
             else
@@ -448,8 +455,15 @@ cc.Class({
         {
             if(this.bsound_play)
                 cc.audioEngine.play(this.snd_btn_click, false, 1);
-            this.dlg_gift.active = true;
+
+            if(this.lbl_gift_timer.node.active)            
+                return;
+            this.lbl_gift_timer.node.active  = true;
+            this.time_got_gift = Date.now();
             this.hints += 1;
+            this.save_data();
+            
+            this.dlg_gift.active = true;            
             this.lbl_dlg_gift.string = "The number of hints \nyou have has\n incresed to " + this.hints + ".";
             this.dlg_gift.position = cc.v2(375, 2000);
             this.node.runAction(cc.sequence(
@@ -569,7 +583,10 @@ cc.Class({
         this.lvl_detail_pan.active = true;
 
         this.toppan_title.string = "LEVEL " + this.curent_level;
-        this.passed_stages.string = this.stage;
+        if(this.level_detail_info.length >= this.curent_level)
+            this.passed_stages.string = this.level_detail_info[this.curent_level - 1].length;
+        else
+            this.passed_stages.string = 0;
        
         this.level_pan.position = cc.v2(0, -200);
         this.level_pan.runAction(cc.sequence(
@@ -581,12 +598,16 @@ cc.Class({
 
     update_stage_button: function()
     {        
-        this.passed_stages.string = (this.level - 1) * 10 + this.stage;
-        this.level_all_stages.string = " / 50";
+        // this.passed_stages.string = (this.level - 1) * 50 + this.stage;
+        this.passed_stages.string = this.all_stages;
+        this.level_all_stages.string = " / 300";
         if(this.lvl_detail_pan.active)
         {
-            this.passed_stages.string = this.stage;
-            this.level_all_stages.string = " / 10";
+            if(this.level_detail_info.length >= this.curent_level)
+                this.passed_stages.string = this.level_detail_info[this.curent_level - 1].length;
+            else
+                this.passed_stages.string = 0;
+            this.level_all_stages.string = " / 50";
         }
         var btns = this.lvl_detail_pan.getComponentsInChildren("stage_button");
         for(var i = 0; i < btns.length; i++) 
@@ -622,6 +643,7 @@ cc.Class({
             level: this.level,
             stage: this.stage,
             hints: this.hints,
+            gift_time:this.time_got_gift,
             detail:this.level_detail_info
         };
         cc.sys.localStorage.setItem('userData', JSON.stringify(userData));
@@ -630,23 +652,39 @@ cc.Class({
     load_saved_game_info: function()
     {
         // cc.sys.localStorage.removeItem("userData");
-        this.userData = JSON.parse(cc.sys.localStorage.getItem('userData'));
-        cc.log(this.userData);
+        this.userData = null;
+        try {
+            var ud = cc.sys.localStorage.getItem('userData');
+            if(ud != null)
+                this.userData = JSON.parse(ud);
+            cc.log(this.userData);
+        } catch (error) {
+            
+        }        
+        
         if(this.userData == null)
         {
             this.level = this.curent_level = 1;
             this.stage = this.curent_stage = 1;
             this.hints = 15;
+            this.time_got_gift = 0;
             this.level_detail_info = [
                 []
             ];
         }
         else
         {
-            this.level = this.userData.level;
-            this.stage = this.userData.stage;
-            this.hints = this.userData.hints;
             this.level_detail_info = this.userData.detail;
+            this.level = this.level_detail_info.length;
+            this.stage = Math.max(...this.level_detail_info[this.level_detail_info.length - 1]);
+            this.hints = this.userData.hints;    
+            this.time_got_gift = this.userData.gift_time;
+            if(this.time_got_gift > 0)
+                this.lbl_gift_timer.node.active = true; 
+            for(var i = 0; i < this.level_detail_info.length; i++)
+            {
+                this.all_stages += this.level_detail_info[i].length;
+            }
         }                
     },
 
@@ -654,10 +692,32 @@ cc.Class({
 
     // },
 
+    toHHMMSS: function (sec_num) {        
+        var hours   = Math.floor(sec_num / 3600);
+        var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
+        var seconds = sec_num - (hours * 3600) - (minutes * 60);
+    
+        if (hours   < 10) {hours   = "0"+hours;}
+        if (minutes < 10) {minutes = "0"+minutes;}
+        if (seconds < 10) {seconds = "0"+seconds;}
+        return hours+':'+minutes+':'+seconds;
+    },
+
     update (dt) 
     {
         this.updateTimer += dt;
-        if (this.updateTimer < this.updateInterval) return; // we don't need to do the math every frame        
+        if (this.updateTimer < this.updateInterval) return; // we don't need to do the math every frame
+        
+        if(this.lbl_gift_timer.node.active)               
+        {
+            var sec_num = Math.floor((this.time_got_gift + 86400 * 1000 - Date.now()) / 1000);
+            this.lbl_gift_timer.string = this.toHHMMSS(sec_num);
+            if(sec_num == 0)
+                this.lbl_gift_timer.node.active = false;
+        }    
+        
+        this.updateTimer = 0;
+        
         if(!this.home_pan.active) return;
 
         var scl = Math.random();
@@ -672,10 +732,7 @@ cc.Class({
         
         item.runAction(cc.scaleTo(0.1, scl, scl));
         item.runAction(cc.moveBy(8 - scl * 2, cc.v2(0, -600))).repeatForever();
-        item.runAction(cc.rotateBy(5- scl, -360)).repeatForever();
-
-
-        this.updateTimer = 0;
+        item.runAction(cc.rotateBy(5- scl, -360)).repeatForever();       
 
 
     },

@@ -88,16 +88,17 @@ cc.Class({
         /*
            Delete Mark on Level Lock
         */
-        if(this.level <= this.game.level || (this.level == this.game.level + 1 && this.game.stage >= 8))
+        if(this.level <= this.game.level || ((this.level == this.game.level + 1) && game_info[this.level - 2].length >= 20))
         {
             this.level_locked.active = false;
             this.stage.node.active = true;
             this.lvl_count.active = true;
         }
+        
         /*
             Display Medal on Level Success
         */
-        if(this.level < this.game.level)
+        if(this.level < this.game.level && game_info[this.level - 1].length == 50)
         {
             this.medal.active = true;
         }    

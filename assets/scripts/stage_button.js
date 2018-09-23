@@ -46,14 +46,14 @@ cc.Class({
         /*
             Select Background Image according to Game Stage.
         */
-        this.level_sprite = this.getComponent(cc.Sprite); 
+        this.stage_sprite = this.getComponent(cc.Sprite); 
         this.refresh_btn_info();
 
         this.node.on(cc.Node.EventType.TOUCH_END, function () 
         {
             if(this.game.bsound_play)
                 cc.audioEngine.play(this.snd_btn_click, false, 1);
-            if(this.game.curent_level < this.game.level || this.stage < this.game.stage + 3)                                    //Available stage
+            if(this.game.curent_level < this.game.level || this.stage < this.game.stage + 4)             //Available stage
             {                
                 this.game.curent_stage = this.stage;
                 this.game.load_game_pan();
@@ -73,35 +73,37 @@ cc.Class({
     {
         /*
             In case that current level or stage is passed
-        */         
-
-        if(this.game.curent_level < this.game.level || this.stage < this.game.stage)            
+        */   
+        var game_info = this.game.level_detail_info;
+        if(game_info != null && game_info.length > this.game.curent_level - 1)            
         {
-            var game_info = this.game.level_detail_info;
-            if(game_info != null && game_info.length > this.game.curent_level - 1)            
+            var levelInfo = game_info[this.game.curent_level - 1];                
+            if(levelInfo.indexOf(this.stage) != -1)                    
             {
-                var levelInfo = game_info[this.game.curent_level - 1];
-                if(levelInfo.indexOf(this.stage) == -1)                    
-                    this.level_sprite.spriteFrame = this.spriteList[1];
+                this.stage_sprite.spriteFrame = this.spriteList[0];
+                this.lvl_hint.active = false;
+            }    
+            else
+            {
+                if(this.stage < (Math.max(...levelInfo) + 4))
+                    this.stage_sprite.spriteFrame = this.spriteList[1];
                 else
-                    this.level_sprite.spriteFrame = this.spriteList[0];
-            } 
-            else 
-                this.level_sprite.spriteFrame = this.spriteList[0];
-        }                                
-        else if(this.stage >= this.game.stage && this.stage < this.game.stage + 3)
-            this.level_sprite.spriteFrame = this.spriteList[1];                                 //Yellow Empty Button
-        else
-            this.level_sprite.spriteFrame = this.spriteList[2];
+                    this.stage_sprite.spriteFrame = this.spriteList[2];
 
-         /*
-            Display Stage Hint
-        */
-        if(this.stage % 10 == 0 && this.stage >= this.game.stage && this.game.curent_level >= this.game.level)        
-            this.lvl_hint.active = true;
-        else
-            this.lvl_hint.active = false;
-        this.brefresh = false;
+                if(this.stage % 10 == 0)
+                    this.lvl_hint.active = true;
+            }   
+        } 
+        else 
+        {       
+            if(this.stage < 4)
+                this.stage_sprite.spriteFrame = this.spriteList[1];
+            else             
+                this.stage_sprite.spriteFrame = this.spriteList[2];
+            
+            if(this.stage % 10 == 0)
+                this.lvl_hint.active = true;
+        } 
     },
 
     // start () {

@@ -62,10 +62,10 @@ cc.Class({
         else
         {
             this.rule1_lable.string = "Each matchsticks must be \nplaced as part of a " + this.game.task_info.act_shape + ".";
-            this.rule2_lable.string = "Make " + this.game.task_info.act_cnt + " " + this.game.task_info.act_shape + "s.";
+            this.rule2_lable.string = "Make " + this.game.task_info.act_shape_cnt + " " + this.game.task_info.act_shape + "s.";
         }
         
-        this.rule3_lable.string = this.game.task_info.act_type + " " + this.game.task_info.act_shape_cnt + " matchmaticks.";
+        this.rule3_lable.string = this.game.task_info.act_type + " " + this.game.task_info.act_cnt + " matchmaticks.";
         if(this.game.b_last_stick)
             this.spr_rule3.spriteFrame = this.spriteList[1];
         else

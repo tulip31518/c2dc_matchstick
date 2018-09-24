@@ -79,7 +79,7 @@ cc.Class({
         {
             var levelInfo = game_info[this.game.curent_level - 1];                
             if(levelInfo.indexOf(this.stage) != -1)                    
-            {
+            {                
                 this.stage_sprite.spriteFrame = this.spriteList[0];
                 this.lvl_hint.active = false;
             }    
@@ -95,7 +95,7 @@ cc.Class({
             }   
         } 
         else 
-        {       
+        {   
             if(this.stage < 4)
                 this.stage_sprite.spriteFrame = this.spriteList[1];
             else             

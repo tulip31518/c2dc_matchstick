@@ -33,14 +33,19 @@ cc.Class({
         this.sprite = this.getComponent(cc.Sprite);
         this.updateInterval = 0.5;
 
-        this.node.on(cc.Node.EventType.TOUCH_END, function () {
-            
+        this.node.on(cc.Node.EventType.TOUCH_END, function () {            
+
+            // let c = cc.find('Canvas');
+            // if(c.getChildByName("game_pan").getComponent("game_control").b_game_successed == true)
+            if(this.game.b_game_successed == true)
+            return;
+
             if(!this.game.check_stick_movable(this.status) || !this.movable)            
                 return;
 
             if(this.game.b_game_start_animation || this.game.b_game_end_animation) 
                 return;
-            // cc.log(this.snd_stick_click);
+            
             if(this.game.game.bsound_play)
                 cc.audioEngine.play(this.snd_stick_click, false, 1);
 

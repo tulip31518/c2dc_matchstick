@@ -84,8 +84,15 @@ cc.Class({
                 this.lvl_hint.active = false;
             }    
             else
-            {
-                if(this.stage < (Math.max(...levelInfo) + 4))
+            {                
+                if(levelInfo.length == 0)
+                {
+                    if(this.stage < 4)
+                        this.stage_sprite.spriteFrame = this.spriteList[1];
+                    else
+                        this.stage_sprite.spriteFrame = this.spriteList[2];
+                }
+                else if(this.stage < (Math.max(...levelInfo) + 4))
                     this.stage_sprite.spriteFrame = this.spriteList[1];
                 else
                     this.stage_sprite.spriteFrame = this.spriteList[2];

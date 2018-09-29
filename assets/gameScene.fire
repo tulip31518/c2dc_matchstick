@@ -56,8 +56,8 @@
     },
     "_scale": {
       "__type__": "cc.Vec3",
-      "x": 0.4070464767616191,
-      "y": 0.4070464767616191,
+      "x": 0.407046476761619,
+      "y": 0.407046476761619,
       "z": 1
     },
     "_quat": {
@@ -935,7 +935,7 @@
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
     "_spriteFrame": {
-      "__uuid__": "6f34ab4e-d080-4631-b96b-f66cf325721a"
+      "__uuid__": "f73e4bf3-d8f9-4533-88e1-0dd5f4728a68"
     },
     "_type": 0,
     "_sizeMode": 0,
@@ -1202,7 +1202,7 @@
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
     "_spriteFrame": {
-      "__uuid__": "c67ded47-a4ad-4cad-9470-1cf81970dfa9"
+      "__uuid__": "40f39ce9-4834-4b93-a722-d8760c12b693"
     },
     "_type": 0,
     "_sizeMode": 0,
@@ -30610,7 +30610,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 615.28,
+      "width": 440.18,
       "height": 100
     },
     "_anchorPoint": {
@@ -30656,8 +30656,8 @@
     "_srcBlendFactor": 1,
     "_dstBlendFactor": 771,
     "_useOriginalSize": false,
-    "_string": "Add  2 matchsticks to create  2\nsquares.",
-    "_N$string": "Add  2 matchsticks to create  2\nsquares.",
+    "_string": "Add  2 matchsticks to \ncreate  2 squares.",
+    "_N$string": "Add  2 matchsticks to \ncreate  2 squares.",
     "_fontSize": 45,
     "_lineHeight": 50,
     "_enableWrapText": true,
@@ -34613,10 +34613,10 @@
     },
     "snd_spriteList": [
       {
-        "__uuid__": "6f34ab4e-d080-4631-b96b-f66cf325721a"
+        "__uuid__": "f73e4bf3-d8f9-4533-88e1-0dd5f4728a68"
       },
       {
-        "__uuid__": "b2f8a6c9-5172-47ad-a5c4-94417ed85934"
+        "__uuid__": "fa475875-6d4a-48df-b56b-7219451c86d4"
       }
     ],
     "snd_home": {
@@ -34705,7 +34705,7 @@
     "curent_level": 1,
     "curent_stage": 1,
     "all_stages": 0,
-    "hints": 2,
+    "hints": 15,
     "blevel_detail": true,
     "_id": "7e1STvSNpMwpsylHzaeJID"
   },

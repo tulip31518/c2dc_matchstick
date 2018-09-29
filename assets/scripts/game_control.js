@@ -217,7 +217,6 @@ cc.Class({
 
     events: function()
     {  
-        this.game.hints = 100;
         this.event_dlg_pause();
         this.event_dlg_progress();
         this.event_dlg_mavelous();
@@ -494,15 +493,15 @@ cc.Class({
         this.hint.string = this.game.hints;
         
         if(this.task_info.act_shape != "formula")            
-                this.task_content.string = this.task_info.act_type + " " + this.task_info.act_cnt + " matchsticks to create " 
-                + this.task_info.act_shape_cnt + "\n" + this.task_info.act_shape + "s." ;
+                this.task_content.string = this.task_info.act_type + " " + this.task_info.act_cnt + " matchsticks to \n create " 
+                + this.task_info.act_shape_cnt + " " + this.task_info.act_shape + "s." ;
         else
             if(this.task_info.math_string != "")
-                this.task_content.string = this.task_info.act_type + " " + this.task_info.act_cnt + " matchsticks \n to " 
+                this.task_content.string = this.task_info.act_type + " " + this.task_info.act_cnt + " matchsticks to \n " 
                 + this.task_info.math_string + "." ;
             else
-                this.task_content.string = this.task_info.act_type + " " + this.task_info.act_cnt + " matchsticks to correct the " 
-                    + "\n" + this.task_info.act_shape + "." ;
+                this.task_content.string = this.task_info.act_type + " " + this.task_info.act_cnt + " matchsticks to \n" 
+                    + " correct the " + this.task_info.act_shape + "." ;
 
         this.b_game_on = true;        
 
@@ -780,7 +779,7 @@ cc.Class({
             arr_stick_indexes.push(this.arr_sticks[i].getComponent('stick').index);
         } 
        
-        var result = this.get_pattern_square(this.task_info.result);cc.log(result);
+        var result = this.get_pattern_square(this.task_info.result);
         var temp = [];
         var count = 0;
         for(var i = 0; i < result.length; i++)
@@ -802,7 +801,7 @@ cc.Class({
             temp = [];
             count = 0; 
         }
-        cc.log(this.arr_result);
+        
         this.check_stick_place_rule(arr_stick_indexes);
         if(this.arr_result.length == this.task_info.act_shape_cnt)
             this.b_shape_count = true;

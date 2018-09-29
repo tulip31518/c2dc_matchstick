@@ -657,7 +657,7 @@ cc.Class({
             var ud = cc.sys.localStorage.getItem('userData');
             if(ud != null)
                 this.userData = JSON.parse(ud);
-            cc.log(this.userData);
+            
         } catch (error) {
             
         }        

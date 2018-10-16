@@ -30,6 +30,7 @@ cc.Class({
 
         stage: 1,
         brefresh: false,
+        capable:true,
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -43,6 +44,7 @@ cc.Class({
         */        
         this.lbl_stage.string = this.stage;        
 
+
         /*
             Select Background Image according to Game Stage.
         */
@@ -53,7 +55,9 @@ cc.Class({
         {
             if(this.game.bsound_play)
                 cc.audioEngine.play(this.snd_btn_click, false, 1);
-            if(this.game.curent_level < this.game.level || this.stage < this.game.stage + 4)             //Available stage
+            cc.log( "stage:" + this.stage + " game.stage:" + this.game.stage);
+            cc.log( "curent_level:" + this.game.curent_level + " game.level:" + this.game.level);
+            if(this.capable)             //Available stage
             {                
                 this.game.curent_stage = this.stage;
                 this.game.load_game_pan();
@@ -75,27 +79,41 @@ cc.Class({
             In case that current level or stage is passed
         */   
         var game_info = this.game.level_detail_info;
+        this.lbl_stage.node.color = cc.Color.WHITE;
+        this.capable = true;
         if(game_info != null && game_info.length > this.game.curent_level - 1)            
-        {
+        {            
             var levelInfo = game_info[this.game.curent_level - 1];                
             if(levelInfo.indexOf(this.stage) != -1)                    
             {                
                 this.stage_sprite.spriteFrame = this.spriteList[0];
-                this.lvl_hint.active = false;
+                this.lvl_hint.active = false;                
             }    
             else
-            {                
+            {               
                 if(levelInfo.length == 0)
                 {
                     if(this.stage < 4)
+                    {                        
                         this.stage_sprite.spriteFrame = this.spriteList[1];
+                        this.lbl_stage.node.color = new cc.Color(232, 184, 7);
+                    }    
                     else
+                    {
+                        this.capable = false;
                         this.stage_sprite.spriteFrame = this.spriteList[2];
+                    }    
                 }
                 else if(this.stage < (Math.max(...levelInfo) + 4))
+                {
                     this.stage_sprite.spriteFrame = this.spriteList[1];
+                    this.lbl_stage.node.color = new cc.Color(232, 184, 7);
+                }    
                 else
+                {
                     this.stage_sprite.spriteFrame = this.spriteList[2];
+                    this.capable = false;                
+                }    
 
                 if(this.stage % 10 == 0)
                     this.lvl_hint.active = true;
@@ -104,13 +122,20 @@ cc.Class({
         else 
         {   
             if(this.stage < 4)
+            {
                 this.stage_sprite.spriteFrame = this.spriteList[1];
+                this.lbl_stage.node.color = new cc.Color(232, 184, 7);
+            }    
             else             
+            {
+                this.capable = false;
                 this.stage_sprite.spriteFrame = this.spriteList[2];
+            }    
             
             if(this.stage % 10 == 0)
                 this.lvl_hint.active = true;
         } 
+        this.brefresh = false;
     },
 
     // start () {

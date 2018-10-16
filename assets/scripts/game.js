@@ -457,8 +457,8 @@ cc.Class({
                 cc.audioEngine.play(this.snd_btn_click, false, 1);
 
             if(this.lbl_gift_timer.node.active)            
-                return;
-            this.lbl_gift_timer.node.active  = true;
+                return;            
+            this.lbl_gift_timer.string = "";
             this.time_got_gift = Date.now();
             this.hints += 1;
             this.save_data();
@@ -486,8 +486,8 @@ cc.Class({
             this.dlg_gift.runAction(cc.sequence(
                 cc.moveBy(0.5, cc.v2(0, 700)),
                 this.out_gift_Action,
-
             ));
+            this.lbl_gift_timer.node.active = true;
         }, this);
     },
 
@@ -651,7 +651,7 @@ cc.Class({
 
     load_saved_game_info: function()
     {
-        // cc.sys.localStorage.removeItem("userData");
+        //cc.sys.localStorage.removeItem("userData");
         this.userData = null;
         try {
             var ud = cc.sys.localStorage.getItem('userData');
@@ -677,6 +677,8 @@ cc.Class({
             this.level_detail_info = this.userData.detail;
             this.level = this.level_detail_info.length;
             this.stage = Math.max(...this.level_detail_info[this.level_detail_info.length - 1]);
+            if(this.stage == null || this.stage < 0)
+                this.stage = 1;
             this.hints = this.userData.hints;    
             this.time_got_gift = this.userData.gift_time;
             if(this.time_got_gift > 0)
@@ -685,7 +687,8 @@ cc.Class({
             {
                 this.all_stages += this.level_detail_info[i].length;
             }
-        }                
+        }
+                        
     },
 
     // start () {
@@ -711,6 +714,11 @@ cc.Class({
         if(this.lbl_gift_timer.node.active)               
         {
             var sec_num = Math.floor((this.time_got_gift + 86400 * 1000 - Date.now()) / 1000);
+            if(sec_num < 0)
+            {
+                this.lbl_gift_timer.string = "";
+                this.lbl_gift_timer.node.active = false;                
+            }    
             this.lbl_gift_timer.string = this.toHHMMSS(sec_num);
             if(sec_num == 0)
                 this.lbl_gift_timer.node.active = false;
